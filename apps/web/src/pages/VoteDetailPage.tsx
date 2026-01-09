@@ -590,7 +590,11 @@ Wylin is an artist and entrepreneur. After exhibiting in galleries, he dropped o
   if (!finalProposal) {
     return (
       <div className="flex h-screen w-full flex-col items-center gap-4 py-8 text-center">
-        <h2>Ooops, prop {proposalId} not found.</h2>
+        <h2>Prop {proposalId} not found</h2>
+        <p className="text-content-secondary max-w-md">
+          This proposal may not exist, may have been cancelled, or may not be indexed yet. 
+          Please verify the proposal ID and try again.
+        </p>
         <Link to="/vote">
           <Button className="rounded-full">Back to proposals</Button>
         </Link>

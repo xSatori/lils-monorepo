@@ -55,8 +55,12 @@ export function useCastRefundableVote(): UseCastRefundableVoteReturnType {
       }
 
       try {
-        // We're on V6, so use proposalsV3 directly
-        const results = await multicall(
+        // proposalsV3 is available from V2 onwards, so try it first
+        // Fallback to proposals (older V2 function) if proposalsV3 fails
+        const primaryFunctionName = "proposalsV3";
+        const fallbackFunctionName = "proposals";
+        
+        let results = await multicall(
           CHAIN_CONFIG.publicClient,
           {
             contracts: [
@@ -69,7 +73,7 @@ export function useCastRefundableVote(): UseCastRefundableVoteReturnType {
               {
                 address: CHAIN_CONFIG.addresses.nounsDaoProxy,
                 abi: nounsDaoLogicConfig.abi,
-                functionName: "proposalsV3",
+                functionName: primaryFunctionName,
                 args: [BigInt(proposalId)],
               },
             ],
@@ -77,7 +81,35 @@ export function useCastRefundableVote(): UseCastRefundableVoteReturnType {
           },
         );
 
-        const [receiptResult, proposalResult] = results;
+        let [receiptResult, proposalResult] = results;
+
+        // If primary function failed, try the fallback function
+        if (proposalResult.status === 'failure') {
+          console.warn(`Primary function ${primaryFunctionName} failed for proposal ${proposalId}, trying fallback ${fallbackFunctionName}`);
+          
+          const fallbackResults = await multicall(
+            CHAIN_CONFIG.publicClient,
+            {
+              contracts: [
+                {
+                  address: CHAIN_CONFIG.addresses.nounsDaoProxy,
+                  abi: nounsDaoLogicConfig.abi,
+                  functionName: "getReceipt",
+                  args: [BigInt(proposalId), address],
+                },
+                {
+                  address: CHAIN_CONFIG.addresses.nounsDaoProxy,
+                  abi: nounsDaoLogicConfig.abi,
+                  functionName: fallbackFunctionName,
+                  args: [BigInt(proposalId)],
+                },
+              ],
+              allowFailure: true,
+            },
+          );
+          
+          [receiptResult, proposalResult] = fallbackResults;
+        }
 
         // Check if proposal exists - if contract call fails but subgraph has it, use subgraph data
         if (proposalResult.status === 'failure') {
@@ -126,11 +158,11 @@ export function useCastRefundableVote(): UseCastRefundableVoteReturnType {
             // If we got here, validation passed using subgraph data
             return null;
           } else {
-            // Proposal doesn't exist in subgraph either
-            return new CustomTransactionValidationError(
-              "PROPOSAL_NOT_FOUND",
-              `Proposal ${proposalId} does not exist.`,
-            );
+            // Both contract calls failed and subgraph doesn't have it
+            // But if this is a recent proposal, it might just not be indexed yet
+            // Allow the vote to proceed - the actual transaction will fail if proposal doesn't exist
+            console.warn(`Both contract calls failed and subgraph doesn't have proposal ${proposalId}. Allowing vote to proceed - transaction will validate on-chain.`);
+            return null; // Allow vote to proceed - on-chain validation will catch if it doesn't exist
           }
         }
 
@@ -176,11 +208,33 @@ export function useCastRefundableVote(): UseCastRefundableVoteReturnType {
           }
         }
         
-        if (errorMessage.includes('delegate call failed') || errorMessage.includes('PROPOSAL_NOT_FOUND')) {
-          return new CustomTransactionValidationError(
-            "PROPOSAL_NOT_FOUND",
-            `Proposal ${proposalId} does not exist or could not be fetched from the contract.`,
-          );
+        // Check for various error patterns that indicate proposal doesn't exist
+        const proposalNotFoundPatterns = [
+          'delegate call failed',
+          'PROPOSAL_NOT_FOUND',
+          'proposal does not exist',
+          'invalid proposal id',
+          'proposal not found',
+          'execution reverted',
+        ];
+        
+        const isProposalNotFound = proposalNotFoundPatterns.some(pattern => 
+          errorMessage.toLowerCase().includes(pattern.toLowerCase())
+        );
+        
+        if (isProposalNotFound) {
+          // Provide more helpful error message
+          if (proposalFromSubgraph) {
+            return new CustomTransactionValidationError(
+              "PROPOSAL_NOT_FOUND",
+              `Prop ${proposalId} exists in the subgraph but could not be found on-chain. This may indicate a sync issue. Please try again in a few moments.`,
+            );
+          } else {
+            return new CustomTransactionValidationError(
+              "PROPOSAL_NOT_FOUND",
+              `Prop ${proposalId} not found. This proposal may not exist, may have been cancelled, or may not be indexed yet. Please verify the proposal ID and try again.`,
+            );
+          }
         }
         
         return new CustomTransactionValidationError(
