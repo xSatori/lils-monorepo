@@ -307,15 +307,52 @@ const ProposalEditor: React.FC<ProposalEditorProps> = ({
     
     for (let i = 0; i < currentActions.length; i++) {
       const action = currentActions[i]
-      const transactions = resolveAction(action)
-      map[i] = []
-      for (let j = 0; j < transactions.length; j++) {
-        map[i].push(transactionIndex++)
+      if (!action) {
+        map[i] = []
+        continue
+      }
+      
+      // Resolve ENS names in action before calling resolveAction
+      let resolvedAction: Action = { ...action }
+      if (action.type === 'one-time-payment' || action.type === 'streaming-payment' || action.type === 'treasury-noun-transfer') {
+        const target = action.target
+        if (target && !isAddress(target)) {
+          if (resolvedAddresses[target]) {
+            resolvedAction = { ...action, target: resolvedAddresses[target] as `0x${string}` }
+          } else {
+            // Skip if ENS name not resolved yet - will retry when resolved
+            map[i] = []
+            continue
+          }
+        }
+      } else if (action.type === 'custom-transaction') {
+        const target = action.contractCallTarget
+        if (target && !isAddress(target)) {
+          if (resolvedAddresses[target]) {
+            resolvedAction = { ...action, contractCallTarget: resolvedAddresses[target] as `0x${string}` }
+          } else {
+            // Skip if ENS name not resolved yet - will retry when resolved
+            map[i] = []
+            continue
+          }
+        }
+      }
+      
+      try {
+        const transactions = resolveAction(resolvedAction)
+        map[i] = []
+        for (let j = 0; j < transactions.length; j++) {
+          map[i].push(transactionIndex++)
+        }
+      } catch (error) {
+        console.error(`Error resolving action ${i}:`, error, resolvedAction)
+        // Skip this action if resolution fails
+        map[i] = []
       }
     }
     
     return map
-  }, [currentActions])
+  }, [currentActions, resolvedAddresses])
 
   // Helper to get simulation status for an action
   const getSimulationStatus = (actionIndex: number): 'idle' | 'simulating' | 'success' | 'error' => {
@@ -519,57 +556,96 @@ const ProposalEditor: React.FC<ProposalEditorProps> = ({
   }
 
   const getActionSummary = (action: Action): string => {
-    switch (action.type) {
-      case 'one-time-payment':
-        return `Transfer ${action.amount} ${action.currency.toUpperCase()} to ${action.target.slice(0, 6)}...${action.target.slice(-4)}`
-      case 'streaming-payment':
-        return `Stream ${action.amount} ${action.currency.toUpperCase()} to ${action.target.slice(0, 6)}...${action.target.slice(-4)}`
-      case 'custom-transaction':
-        return `Call ${action.contractCallSignature} on ${action.contractCallTarget.slice(0, 6)}...${action.contractCallTarget.slice(-4)}`
-      case 'treasury-noun-transfer':
-        return `Transfer Noun #${action.nounId} to ${action.target.slice(0, 6)}...${action.target.slice(-4)}`
-      default:
-        return 'Unknown action'
+    try {
+      switch (action.type) {
+        case 'one-time-payment':
+          if (!action.target || !action.amount) return 'Invalid payment action'
+          return `Transfer ${action.amount} ${action.currency?.toUpperCase() || 'ETH'} to ${action.target.slice(0, 6)}...${action.target.slice(-4)}`
+        case 'streaming-payment':
+          if (!action.target || !action.amount) return 'Invalid streaming payment action'
+          return `Stream ${action.amount} ${action.currency?.toUpperCase() || 'ETH'} to ${action.target.slice(0, 6)}...${action.target.slice(-4)}`
+        case 'custom-transaction':
+          if (!action.contractCallTarget || !action.contractCallSignature) return 'Invalid custom transaction'
+          return `Call ${action.contractCallSignature} on ${action.contractCallTarget.slice(0, 6)}...${action.contractCallTarget.slice(-4)}`
+        case 'treasury-noun-transfer':
+          if (!action.target || !action.nounId) return 'Invalid noun transfer action'
+          return `Transfer Noun #${action.nounId} to ${action.target.slice(0, 6)}...${action.target.slice(-4)}`
+        default:
+          return 'Unknown action'
+      }
+    } catch (error) {
+      console.error('Error generating action summary:', error, action)
+      return 'Error displaying action'
     }
   }
 
   const getActionDetails = (action: Action): { target?: string; value?: string; originalTarget?: string } => {
-    switch (action.type) {
-      case 'one-time-payment':
-        try {
-          // Parse decimal amount to wei/smallest unit
-          const parsedValue = action.currency === 'eth' 
-            ? parseEther(action.amount)
-            : action.currency === 'usdc'
-            ? parseUnits(action.amount, 6) // USDC has 6 decimals
-            : parseUnits(action.amount, 18) // WETH has 18 decimals
+    try {
+      switch (action.type) {
+        case 'one-time-payment':
+          if (!action.target || !action.amount) {
+            return { target: action.target || '', originalTarget: action.target || '', value: '0' }
+          }
+          try {
+            // Parse decimal amount to wei/smallest unit
+            const parsedValue = action.currency === 'eth' 
+              ? parseEther(action.amount)
+              : action.currency === 'usdc'
+              ? parseUnits(action.amount, 6) // USDC has 6 decimals
+              : parseUnits(action.amount, 18) // WETH has 18 decimals
+            return {
+              target: action.target,
+              originalTarget: action.target,
+              value: `${parsedValue.toString()} // ${action.amount} ${action.currency?.toUpperCase() || 'ETH'}`,
+            }
+          } catch (error) {
+            // Fallback if parsing fails
+            return {
+              target: action.target,
+              originalTarget: action.target,
+              value: `0 // ${action.amount} ${action.currency?.toUpperCase() || 'ETH'} (parse error)`,
+            }
+          }
+        case 'streaming-payment':
+          if (!action.target || !action.amount) {
+            return { target: action.target || '', originalTarget: action.target || '', value: '0' }
+          }
+          try {
+            // Parse decimal amount to wei/smallest unit
+            const parsedValue = action.currency === 'usdc'
+              ? parseUnits(action.amount, 6) // USDC has 6 decimals
+              : parseUnits(action.amount, 18) // WETH and others have 18 decimals
+            return {
+              target: action.target,
+              originalTarget: action.target,
+              value: `${parsedValue.toString()} // ${action.amount} ${action.currency?.toUpperCase() || 'WETH'}`,
+            }
+          } catch (error) {
+            // Fallback if parsing fails
+            return {
+              target: action.target,
+              originalTarget: action.target,
+              value: `0 // ${action.amount} ${action.currency?.toUpperCase() || 'WETH'} (parse error)`,
+            }
+          }
+        case 'custom-transaction':
           return {
-            target: action.target,
-            originalTarget: action.target,
-            value: `${parsedValue.toString()} // ${action.amount} ${action.currency.toUpperCase()}`,
+            target: action.contractCallTarget || '',
+            originalTarget: action.contractCallTarget || '',
+            value: action.contractCallValue || '0',
           }
-        } catch (error) {
-          // Fallback if parsing fails
-        return {
-          target: action.target,
-          originalTarget: action.target,
-            value: `0 // ${action.amount} ${action.currency.toUpperCase()} (parse error)`,
+        case 'treasury-noun-transfer':
+          return {
+            target: action.target || '',
+            originalTarget: action.target || '',
+            value: '0',
           }
-        }
-      case 'custom-transaction':
-        return {
-          target: action.contractCallTarget,
-          originalTarget: action.contractCallTarget,
-          value: '0',
-        }
-      case 'treasury-noun-transfer':
-        return {
-          target: action.target,
-          originalTarget: action.target,
-          value: '0',
-        }
-      default:
-        return {}
+        default:
+          return {}
+      }
+    } catch (error) {
+      console.error('Error getting action details:', error, action)
+      return { target: '', value: '0' }
     }
   }
 
@@ -656,6 +732,11 @@ const ProposalEditor: React.FC<ProposalEditorProps> = ({
             </div>
             <ol className="p-0 m-0 pl-6 list-decimal">
               {currentActions.map((action, index) => {
+                if (!action) {
+                  console.error('Invalid action at index', index)
+                  return null
+                }
+                
                 const details = getActionDetails(action)
                 const isExpanded = expandedActions.has(index)
 
@@ -697,9 +778,9 @@ const ProposalEditor: React.FC<ProposalEditorProps> = ({
                             <div className="flex items-start mb-2">
                               <span className="text-gray-500 mr-2 flex-shrink-0">target:</span>
                               <span className="break-all flex-1">
-                                {resolvedAddresses[details.originalTarget || ''] 
-                                  ? `${resolvedAddresses[details.originalTarget || '']} (${details.originalTarget})`
-                                  : details.target
+                                {details.originalTarget && resolvedAddresses[details.originalTarget]
+                                  ? `${resolvedAddresses[details.originalTarget]} (${details.originalTarget})`
+                                  : details.target || details.originalTarget || 'N/A'
                                 }
                               </span>
                             </div>

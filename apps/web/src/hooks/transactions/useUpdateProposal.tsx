@@ -11,6 +11,7 @@ import {
 import { CustomTransactionValidationError } from "./types";
 import { Action } from "@/types/proposal-editor";
 import { resolveActions } from "@/utils/transactions";
+import { useEnsResolution } from "@/hooks/useEnsResolution";
 import { DetailedProposal } from "@/data/goldsky/governance/common";
 
 interface UseUpdateProposalReturnType
@@ -27,6 +28,7 @@ interface UseUpdateProposalReturnType
 export function useUpdateProposal(): UseUpdateProposalReturnType {
   const { sendTransaction, ...other } = useSendTransaction();
   const { address } = useAccount();
+  const { resolveEnsAddresses } = useEnsResolution();
 
   const updateProposal = useCallback(
     async (
@@ -59,8 +61,22 @@ export function useUpdateProposal(): UseUpdateProposalReturnType {
         );
       }
 
-      // Convert actions to transactions
-      const transactions = resolveActions(actions);
+      // Resolve ENS names in actions BEFORE converting to transactions
+      const resolvedActions: Action[] = await Promise.all(
+        actions.map(async (action) => {
+          if (action.type === 'one-time-payment' || action.type === 'streaming-payment' || action.type === 'treasury-noun-transfer') {
+            const [resolvedTarget] = await resolveEnsAddresses([action.target])
+            return { ...action, target: resolvedTarget as `0x${string}` }
+          } else if (action.type === 'custom-transaction') {
+            const [resolvedTarget] = await resolveEnsAddresses([action.contractCallTarget])
+            return { ...action, contractCallTarget: resolvedTarget as `0x${string}` }
+          }
+          return action
+        })
+      )
+
+      // Convert resolved actions to transactions
+      const transactions = resolveActions(resolvedActions);
 
       const targets = transactions.map((tx) => getAddress(tx.target));
       const values = transactions.map((tx) => BigInt(tx.value));
@@ -134,7 +150,7 @@ export function useUpdateProposal(): UseUpdateProposalReturnType {
         },
       );
     },
-    [sendTransaction, address],
+    [sendTransaction, address, resolveEnsAddresses],
   );
 
   return { updateProposal, ...other };

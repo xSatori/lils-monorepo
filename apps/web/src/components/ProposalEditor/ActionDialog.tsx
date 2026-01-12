@@ -7,11 +7,13 @@ import { cn } from '@/utils/shadcn'
 import { useTokenPrices, formatUsdConversion } from '@/hooks/useTokenPrices'
 import { parseActionsFromJSON } from '@/utils/action-json-parser'
 import { FileJson, AlertCircle } from 'lucide-react'
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import {
   DrawerDialog,
   DrawerDialogContent,
   DrawerDialogContentInner,
   DrawerDialogTitle,
+  DrawerDialogDescription,
 } from "../ui/DrawerDialog"
 
 interface ActionDialogProps {
@@ -53,16 +55,37 @@ const ActionDialog: React.FC<ActionDialogProps> = ({
   const [showJsonImport, setShowJsonImport] = useState(false)
   const { prices } = useTokenPrices()
 
+  // Update currency when switching action types
+  useEffect(() => {
+    setFormData((prev: typeof formData) => {
+      if (actionType === 'streaming-payment' && (prev.currency === 'eth' || !['weth', 'usdc', 'steth', 'reth', 'oeth'].includes(prev.currency))) {
+        // Streaming payments don't support ETH, convert to WETH
+        return { ...prev, currency: 'weth' }
+      } else if (actionType === 'one-time-payment' && !['eth', 'weth', 'usdc', 'steth', 'reth', 'oeth'].includes(prev.currency)) {
+        // Reset to eth if invalid currency for one-time payment
+        return { ...prev, currency: 'eth' }
+      }
+      return prev
+    })
+  }, [actionType])
+
   useEffect(() => {
     if (action) {
-      setActionType(action.type)
-      setFormData(action)
+      setActionType(action.type as ActionType)
+      // If editing a streaming payment with 'eth', convert to 'weth'
+      if (action.type === 'streaming-payment' && (action as any).currency === 'eth') {
+        setFormData({ ...action, currency: 'weth' } as any)
+      } else {
+        setFormData(action as any)
+      }
     } else {
       // Reset form when opening without an action
+      // Default currency depends on action type
+      const defaultCurrency = actionType === 'streaming-payment' ? 'weth' : 'eth'
       setFormData({
         target: '',
         amount: '',
-        currency: 'eth',
+        currency: defaultCurrency,
         contractCallTarget: '',
         contractCallSignature: '',
         contractCallArguments: '',
@@ -72,7 +95,7 @@ const ActionDialog: React.FC<ActionDialogProps> = ({
         endTimestamp: Date.now() + 86400000 * 30,
       })
     }
-  }, [action, isOpen])
+  }, [action, isOpen, actionType])
 
   const handleSubmit = () => {
     let actionData: Action
@@ -87,11 +110,17 @@ const ActionDialog: React.FC<ActionDialogProps> = ({
         }
         break
       case 'streaming-payment':
+        // Convert 'eth' to 'weth' for streaming payments (ETH not supported)
+        const streamingCurrency = formData.currency === 'eth' ? 'weth' : formData.currency
+        if (!['weth', 'usdc', 'steth', 'reth', 'oeth'].includes(streamingCurrency)) {
+          alert('Streaming payments only support WETH, USDC, stETH, rETH, or OETH. ETH is not supported.')
+          return
+        }
         actionData = {
           type: 'streaming-payment',
           target: formData.target,
           amount: formData.amount,
-          currency: formData.currency as 'weth' | 'usdc' | 'steth' | 'reth' | 'oeth',
+          currency: streamingCurrency as 'weth' | 'usdc' | 'steth' | 'reth' | 'oeth',
           startTimestamp: formData.startTimestamp,
           endTimestamp: formData.endTimestamp,
           predictedStreamContractAddress: '0x0000000000000000000000000000000000000000', // Will be calculated
@@ -206,9 +235,14 @@ const ActionDialog: React.FC<ActionDialogProps> = ({
   return (
     <DrawerDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DrawerDialogContent className="md:max-h-[85vh] md:max-w-[min(95vw,800px)]">
-        <DrawerDialogTitle className="sr-only">
-          {title}
-        </DrawerDialogTitle>
+        <VisuallyHidden.Root>
+          <DrawerDialogTitle>
+            {title}
+          </DrawerDialogTitle>
+          <DrawerDialogDescription>
+            {title === 'Add Action' ? 'Add a new proposal action' : 'Edit proposal action'}
+          </DrawerDialogDescription>
+        </VisuallyHidden.Root>
         <DrawerDialogContentInner className="p-0 md:flex-row">
           <div className="w-full pl-6 pt-6 heading-1 md:hidden">
             {title}

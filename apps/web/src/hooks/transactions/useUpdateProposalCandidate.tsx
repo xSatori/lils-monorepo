@@ -13,6 +13,7 @@ import { Action } from "@/types/proposal-editor";
 import { resolveActions } from "@/utils/transactions";
 import { ProposalIdea } from "@/data/goldsky/governance/ideaTypes";
 import { extractSlugFromId } from "@/data/goldsky/governance/getProposalIdeas";
+import { useEnsResolution } from "@/hooks/useEnsResolution";
 
 interface UseUpdateProposalCandidateReturnType
   extends Omit<UseSendTransactionReturnType, "sendTransaction"> {
@@ -28,6 +29,7 @@ interface UseUpdateProposalCandidateReturnType
 export function useUpdateProposalCandidate(): UseUpdateProposalCandidateReturnType {
   const { sendTransaction, ...other } = useSendTransaction();
   const { address } = useAccount();
+  const { resolveEnsAddresses } = useEnsResolution();
 
   const updateCandidate = useCallback(
     async (
@@ -52,8 +54,22 @@ export function useUpdateProposalCandidate(): UseUpdateProposalCandidateReturnTy
         );
       }
 
-      // Convert actions to transactions
-      const transactions = resolveActions(actions);
+      // Resolve ENS names in actions BEFORE converting to transactions
+      const resolvedActions: Action[] = await Promise.all(
+        actions.map(async (action) => {
+          if (action.type === 'one-time-payment' || action.type === 'streaming-payment' || action.type === 'treasury-noun-transfer') {
+            const [resolvedTarget] = await resolveEnsAddresses([action.target])
+            return { ...action, target: resolvedTarget as `0x${string}` }
+          } else if (action.type === 'custom-transaction') {
+            const [resolvedTarget] = await resolveEnsAddresses([action.contractCallTarget])
+            return { ...action, contractCallTarget: resolvedTarget as `0x${string}` }
+          }
+          return action
+        })
+      )
+
+      // Convert resolved actions to transactions
+      const transactions = resolveActions(resolvedActions);
 
       const targets = transactions.map((tx) => getAddress(tx.target));
       const values = transactions.map((tx) => BigInt(tx.value));
@@ -116,7 +132,7 @@ export function useUpdateProposalCandidate(): UseUpdateProposalCandidateReturnTy
         },
       );
     },
-    [sendTransaction, address],
+    [sendTransaction, address, resolveEnsAddresses],
   );
 
   return { updateCandidate, ...other };

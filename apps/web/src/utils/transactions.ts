@@ -113,26 +113,28 @@ const resolveStreamingPayment = (action: Extract<Action, { type: 'streaming-paym
   const transactions: Transaction[] = []
 
   // Determine token address and decimals
+  // Convert 'eth' to 'weth' if somehow it got through (shouldn't happen with validation)
+  const normalizedCurrency = currency === 'eth' ? 'weth' : currency
   let tokenAddress: string
   let decimals: number
   
-  if (currency === 'weth') {
+  if (normalizedCurrency === 'weth') {
     tokenAddress = contracts['weth-token'].address
     decimals = 18
-  } else if (currency === 'usdc') {
+  } else if (normalizedCurrency === 'usdc') {
     tokenAddress = contracts['usdc-token'].address
     decimals = 6
-  } else if (currency === 'steth') {
+  } else if (normalizedCurrency === 'steth') {
     tokenAddress = contracts['steth-token'].address
     decimals = 18
-  } else if (currency === 'reth') {
+  } else if (normalizedCurrency === 'reth') {
     tokenAddress = contracts['reth-token'].address
     decimals = 18
-  } else if (currency === 'oeth') {
+  } else if (normalizedCurrency === 'oeth') {
     tokenAddress = contracts['oeth-token'].address
     decimals = 18
   } else {
-    throw new Error(`Unsupported currency for streaming: ${currency}`)
+    throw new Error(`Unsupported currency for streaming: ${currency}. Supported currencies: WETH, USDC, stETH, rETH, OETH`)
   }
   
   const amountInWei = parseUnits(amount, decimals)

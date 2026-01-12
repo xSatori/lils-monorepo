@@ -128,11 +128,25 @@ export function useCreateProposal(): UseCreateProposalReturnType {
       description: string,
       actions: Action[],
     ) => {
-      // Convert actions to transactions
-      const transactions = resolveActions(actions);
+      // Resolve ENS names in actions BEFORE converting to transactions
+      const resolvedActions: Action[] = await Promise.all(
+        actions.map(async (action) => {
+          if (action.type === 'one-time-payment' || action.type === 'streaming-payment' || action.type === 'treasury-noun-transfer') {
+            const [resolvedTarget] = await resolveEnsAddresses([action.target])
+            return { ...action, target: resolvedTarget as `0x${string}` }
+          } else if (action.type === 'custom-transaction') {
+            const [resolvedTarget] = await resolveEnsAddresses([action.contractCallTarget])
+            return { ...action, contractCallTarget: resolvedTarget as `0x${string}` }
+          }
+          return action
+        })
+      )
 
-      // Resolve ENS names to addresses
-      const targets = await resolveEnsAddresses(transactions.map(tx => tx.target)) as Hex[];
+      // Convert resolved actions to transactions
+      const transactions = resolveActions(resolvedActions);
+
+      // Extract targets (already resolved)
+      const targets = transactions.map(tx => tx.target) as Hex[];
       const values = transactions.map((tx) => BigInt(tx.value));
       const signatures = transactions.map((tx) => tx.signature);
       const calldatas = transactions.map((tx) => tx.calldata as Hex);
