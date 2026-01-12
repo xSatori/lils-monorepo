@@ -15,7 +15,18 @@ import {
 import { createConfig } from "wagmi";
 import { EnsAvatar } from "@/components/EnsAvatar";
 
-export const PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID!;
+export const PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
+const APP_URL = import.meta.env.VITE_URL || 'https://www.lilnouns.wtf';
+
+// Validate required environment variables
+if (typeof window !== 'undefined' && !PROJECT_ID) {
+  console.warn(
+    '⚠️ VITE_WALLETCONNECT_PROJECT_ID is not set. ' +
+    'WalletConnect (mobile wallets) will not be available. ' +
+    'Other wallet connectors (MetaMask, Coinbase Wallet, etc.) will still work. ' +
+    'Get a free project ID at https://cloud.walletconnect.com'
+  );
+}
 
 // Create minimal wagmi config without WalletConnect for SSR
 const config = typeof window === 'undefined' 
@@ -37,11 +48,13 @@ const config = typeof window === 'undefined'
           http(CHAIN_CONFIG.rpcUrl.fallback),
         ]),
       },
-      projectId: PROJECT_ID,
+      // WalletConnect v2 requires a valid project ID
+      // If missing, WalletConnect won't be available but other connectors will work
+      projectId: PROJECT_ID || '00000000000000000000000000000000000000000000',
       appName: "Lilnouns.wtf",
       appDescription: "Lil Nouns DAO Governance Hub",
-      appUrl: import.meta.env.VITE_URL!,
-      appIcon: `${import.meta.env.VITE_URL}/app-icon.jpeg`,
+      appUrl: APP_URL,
+      appIcon: `${APP_URL}/app-icon.jpeg`,
       ssr: true,
     });
 
