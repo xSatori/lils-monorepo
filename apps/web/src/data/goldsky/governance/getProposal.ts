@@ -136,6 +136,19 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
       nouns: vote.nouns || [],
     })) || [];
 
+    // Calculate timestamps using createdTimestamp (same approach as overview mapping)
+    // This ensures consistency between list and detail views
+    const createdTimestamp = parseInt(proposal.createdTimestamp);
+    const createdBlock = parseInt(proposal.createdBlock);
+    const startBlock = parseInt(proposal.startBlock);
+    const endBlock = parseInt(proposal.endBlock);
+    
+    const blocksFromCreationToStart = startBlock - createdBlock;
+    const blocksFromCreationToEnd = endBlock - createdBlock;
+    
+    const votingStartTimestamp = createdTimestamp + (blocksFromCreationToStart * 12);
+    const votingEndTimestamp = createdTimestamp + (blocksFromCreationToEnd * 12);
+
     // Use the common interface to build the base proposal data
     const baseProposal = {
       id: parseInt(proposal.id),
@@ -149,12 +162,12 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
              state === 'DEFEATED' ? 'failed' :
              state === 'UPDATABLE' ? 'updatable' :
              state.toLowerCase() as any,
-      creationBlock: parseInt(proposal.createdBlock),
+      creationBlock: createdBlock,
       createdTransactionHash: proposal.createdTransactionHash || undefined,
-      votingStartBlock: parseInt(proposal.startBlock),
-      votingStartTimestamp: Math.floor(Date.now() / 1000) + (parseInt(proposal.startBlock) - blockNumber) * 12,
-      votingEndBlock: parseInt(proposal.endBlock),
-      votingEndTimestamp: Math.floor(Date.now() / 1000) + (parseInt(proposal.endBlock) - blockNumber) * 12,
+      votingStartBlock: startBlock,
+      votingStartTimestamp: votingStartTimestamp,
+      votingEndBlock: endBlock,
+      votingEndTimestamp: votingEndTimestamp,
       executionEtaTimestamp: proposal.executionETA ? parseInt(proposal.executionETA) : undefined,
       objectionPeriodEndBlock: proposal.objectionPeriodEndBlock ? parseInt(proposal.objectionPeriodEndBlock) : undefined,
     };
