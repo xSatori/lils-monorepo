@@ -12,7 +12,15 @@ export function TooltipPopover({ trigger, children }: TooltipPopoverProps) {
     <>
       <Tooltip delayDuration={500}>
         <TooltipTrigger className="hidden w-fit md:flex">{trigger}</TooltipTrigger>
-        <TooltipContent className="hidden w-fit md:flex">{children}</TooltipContent>
+        <TooltipContent 
+          className="hidden w-fit md:flex"
+          side="top"
+          sideOffset={8}
+          avoidCollisions={true}
+          collisionPadding={64}
+        >
+          {children}
+        </TooltipContent>
       </Tooltip>
       <Popover>
         <PopoverTrigger className="w-fit md:hidden">{trigger}</PopoverTrigger>

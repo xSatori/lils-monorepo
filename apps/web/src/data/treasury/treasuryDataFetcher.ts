@@ -38,6 +38,31 @@ export interface TreasuryData {
   totalEth: number;
   totalUsd: number;
   totalNouns: number;
+  // Detailed balances by contract
+  executor: {
+    eth: number;
+    steth: number;
+    weth: number;
+    usdc: number;
+    oeth: number;
+    reth: number;
+  };
+  payer: {
+    eth: number;
+    steth: number;
+    weth: number;
+    usdc: number;
+    oeth: number;
+    reth: number;
+  };
+  tokenBuyer: {
+    eth: number;
+    steth: number;
+    weth: number;
+    usdc: number;
+    oeth: number;
+    reth: number;
+  };
 }
 
 interface TokenBalance {
@@ -173,10 +198,8 @@ async function getNounsBalanceFromSubgraph(
 
 /**
  * Main function to fetch treasury data
- * Emulates the working version pattern:
- * - ETH, Lido (stETH), WETH from executor
- * - USDC from payerContract
- * - Nouns count from Nouns DAO subgraph
+ * Fetches balances from executor (treasury), payer, and token buyer contracts
+ * for ETH, stETH, oETH, wrapped ETH, and USDC
  */
 export async function getTreasuryData(
   chainId: number
@@ -193,29 +216,60 @@ export async function getTreasuryData(
   // Use Nouns DAO executor address from config (not Lil Nouns executor)
   const executorAddress = config.addresses.nounsTreasury;
   const payerAddress = contracts.payer.address;
+  const tokenBuyerAddress = contracts["token-buyer"].address;
 
   // Get token addresses
   const usdcAddress = contracts["usdc-token"].address;
   const stethAddress = contracts["steth-token"].address;
+  const wethAddress = contracts["weth-token"].address;
+  const oethAddress = contracts["oeth-token"].address;
+  const rethAddress = contracts["reth-token"].address;
 
-  // Fetch all balances in parallel
-  // Following the working pattern:
-  // - ETH, Lido, WETH from executor
-  // - USDC from payerContract
+  // Fetch all balances in parallel for all contracts and tokens
   const [
     executorEthBalance,
     executorStethBalance,
+    executorWethBalance,
+    executorUsdcBalance,
+    executorOethBalance,
+    executorRethBalance,
+    payerEthBalance,
+    payerStethBalance,
+    payerWethBalance,
     payerUsdcBalance,
+    payerOethBalance,
+    payerRethBalance,
+    tokenBuyerEthBalance,
+    tokenBuyerStethBalance,
+    tokenBuyerWethBalance,
+    tokenBuyerUsdcBalance,
+    tokenBuyerOethBalance,
+    tokenBuyerRethBalance,
     ethPriceUsd,
     executorNounsBalance,
     leagueNounsBalance,
   ] = await Promise.all([
-    // ETH balance from executor
+    // Executor balances
     getEthBalance(publicClient, executorAddress),
-    // Lido (stETH) balance from executor
     getTokenBalance(publicClient, stethAddress, executorAddress),
-    // USDC balance from payerContract (not executor!)
+    getTokenBalance(publicClient, wethAddress, executorAddress),
+    getTokenBalance(publicClient, usdcAddress, executorAddress),
+    getTokenBalance(publicClient, oethAddress, executorAddress),
+    getTokenBalance(publicClient, rethAddress, executorAddress),
+    // Payer balances
+    getEthBalance(publicClient, payerAddress),
+    getTokenBalance(publicClient, stethAddress, payerAddress),
+    getTokenBalance(publicClient, wethAddress, payerAddress),
     getTokenBalance(publicClient, usdcAddress, payerAddress),
+    getTokenBalance(publicClient, oethAddress, payerAddress),
+    getTokenBalance(publicClient, rethAddress, payerAddress),
+    // Token buyer balances
+    getEthBalance(publicClient, tokenBuyerAddress),
+    getTokenBalance(publicClient, stethAddress, tokenBuyerAddress),
+    getTokenBalance(publicClient, wethAddress, tokenBuyerAddress),
+    getTokenBalance(publicClient, usdcAddress, tokenBuyerAddress),
+    getTokenBalance(publicClient, oethAddress, tokenBuyerAddress),
+    getTokenBalance(publicClient, rethAddress, tokenBuyerAddress),
     // ETH price in USD
     getEthPriceUsd(),
     // Nouns DAO tokens owned/delegated to Lil Nouns executor/treasury
@@ -224,14 +278,55 @@ export async function getTreasuryData(
     getNounsBalanceFromSubgraph(LEAGUE_OF_LILS_MULTISIG),
   ]);
 
-  // Convert all balances to ETH equivalent
-  // Following the working pattern: ETH + Lido (stETH) from executor
-  // Note: The working version only adds ETH + Lido, not WETH separately
-  // USDC from payer is converted to ETH
+  // Convert balances to numbers
+  const executor = {
+    eth: Number(formatUnits(executorEthBalance, 18)),
+    steth: Number(formatUnits(executorStethBalance.balance, executorStethBalance.decimals)),
+    weth: Number(formatUnits(executorWethBalance.balance, executorWethBalance.decimals)),
+    usdc: Number(formatUnits(executorUsdcBalance.balance, executorUsdcBalance.decimals)),
+    oeth: Number(formatUnits(executorOethBalance.balance, executorOethBalance.decimals)),
+    reth: Number(formatUnits(executorRethBalance.balance, executorRethBalance.decimals)),
+  };
+
+  const payer = {
+    eth: Number(formatUnits(payerEthBalance, 18)),
+    steth: Number(formatUnits(payerStethBalance.balance, payerStethBalance.decimals)),
+    weth: Number(formatUnits(payerWethBalance.balance, payerWethBalance.decimals)),
+    usdc: Number(formatUnits(payerUsdcBalance.balance, payerUsdcBalance.decimals)),
+    oeth: Number(formatUnits(payerOethBalance.balance, payerOethBalance.decimals)),
+    reth: Number(formatUnits(payerRethBalance.balance, payerRethBalance.decimals)),
+  };
+
+  const tokenBuyer = {
+    eth: Number(formatUnits(tokenBuyerEthBalance, 18)),
+    steth: Number(formatUnits(tokenBuyerStethBalance.balance, tokenBuyerStethBalance.decimals)),
+    weth: Number(formatUnits(tokenBuyerWethBalance.balance, tokenBuyerWethBalance.decimals)),
+    usdc: Number(formatUnits(tokenBuyerUsdcBalance.balance, tokenBuyerUsdcBalance.decimals)),
+    oeth: Number(formatUnits(tokenBuyerOethBalance.balance, tokenBuyerOethBalance.decimals)),
+    reth: Number(formatUnits(tokenBuyerRethBalance.balance, tokenBuyerRethBalance.decimals)),
+  };
+
+  // Calculate total ETH equivalent (all assets converted to ETH)
+  // USDC is converted to ETH using price
   const totalEth =
-    Number(formatUnits(executorEthBalance, 18)) +
-    Number(formatUnits(executorStethBalance.balance, executorStethBalance.decimals)) +
-    Number(formatUnits(payerUsdcBalance.balance, payerUsdcBalance.decimals)) / ethPriceUsd; // Convert USDC to ETH
+    executor.eth +
+    executor.steth +
+    executor.weth +
+    executor.usdc / ethPriceUsd +
+    executor.oeth +
+    executor.reth +
+    payer.eth +
+    payer.steth +
+    payer.weth +
+    payer.usdc / ethPriceUsd +
+    payer.oeth +
+    payer.reth +
+    tokenBuyer.eth +
+    tokenBuyer.steth +
+    tokenBuyer.weth +
+    tokenBuyer.usdc / ethPriceUsd +
+    tokenBuyer.oeth +
+    tokenBuyer.reth;
 
   // Calculate USD value
   const totalUsd = totalEth * ethPriceUsd;
@@ -243,5 +338,8 @@ export async function getTreasuryData(
     totalEth,
     totalUsd,
     totalNouns,
+    executor,
+    payer,
+    tokenBuyer,
   };
 }
