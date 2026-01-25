@@ -259,6 +259,24 @@ function SnapshotVoteWrapper({ proposalId }: { proposalId: number }) {
     ? matchSnapshotProposal(proposal, snapshotProposals)
     : undefined;
 
+  // Fetch Snapshot votes to check if user has already voted
+  const { data: snapshotVotes = [], isLoading: isLoadingSnapshotVotes, refetch: refetchVotes } = useQuery({
+    queryKey: ['snapshot-votes', snapshotProposal?.id],
+    queryFn: () => getSnapshotVotes(snapshotProposal!.id),
+    enabled: !!snapshotProposal && !!address,
+    staleTime: 30 * 1000, // Refresh every 30 seconds to catch new votes
+  });
+
+  // Check if connected address has already voted
+  const hasVoted = address && snapshotVotes.some(
+    vote => vote.voter.toLowerCase() === address.toLowerCase()
+  );
+  
+  // Get user's vote if they've voted
+  const userVote = address ? snapshotVotes.find(
+    vote => vote.voter.toLowerCase() === address.toLowerCase()
+  ) : undefined;
+
   const handleVote = async (choice: number, reason?: string) => {
     if (!snapshotProposal || !address || !walletClient) {
       throw new Error("Cannot vote: missing requirements");
@@ -267,8 +285,36 @@ function SnapshotVoteWrapper({ proposalId }: { proposalId: number }) {
     const hub = 'https://hub.snapshot.org';
     const client = new snapshot.Client712(hub);
 
-    // Create an ethers provider from walletClient
-    const provider = walletClient as any;
+    // Convert wagmi walletClient to ethers signer format expected by Snapshot
+    // Snapshot.js expects an object with _signTypedData method (ethers format)
+    // We need to convert from ethers format to viem format
+    const signer = {
+      _signTypedData: async (domain: any, types: any, message: any) => {
+        // Snapshot.js passes ethers-style types, but viem expects a different format
+        // Extract primaryType from types (ethers format: { EIP712Domain: [...], Vote: [...] })
+        const primaryType = Object.keys(types).find(key => key !== 'EIP712Domain') || 'Vote';
+        
+        // Convert ethers domain format to viem format
+        const viemDomain = {
+          name: domain.name,
+          version: domain.version,
+          chainId: domain.chainId ? BigInt(domain.chainId) : undefined,
+          verifyingContract: domain.verifyingContract,
+          salt: domain.salt,
+        };
+
+        // Use wagmi's signTypedData through walletClient
+        const signature = await walletClient.signTypedData({
+          account: address,
+          domain: viemDomain,
+          types: types as any,
+          primaryType: primaryType,
+          message: message as any,
+        });
+        return signature;
+      },
+      getAddress: async () => address,
+    };
 
     const voteObject: any = {
       space: 'leagueoflils.eth',
@@ -279,7 +325,16 @@ function SnapshotVoteWrapper({ proposalId }: { proposalId: number }) {
       ...(reason && { reason }),
     };
 
-    await (client.vote as any)(provider, address, voteObject);
+    await (client.vote as any)(signer, address, voteObject);
+  };
+
+  // Enhanced handleVote that refetches votes after successful vote
+  const handleVoteWithRefresh = async (choice: number, reason?: string) => {
+    await handleVote(choice, reason);
+    // Refetch votes to update hasVoted status
+    setTimeout(() => {
+      refetchVotes();
+    }, 2000); // Wait 2 seconds for Snapshot to index the vote
   };
 
   if (!snapshotProposal) {
@@ -288,19 +343,25 @@ function SnapshotVoteWrapper({ proposalId }: { proposalId: number }) {
 
   return (
     <>
-      {/* Desktop - Floating sticky form */}
-      <div className="sticky bottom-0 z-10 hidden w-full max-w-[780px] flex-col items-center gap-2 rounded-t-[20px] bg-background-primary pb-8 lg:flex">
+      {/* Desktop - Form appears after proposal content, requires scrolling */}
+      <div className="hidden w-full max-w-[780px] flex-col items-center gap-2 mt-8 lg:flex">
         <SnapshotVoteForm
           snapshotProposal={snapshotProposal}
-          onVote={handleVote}
+          onVote={handleVoteWithRefresh}
+          isLoading={isLoadingSnapshotVotes}
+          hasVoted={hasVoted}
+          userVote={userVote}
         />
       </div>
 
-      {/* Mobile - Keep inline for now (can add drawer later if needed) */}
-      <div className="lg:hidden">
+      {/* Mobile - Form appears after proposal content */}
+      <div className="lg:hidden mt-8">
         <SnapshotVoteForm
           snapshotProposal={snapshotProposal}
-          onVote={handleVote}
+          onVote={handleVoteWithRefresh}
+          isLoading={isLoadingSnapshotVotes}
+          hasVoted={hasVoted}
+          userVote={userVote}
         />
       </div>
     </>
@@ -742,6 +803,7 @@ Wylin is an artist and entrepreneur. After exhibiting in galleries, he dropped o
           quorumVotes={finalProposal.quorumVotes}
           proposal={finalProposal}
           alwaysShowAbstain={true}
+          isNounsDao={isNounsDao}
         />
         {snapshotProposal && (
           <div className="mt-4">
@@ -1193,6 +1255,7 @@ If client owners feel their current share or incentives from the DAO aren\'t eno
       quorumVotes={finalProposal.quorumVotes}
       proposal={finalProposal}
       alwaysShowAbstain={true}
+      isNounsDao={isNounsDao}
     />
   )
 }

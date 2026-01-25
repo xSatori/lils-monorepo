@@ -11,6 +11,7 @@ export default function VotingSummary({
   quorumVotes,
   proposal,
   alwaysShowAbstain = false,
+  isNounsDao = false,
 }: {
   forVotes: number;
   againstVotes: number;
@@ -18,6 +19,7 @@ export default function VotingSummary({
   quorumVotes: number;
   proposal?: DetailedProposal;
   alwaysShowAbstain?: boolean;
+  isNounsDao?: boolean;
 }) {
   const items: { name: string; votes: number }[] = [
     { name: "For", votes: forVotes },
@@ -64,7 +66,7 @@ export default function VotingSummary({
       )}
       {proposal && (
         <div className="mt-2">
-          <ProposalActions proposal={proposal} />
+          <ProposalActions proposal={proposal} isNounsDao={isNounsDao} />
         </div>
       )}
     </div>

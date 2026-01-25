@@ -1,25 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { SnapshotProposal } from "@/data/snapshot/getSnapshotProposals";
+import { SnapshotProposal, SnapshotVote } from "@/data/snapshot/getSnapshotProposals";
 import Icon from "@/components/ui/Icon";
-import { Check } from "lucide-react";
+import { Check, CheckCircle2 } from "lucide-react";
 import clsx from "clsx";
 
 interface SnapshotVoteFormProps {
   snapshotProposal: SnapshotProposal;
   onVote: (choice: number, reason?: string) => Promise<void>;
   isLoading?: boolean;
+  hasVoted?: boolean;
+  userVote?: SnapshotVote;
 }
 
-export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading }: SnapshotVoteFormProps) {
+export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading, hasVoted = false, userVote }: SnapshotVoteFormProps) {
   const { isConnected } = useAccount();
-  const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
-  const [reason, setReason] = useState("");
+  
+  // Map choice numbers to labels
+  const choiceLabels: Record<number, string> = {
+    1: "For",
+    2: "Against",
+    3: "Abstain",
+  };
+  
+  // Initialize form with user's existing vote if they've voted
+  const [selectedChoice, setSelectedChoice] = useState<number | null>(
+    userVote?.choice || null
+  );
+  const [reason, setReason] = useState(userVote?.reason || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Update form when userVote changes
+  useEffect(() => {
+    if (userVote) {
+      setSelectedChoice(userVote.choice);
+      setReason(userVote.reason || "");
+    }
+  }, [userVote]);
 
   const handleVote = async () => {
     if (selectedChoice === null) return;
@@ -49,6 +70,21 @@ export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading }: Snapsh
       <p className="text-content-secondary paragraph-sm">
         Vote on this Nouns DAO proposal using Snapshot. Your vote will be recorded off-chain.
       </p>
+
+      {/* Show indicator if user has already voted */}
+      {hasVoted && userVote && (
+        <div className="flex flex-col gap-2 rounded-[12px] border border-green-200 bg-green-50 p-3">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 size={18} className="text-green-600" />
+            <p className="text-sm font-medium text-green-800">
+              You've already voted: {choiceLabels[userVote.choice] || `Choice ${userVote.choice}`}
+            </p>
+          </div>
+          <p className="text-xs text-green-700">
+            You can update your vote and reason below.
+          </p>
+        </div>
+      )}
 
       {snapshotProposal.state === "active" ? (
         <>
@@ -112,7 +148,11 @@ export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading }: Snapsh
                 disabled={selectedChoice === null || isSubmitting}
                 className="w-full"
               >
-                {isSubmitting ? "Submitting vote..." : "Submit Vote"}
+                {isSubmitting 
+                  ? "Submitting vote..." 
+                  : hasVoted 
+                  ? "Update Vote" 
+                  : "Submit Vote"}
               </Button>
             </>
           )}

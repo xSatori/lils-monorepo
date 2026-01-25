@@ -1,10 +1,13 @@
 "use client";
 
 import { useInfiniteProposals } from "@/hooks/useInfiniteProposals";
-import { useSnapshotMetagov } from "@/hooks/useSnapshotMetagov";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { ProposalOverview } from "@/data/goldsky/governance/common";
 import { DaoType } from "@/data/goldsky/governance/getProposalOverviews";
+import { getSnapshotProposals, matchSnapshotProposal } from "@/data/snapshot/getSnapshotProposals";
+import { determineMetagovState } from "@/data/goldsky/governance/common";
+import { MetagovProposal } from "@/hooks/useSnapshotMetagov";
 import FilteredProposalOverviews from "./FilteredProposalOverviews";
 import LoadingSpinner from "../LoadingSpinner";
 import LoadingSkeletons from "../LoadingSkeletons";
@@ -56,12 +59,17 @@ export default function InfiniteProposalOverviews({
 
   const { ref, inView } = useInView();
 
-  // Use metagov hook only for Nouns DAO proposals
+  // Use metagov only for Nouns DAO proposals
   const enableMetagov = daoType === 'nouns';
-  const { metagovProposals, isLoading: isLoadingMetagov } = useSnapshotMetagov(
-    initialProposals,
-    enableMetagov
-  );
+  
+  // Fetch Snapshot proposals (only when metagov is enabled)
+  const { data: snapshotProposals = [], isLoading: isLoadingMetagov } = useQuery({
+    queryKey: ['snapshot-proposals'],
+    queryFn: () => getSnapshotProposals('leagueoflils.eth'),
+    enabled: enableMetagov,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+  });
 
   // Automatically fetch next page when loading area comes into view
   useEffect(() => {
@@ -87,11 +95,44 @@ export default function InfiniteProposalOverviews({
     return [...proposals, ...newDummyProposals];
   }, [data?.pages, initialProposals, dummyProposals]);
 
+  // Compute metagov data for ALL proposals (including those from infinite scroll)
+  // This ensures metagov state doesn't reset when new proposals load
+  const metagovProposals = useMemo(() => {
+    if (!enableMetagov) {
+      return [];
+    }
+    
+    return allProposals.map(daoProposal => {
+      const snapshotProposal = matchSnapshotProposal(daoProposal, snapshotProposals);
+      const combinedState = determineMetagovState(daoProposal.state, snapshotProposal);
+      
+      // Debug logging for active Nouns DAO proposals
+      if (daoProposal.state === "active") {
+        console.log(`🔍 [Metagov Debug] Prop ${daoProposal.id}:`, {
+          nounsDaoState: daoProposal.state,
+          hasSnapshotMatch: !!snapshotProposal,
+          snapshotState: snapshotProposal?.state,
+          combinedState,
+          transactionHash: daoProposal.createdTransactionHash || 'MISSING',
+          title: daoProposal.title.substring(0, 50),
+        });
+      }
+      
+      return {
+        daoProposal,
+        snapshotProposal,
+        combinedState,
+      } as MetagovProposal;
+    });
+  }, [allProposals, snapshotProposals, enableMetagov]);
+
   // Use metagov proposals if enabled
   // IMPORTANT: Always use DAO proposal state for filtering/categorization
   // Metagov state is only for display badges, not for filtering
   const proposalsToDisplay = enableMetagov ? metagovProposals.map(mp => mp.daoProposal) : allProposals;
-  const metagovMap = new Map(metagovProposals.map(mp => [mp.daoProposal.id, mp]));
+  const metagovMap = useMemo(() => {
+    return new Map(metagovProposals.map(mp => [mp.daoProposal.id, mp]));
+  }, [metagovProposals]);
 
   // Categorize proposals - use metagov state for Nouns DAO to prioritize Snapshot voting
   const { activeProposals, upcomingProposals, pastProposals } = useMemo(() => {

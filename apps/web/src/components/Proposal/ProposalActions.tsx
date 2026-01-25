@@ -88,9 +88,10 @@ const NOUNS_TOKEN_ABI = [
 
 interface ProposalActionsProps {
   proposal: DetailedProposal;
+  isNounsDao?: boolean;
 }
 
-export function ProposalActions({ proposal }: ProposalActionsProps) {
+export function ProposalActions({ proposal, isNounsDao = false }: ProposalActionsProps) {
   const { address } = useAccount();
   const { writeContractAsync, isPending, data: hash } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed, isError: isFailed, error: receiptError } =
@@ -166,13 +167,16 @@ export function ProposalActions({ proposal }: ProposalActionsProps) {
   // Show cancel button only if:
   // 1. Proposal is in a cancelable state: active, queued, or succeeded (but not executed)
   // 2. AND (user is the proposer OR proposer lost voting power)
+  // FOR NOUNS ONLY: Only show if connected wallet is the proposer
   const isCancelableState = 
     proposal.state === "active" ||
     proposal.state === "queued" ||
     (proposal.state === "successful" && proposal.state !== "executed");
   const showCancelButton =
     isCancelableState &&
-    (isProposer || proposerLostPower);
+    (isNounsDao 
+      ? isProposer  // For Nouns: only show if connected wallet is proposer
+      : (isProposer || proposerLostPower));  // For Lil Nouns: show if proposer OR proposer lost power
 
   const handleQueue = async () => {
     if (!address || !daoAddress) return;

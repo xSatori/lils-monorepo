@@ -124,13 +124,6 @@ export function matchSnapshotProposal(
     return undefined;
   }
 
-  console.log('🔍 Matching Snapshot proposal:', {
-    transactionHash: daoProposal.createdTransactionHash,
-    proposalId: daoProposal.id,
-    hasHash: !!daoProposal.createdTransactionHash
-  });
-  console.log('🔍 Checking', snapshotProposals.length, 'Snapshot proposals');
-  
   // Try multiple matching strategies
   const matched = snapshotProposals.find(snapshotProposal => {
     // Strategy 1: Match by transaction hash (most reliable)
@@ -141,16 +134,18 @@ export function matchSnapshotProposal(
       // Check for hash with or without 0x prefix
       if (bodyLower.includes(hashLower) || 
           bodyLower.includes(hashLower.substring(2))) {
-        console.log('✅ Matched by transaction hash:', daoProposal.createdTransactionHash);
-      return true;
+        return true;
       }
     }
     
     // Strategy 2: Match by proposal URL (various formats)
     if (daoProposal.id) {
       const urlPatterns = [
+        `https://lilnouns.wtf/vote/nouns/${daoProposal.id}`,
         `https://nouns.wtf/vote/${daoProposal.id}`,
+        `lilnouns.wtf/vote/nouns/${daoProposal.id}`,
         `nouns.wtf/vote/${daoProposal.id}`,
+        `/vote/nouns/${daoProposal.id}`,
         `/vote/${daoProposal.id}`,
         `prop ${daoProposal.id}`,
         `proposal ${daoProposal.id}`,
@@ -160,8 +155,7 @@ export function matchSnapshotProposal(
       const bodyLower = snapshotProposal.body.toLowerCase();
       for (const pattern of urlPatterns) {
         if (bodyLower.includes(pattern.toLowerCase())) {
-          console.log('✅ Matched by URL pattern:', pattern);
-        return true;
+          return true;
         }
       }
     }
@@ -169,13 +163,12 @@ export function matchSnapshotProposal(
     return false;
   });
   
-  if (matched) {
-    console.log('✅ Found matching Snapshot proposal:', matched.id, matched.title);
-  } else {
-    console.log('❌ No matching Snapshot proposal found. Checked:', {
-      transactionHash: daoProposal.createdTransactionHash,
-      proposalId: daoProposal.id,
-      snapshotProposalTitles: snapshotProposals.slice(0, 5).map(p => p.title)
+  // Only log when there's no match (for debugging)
+  if (!matched && daoProposal.id) {
+    console.log(`❌ [Metagov Match] No Snapshot match for Nouns Prop ${daoProposal.id}:`, {
+      transactionHash: daoProposal.createdTransactionHash || 'MISSING',
+      snapshotProposalsChecked: snapshotProposals.length,
+      sampleSnapshotTitles: snapshotProposals.slice(0, 3).map(p => p.title.substring(0, 40))
     });
   }
   
