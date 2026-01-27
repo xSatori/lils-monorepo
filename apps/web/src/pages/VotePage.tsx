@@ -1,6 +1,6 @@
 import { useEffect, useState, Suspense } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import LoadingSkeletons from '@/components/LoadingSkeletons'
 import InfiniteProposalOverviews from '@/components/Proposal/InfiniteProposalOverviews'
@@ -83,10 +83,34 @@ function ProposalSectionsWrapper({ daoType, dummyProposals }: { daoType: DaoType
 
 export default function VotePage() {
   const queryClient = useQueryClient()
-  const [daoType, setDaoType] = useState<DaoType>('lilnouns')
+  const location = useLocation()
+  const navigate = useNavigate()
+  
+  // Determine initial daoType from URL path
+  const initialDaoType = (location.pathname === '/vote/nouns' || location.pathname === '/vote/nounsdao') ? 'nouns' : 'lilnouns'
+  const [daoType, setDaoType] = useState<DaoType>(initialDaoType)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [dummyProposals, setDummyProposals] = useState<ProposalOverview[]>([])
   const isSepolia = isSepoliaNetwork()
+
+  // Sync daoType with URL path
+  useEffect(() => {
+    const pathBasedDaoType: DaoType = 
+      (location.pathname === '/vote/nouns' || location.pathname === '/vote/nounsdao') 
+        ? 'nouns' 
+        : 'lilnouns'
+    
+    setDaoType(pathBasedDaoType)
+  }, [location.pathname]) // Only depend on pathname to avoid loops
+
+  const handleDaoTypeChange = (newDaoType: DaoType) => {
+    setDaoType(newDaoType)
+    if (newDaoType === 'nouns') {
+      navigate('/vote/nouns', { replace: true })
+    } else {
+      navigate('/vote', { replace: true })
+    }
+  }
 
   // Create dummy active proposal
   const createDummyProposal = (): ProposalOverview => {
@@ -257,7 +281,7 @@ Feel free to experiment with this test topic!`,
               {/* DAO Selection Buttons */}
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setDaoType('lilnouns')}
+                  onClick={() => handleDaoTypeChange('lilnouns')}
                   className={clsx(
                     "rounded-full px-6 py-2 text-sm font-medium transition-all",
                     daoType === 'lilnouns'
@@ -268,7 +292,7 @@ Feel free to experiment with this test topic!`,
                   Lil Nouns DAO
                 </button>
                 <button
-                  onClick={() => setDaoType('nouns')}
+                  onClick={() => handleDaoTypeChange('nouns')}
                   className={clsx(
                     "rounded-full px-6 py-2 text-sm font-medium transition-all",
                     daoType === 'nouns'

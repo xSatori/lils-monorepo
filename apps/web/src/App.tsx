@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 
 // Providers
@@ -33,6 +33,12 @@ import TopicDetailPage from './pages/TopicDetailPage'
 import ProfilesPage from './pages/ProfilesPage'
 import TraitsPage from './pages/TraitsPage'
 import BrandPage from './pages/BrandPage'
+
+function NounsDaoRedirect() {
+  const { id } = useParams<{ id: string }>()
+  if (!id) return null
+  return <Navigate to={`/vote/nouns/${id}`} replace />
+}
 
 function App() {
   const jsonLd = {
@@ -95,8 +101,11 @@ function App() {
               <Route path="profile" element={<ProposalsPage />} />
               <Route path="profile/:address" element={<ProposalsPage />} />
               <Route path="vote" element={<VotePage />} />
+              <Route path="vote/nouns" element={<VotePage />} />
+              <Route path="vote/nounsdao" element={<VotePage />} />
               <Route path="vote/:id" element={<VoteDetailPage />} />
               <Route path="vote/nouns/:id" element={<VoteDetailPage />} />
+              <Route path="vote/nounsdao/:id" element={<NounsDaoRedirect />} />
               <Route path="candidates" element={<CandidatePage />} />
               <Route path="candidates/:id" element={<CandidateDetailPage />} />
               <Route path="topics" element={<TopicsPage />} />
