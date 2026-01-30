@@ -24,6 +24,8 @@ import { ContractNameDisplay } from "./ContractNameDisplay";
 import { Button } from "../ui/button";
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
+import { getContractsForChain } from "@/contracts/proposal-contracts";
+import { useChainId } from "wagmi";
 
 interface ProposalTransactionSummaryProps {
   transactions: ProposalTransaction[];
@@ -45,23 +47,25 @@ export default function ProposalTransactionSummary({
   proposalState,
 }: ProposalTransactionSummaryProps) {
   const [copied, setCopied] = useState(false);
+  const chainId = useChainId();
+
+  // Only simulate if proposal is in a state where it can still execute
+  const enableSimulation = shouldSimulate(proposalState);
+
+  // Tenderly simulation hook (only enabled for pending/active/queued proposals)
+  // Must be called before early return
+  const {
+    data: simulationResults,
+    isLoading: isSimulating
+  } = useTenderlySimulationForTransactions(transactions, enableSimulation)
 
   // Handle undefined or empty transactions
   if (!transactions || transactions.length === 0) {
     return null;
   }
 
-  // Only simulate if proposal is in a state where it can still execute
-  const enableSimulation = shouldSimulate(proposalState);
-
-  // Tenderly simulation hook (only enabled for pending/active/queued proposals)
-  const {
-    data: simulationResults,
-    isLoading: isSimulating
-  } = useTenderlySimulationForTransactions(transactions, enableSimulation)
-
   const decodedTransactions = transactions.map(decodeTransaction);
-  const summary = parseDecodedTransactionsSummary(decodedTransactions);
+  const summary = parseDecodedTransactionsSummary(decodedTransactions, chainId);
 
   const handleCopyActions = async () => {
     try {
@@ -243,31 +247,37 @@ function decodeTransaction(
   let functionName: string;
   let args: DecodedTransaction["args"];
 
-  if (transaction.signature == "") {
+  if (transaction.signature == "" || !transaction.signature) {
     // ETH transfer
     functionName = "transfer";
     args = [{ type: "uint256", value: transaction.value }];
   } else {
     functionName = transaction.signature.split("(")[0];
-    const functionSignature = `function ${transaction.signature}`;
-    const abi = parseAbi([functionSignature])[0] as AbiFunction;
+    // Handle malformed signatures that might include the value
+    if (functionName.startsWith("unknown") || functionName.match(/^\d+$/)) {
+      functionName = "transfer";
+      args = [{ type: "uint256", value: transaction.value }];
+    } else {
+      const functionSignature = `function ${transaction.signature}`;
+      const abi = parseAbi([functionSignature])[0] as AbiFunction;
 
-    let decoded: (string | Address | bigint | number)[];
-    try {
-      decoded = decodeAbiParameters(abi.inputs, transaction.calldata) as (
-        | string
-        | Address
-        | bigint
-        | number
-      )[];
-    } catch (e) {
-      decoded = Array(abi.inputs.length).fill("decodeError");
+      let decoded: (string | Address | bigint | number)[];
+      try {
+        decoded = decodeAbiParameters(abi.inputs, transaction.calldata) as (
+          | string
+          | Address
+          | bigint
+          | number
+        )[];
+      } catch (e) {
+        decoded = Array(abi.inputs.length).fill("decodeError");
+      }
+
+      args = decoded.map((value, i) => ({
+        type: abi.inputs[i].type,
+        value,
+      }));
     }
-
-    args = decoded.map((value, i) => ({
-      type: abi.inputs[i].type,
-      value,
-    }));
   }
 
   return { to: transaction.to, functionName, args, value: transaction.value };
@@ -279,11 +289,41 @@ function DecodedTransactionRenderer({
   args,
   value,
 }: DecodedTransaction) {
+  const chainId = useChainId();
+  const contracts = getContractsForChain(chainId);
+  const lilNounsTokenBuyerAddress = contracts["token-buyer"].address;
+  
+  // Check for both Nouns DAO and Lil Nouns DAO payer contracts
+  const nounsDaoPayer = CHAIN_CONFIG.addresses.nounsPayer;
+  const lilNounsPayer = contracts.payer.address;
+  
+  // Check for both Nouns DAO and Lil Nouns DAO token buyer contracts
+  const nounsDaoTokenBuyer = CHAIN_CONFIG.addresses.nounsTokenBuyer;
+  
+  const isSendOrRegisterDebt = 
+    (isAddressEqual(to, nounsDaoPayer) || isAddressEqual(to, lilNounsPayer)) &&
+    functionName === "sendOrRegisterDebt";
+  
+  const isEthTransferToPayer = 
+    functionName === "transfer" &&
+    value > 0 &&
+    (isAddressEqual(to, nounsDaoPayer) || isAddressEqual(to, lilNounsPayer));
+
+  const isEthTransferToTokenBuyer = 
+    functionName === "transfer" &&
+    value > 0 &&
+    (isAddressEqual(to, nounsDaoTokenBuyer) || isAddressEqual(to, lilNounsTokenBuyerAddress));
+
+  // For ETH transfers to token buyer, the function name might be "unknown" - show as transfer
+  const displayFunctionName = isEthTransferToTokenBuyer && typeof functionName === 'string' && (functionName.startsWith("unknown") || functionName.includes("unknown"))
+    ? "transfer" 
+    : functionName;
+
   return (
     <div>
       <div className="flex">
-        <ContractNameDisplay address={to} />
-        .{functionName}({args.length == 0 && ")"}
+        <span className="font-mono">{to.toLowerCase()}</span>
+        .{displayFunctionName}({args.length == 0 && ")"}
       </div>
       {args.map((param, i) => (
         <div className="flex pl-4" key={i}>
@@ -292,6 +332,36 @@ function DecodedTransactionRenderer({
         </div>
       ))}
       {args.length > 0 && <div>)</div>}
+      
+      {/* Show helpful message for sendOrRegisterDebt */}
+      {isSendOrRegisterDebt && args.length >= 2 && (
+        <div className="mt-2 text-xs text-content-secondary italic">
+          This transaction registers {formatTokenAmount(args[1].value as bigint, 6)} USDC to be sent to{" "}
+          <span className="font-mono">
+            {(() => {
+              const addr = typeof args[0].value === 'string' 
+                ? getAddress(args[0].value)
+                : getAddress(String(args[0].value));
+              return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+            })()}
+          </span>{" "}
+          via the DAO's PayerContract.
+        </div>
+      )}
+      
+      {/* Show helpful message for ETH transfer to payer */}
+      {isEthTransferToPayer && (
+        <div className="mt-2 text-xs text-content-secondary italic">
+          (This transaction sends {formatTokenAmount(value, 18)} ETH to the PayerContract as a topup so that registered debts can be settled. This ETH is not sent directly to the proposer.)
+        </div>
+      )}
+      
+      {/* Show helpful message for ETH transfer to token buyer */}
+      {isEthTransferToTokenBuyer && (
+        <div className="mt-2 text-xs text-content-secondary italic">
+          This transaction registers {formatTokenAmount(value, 18)} ETH to be sent to the DAO's Buyer contract so that the PayerContract can settle debts.
+        </div>
+      )}
     </div>
   );
 }
@@ -299,7 +369,8 @@ function DecodedTransactionRenderer({
 function FunctionArgumentRenderer({
   type,
   value,
-}: DecodedTransaction["args"][0]) {
+  parentTx,
+}: DecodedTransaction["args"][0] & { parentTx?: DecodedTransaction }) {
   switch (type) {
     case "address":
       return (
@@ -310,6 +381,19 @@ function FunctionArgumentRenderer({
           <EnsName address={getAddress(value as string)} />
         </LinkExternal>
       );
+    case "uint256":
+    case "uint128":
+    case "uint64":
+    case "uint32":
+    case "uint8":
+      // Format large numbers appropriately
+      const numValue = typeof value === 'bigint' ? value : BigInt(value);
+      // If it's a very large number (likely wei), format as ETH
+      // But don't format if it's part of sendOrRegisterDebt (USDC amount)
+      if (numValue > BigInt(10 ** 15)) {
+        return <>{formatTokenAmount(numValue, 18)} ETH</>;
+      }
+      return <>{value.toString()}</>;
     default:
       return <>{value.toString()}</>;
   }
@@ -339,6 +423,7 @@ function parseErc20Amount(
 
 function parseDecodedTransactionsSummary(
   transactions: DecodedTransaction[],
+  chainId: number = 1,
 ): string | undefined {
   const items: string[] = [];
 
@@ -349,8 +434,26 @@ function parseDecodedTransactionsSummary(
   const nounIds: number[] = [];
 
   try {
+    const contracts = getContractsForChain(chainId);
+    const lilNounsTokenBuyerAddress = contracts["token-buyer"].address;
+    const nounsDaoPayer = CHAIN_CONFIG.addresses.nounsPayer;
+    const lilNounsPayer = contracts.payer.address;
+    const nounsDaoTokenBuyer = CHAIN_CONFIG.addresses.nounsTokenBuyer;
+
     for (const tx of transactions) {
-      if (tx.functionName == "transfer") {
+      // Check if this is ETH transfer to payer or token buyer (topups) - exclude from summary
+      const isEthToPayer = 
+        tx.functionName === "transfer" &&
+        tx.value > 0 &&
+        (isAddressEqual(tx.to, nounsDaoPayer) || isAddressEqual(tx.to, lilNounsPayer));
+      
+      const isEthToTokenBuyer = 
+        tx.functionName === "transfer" &&
+        tx.value > 0 &&
+        (isAddressEqual(tx.to, nounsDaoTokenBuyer) || isAddressEqual(tx.to, lilNounsTokenBuyerAddress));
+
+      // Don't include ETH topups to payer/buyer contracts in the "Requesting" summary
+      if (tx.functionName == "transfer" && !isEthToPayer && !isEthToTokenBuyer) {
         totalEth += tx.value;
       }
 
@@ -361,8 +464,9 @@ function parseDecodedTransactionsSummary(
       );
       totalStEth += parseErc20Amount(tx, CHAIN_CONFIG.addresses.stEth);
 
+      // Include sendOrRegisterDebt USDC in the summary (it's a request) - check both payer contracts
       if (
-        isAddressEqual(tx.to, CHAIN_CONFIG.addresses.nounsPayer) &&
+        (isAddressEqual(tx.to, nounsDaoPayer) || isAddressEqual(tx.to, lilNounsPayer)) &&
         tx.functionName == "sendOrRegisterDebt"
       ) {
         totalUsdc += tx.args[1].value as bigint;

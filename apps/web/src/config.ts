@@ -38,6 +38,7 @@ export interface ChainSpecificData {
     noundersMultisig: Address;
     usdc: Address;
     nounsPayer: Address;
+    nounsTokenBuyer: Address;
     stEth: Address;
     [key: string]: Address; // Allow additional addresses like nounsSeeder, lilVRGDA, etc.
   };
@@ -112,6 +113,7 @@ const NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       ),
       usdc: getAddress("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"),
       nounsPayer: getAddress("0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D"),
+      nounsTokenBuyer: getAddress("0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"),
       stEth: getAddress("0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"),
     },
     nounsGovernanceUrl: "https://lilnouns.wtf/",
@@ -186,6 +188,7 @@ const NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       // Multisig & Payer
       noundersMultisig: getAddress("0x0000000000000000000000000000000000000000"),
       nounsPayer: getAddress("0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D"),
+      nounsTokenBuyer: getAddress("0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"),
     },
     nounsGovernanceUrl: "https://sepolia.lilnouns.wtf/",
     subgraphUrl: {
@@ -247,6 +250,7 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       ),
       usdc: getAddress("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"),
       nounsPayer: getAddress("0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D"),
+      nounsTokenBuyer: getAddress("0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"),
       stEth: getAddress("0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"),
     },
     nounsGovernanceUrl: "https://lilnouns.wtf/",
@@ -318,6 +322,7 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       stEth: getAddress(sepoliaAddresses.stEth),
 
       nounsPayer: getAddress(sepoliaAddresses.nounsPayer),
+      nounsTokenBuyer: getAddress(sepoliaAddresses.nounsTokenBuyer || "0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"),
       noundersMultisig: getAddress(sepoliaAddresses.noundersMultisig),
     },
     nounsGovernanceUrl: "https://sepolia.lilnouns.wtf/",

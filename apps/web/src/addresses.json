@@ -22,7 +22,8 @@
       "noundersMultisig": "0x3cf6a7f06015aCad49F76044d3c63D7fE477D945",
       "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "stEth": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "nounsPayer": "0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D"
+      "nounsPayer": "0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D",
+      "nounsTokenBuyer": "0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"
 
     },
     "11155111": {
@@ -50,6 +51,7 @@
       "usdc": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
       "stEth": "0x3e3FE7dBc6B4C189E7128855dD526361c49b40Af",
       "nounsPayer": "0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D",
+      "nounsTokenBuyer": "0x4f2acdc74f6941390d9b1804fabc3e780388cfe5",
       "noundersMultisig": "0x0000000000000000000000000000000000000000"
     }
 } 

@@ -22,6 +22,7 @@ export async function getVrgdaSeedByBlock(blockNumber: string): Promise<VrgdaPoo
 
     return {
       id: result.vrgdaPoolSeed.id,
+      nounId: result.vrgdaPoolSeed.nounId,
       blockNumber: result.vrgdaPoolSeed.blockNumber,
       background: result.vrgdaPoolSeed.background,
       body: result.vrgdaPoolSeed.body,
