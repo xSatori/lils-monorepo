@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, Suspense, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -85,6 +85,7 @@ export default function VotePage() {
   const queryClient = useQueryClient()
   const location = useLocation()
   const navigate = useNavigate()
+  const lastPathnameRef = useRef<string>(location.pathname)
   
   // Determine initial daoType from URL path
   const initialDaoType = (location.pathname === '/vote/nouns' || location.pathname === '/vote/nounsdao') ? 'nouns' : 'lilnouns'
@@ -95,13 +96,21 @@ export default function VotePage() {
 
   // Sync daoType with URL path
   useEffect(() => {
+    // Only process if pathname actually changed
+    if (lastPathnameRef.current === location.pathname) {
+      return
+    }
+    
+    lastPathnameRef.current = location.pathname
+    
     const pathBasedDaoType: DaoType = 
       (location.pathname === '/vote/nouns' || location.pathname === '/vote/nounsdao') 
         ? 'nouns' 
         : 'lilnouns'
     
     setDaoType(pathBasedDaoType)
-  }, [location.pathname]) // Only depend on pathname to avoid loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]) // Only depend on pathname - ref prevents duplicate processing
 
   const handleDaoTypeChange = (newDaoType: DaoType) => {
     setDaoType(newDaoType)
