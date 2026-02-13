@@ -1,5 +1,5 @@
 import { graphQLFetch } from "@/data/utils/graphQLFetch";
-import { CHAIN_CONFIG } from "@/config";
+import { CHAIN_CONFIG, NOUNS_DAO_GOLDSKY_URL } from "@/config";
 import { DaoType } from "./getProposalOverviews";
 
 const query = `
@@ -27,12 +27,11 @@ interface CandidateForProposalResponse {
   }>;
 }
 
-// Get the appropriate Goldsky URL based on DAO type
+// Get the appropriate Goldsky URL based on DAO type (Nouns DAO vs Lil Nouns)
 function getGoldskyUrl(daoType: DaoType): string {
   if (daoType === 'nouns') {
-    return "https://api.goldsky.com/api/public/project_cldf2o9pqagp43svvbk5u3kmo/subgraphs/nouns/prod/gn";
+    return NOUNS_DAO_GOLDSKY_URL;
   }
-  // Default to Lil Nouns
   return CHAIN_CONFIG.goldskyUrl.primary;
 }
 

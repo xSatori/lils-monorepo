@@ -99,15 +99,18 @@ async function getTokenBalance(
   accountAddress: Address
 ): Promise<TokenBalance> {
   try {
+    // Normalize to EIP-55 checksum so viem accepts the address
+    const token = getAddress(tokenAddress);
+    const account = getAddress(accountAddress);
     const [balance, decimals] = await Promise.all([
       readContract(publicClient, {
-        address: tokenAddress,
+        address: token,
         abi: ERC20_ABI,
         functionName: "balanceOf",
-        args: [accountAddress],
+        args: [account],
       }),
       readContract(publicClient, {
-        address: tokenAddress,
+        address: token,
         abi: ERC20_ABI,
         functionName: "decimals",
       }).catch(() => 18), // Default to 18 decimals if not available

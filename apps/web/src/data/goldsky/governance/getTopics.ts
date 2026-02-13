@@ -1,11 +1,17 @@
 import { graphQLFetch } from "@/data/utils/graphQLFetch";
-import { CHAIN_CONFIG } from "@/config";
+import { CHAIN_CONFIG, NOUNS_DAO_GOLDSKY_URL } from "@/config";
 import { getAddress } from "viem";
 import { getTopicsOnchain } from "@/data/nounsDaoData/getTopicsOnchain";
 
 // Helpers to resolve endpoints (prefer Goldsky, fallback to The Graph)
 const getGoldskyUrls = () => CHAIN_CONFIG.goldskyUrl;
 const getGraphUrls = () => CHAIN_CONFIG.subgraphUrl;
+
+/** Topics exist only on Lil Nouns subgraph; Nouns DAO subgraph has no `topics` field */
+function isTopicsSupportedSubgraph(): boolean {
+  const primary = getGoldskyUrls().primary;
+  return primary !== NOUNS_DAO_GOLDSKY_URL;
+}
 
 const query = `
   query GetTopics($first: Int = 1000) {
@@ -263,10 +269,14 @@ interface TopicSignaturesResponse {
 }
 
 /**
- * Fetch all topics from Goldsky subgraph
+ * Fetch all topics from Goldsky subgraph.
+ * Topics are a Lil Nouns–only feature; when config points at Nouns DAO subgraph, returns [].
  */
 export async function getTopics(limit: number = 1000): Promise<Topic[]> {
   try {
+    if (!isTopicsSupportedSubgraph()) {
+      return [];
+    }
     // Try Goldsky first, fall back to decentralized subgraph if needed
     let data = await graphQLFetch(
       getGoldskyUrls().primary,

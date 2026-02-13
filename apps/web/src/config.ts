@@ -359,6 +359,10 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
 export const CHAIN_CONFIG =
   CHAIN_SPECIFIC_CONFIGS[detectChainFromHostname()]!;
 
+/** Canonical Nouns DAO (mainnet) subgraph – use for daoType === 'nouns' proposal/candidate queries */
+export const NOUNS_DAO_GOLDSKY_URL =
+  "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/nouns/1.0.2/gn";
+
 /**
  * Helper to get the active DAO proxy address
  * Returns V2 proxy by default, or V3 proxy if it exists and is different

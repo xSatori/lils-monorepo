@@ -61,7 +61,7 @@ const CONTRACTS_BY_CHAIN = {
       chainId: mainnet.id
     },
     'oeth-token': {
-      address: '0x856c4eFb76c1D1Ae02E20CEb03A2A6A08b0b8dC3' as Address, // Origin ETH (OETH) on mainnet
+      address: '0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3' as Address, // Origin ETH (OETH) on mainnet
       chainId: mainnet.id
     }
   },
@@ -111,7 +111,7 @@ const CONTRACTS_BY_CHAIN = {
       chainId: sepolia.id
     },
     'oeth-token': {
-      address: '0x856c4eFb76c1D1Ae02E20CEb03A2A6A08b0b8dC3' as Address, // Origin ETH (OETH) (same on Sepolia)
+      address: '0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3' as Address, // Origin ETH (OETH) (same on Sepolia)
       chainId: sepolia.id
     }
   }
