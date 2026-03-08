@@ -29,24 +29,30 @@ if (typeof window !== 'undefined' && !PROJECT_ID) {
 }
 
 // Create minimal wagmi config without WalletConnect for SSR
+const transports =
+  CHAIN_CONFIG.rpcUrl.fallback2 != null
+    ? fallback([
+        http(CHAIN_CONFIG.rpcUrl.primary),
+        http(CHAIN_CONFIG.rpcUrl.fallback),
+        http(CHAIN_CONFIG.rpcUrl.fallback2),
+      ])
+    : fallback([
+        http(CHAIN_CONFIG.rpcUrl.primary),
+        http(CHAIN_CONFIG.rpcUrl.fallback),
+      ]);
+
 const config = typeof window === 'undefined' 
   ? createConfig({
       chains: [CHAIN_CONFIG.chain],
       transports: {
-        [CHAIN_CONFIG.publicClient.chain!.id]: fallback([
-          http(CHAIN_CONFIG.rpcUrl.primary),
-          http(CHAIN_CONFIG.rpcUrl.fallback),
-        ]),
+        [CHAIN_CONFIG.publicClient.chain!.id]: transports,
       },
       ssr: true,
     })
   : getDefaultConfig({
       chains: [CHAIN_CONFIG.chain],
       transports: {
-        [CHAIN_CONFIG.publicClient.chain!.id]: fallback([
-          http(CHAIN_CONFIG.rpcUrl.primary),
-          http(CHAIN_CONFIG.rpcUrl.fallback),
-        ]),
+        [CHAIN_CONFIG.publicClient.chain!.id]: transports,
       },
       // WalletConnect v2 requires a valid project ID
       // If missing, WalletConnect won't be available but other connectors will work

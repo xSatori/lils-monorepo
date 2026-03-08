@@ -27,6 +27,8 @@ export interface ChainSpecificData {
   rpcUrl: {
     primary: string;
     fallback: string;
+    /** Optional second fallback for 3-way rotation (e.g. Goldsky proxy + Alchemy + Infura) */
+    fallback2?: string;
   };
   addresses: {
     nounsToken: Address;
@@ -75,6 +77,26 @@ export interface ChainSpecificData {
 export const mainnetPublicClient = createPublicClient({
   chain: mainnet,
   transport: fallback([
+    http(
+      `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
+    ),
+    http(
+      `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
+    ),
+  ]),
+});
+
+/** Base URL for the app (no trailing slash). In browser uses current origin so localhost always hits same host/port and avoids loops. */
+function getAppBaseUrl(): string {
+  if (typeof window !== "undefined") return window.location.origin;
+  return import.meta.env.VITE_URL || "https://www.lilnouns.wtf";
+}
+
+/** Lil Nouns mainnet: Goldsky RPC via server-side proxy (secret never exposed), then Alchemy, then Infura. */
+const lilNounsMainnetPublicClient = createPublicClient({
+  chain: mainnet,
+  transport: fallback([
+    http(`${getAppBaseUrl()}/api/rpc`),
     http(
       `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
     ),
@@ -226,10 +248,11 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
   [mainnet.id]: {
     chain: mainnet,
     rpcUrl: {
-      primary: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
-      fallback: `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
+      primary: `${getAppBaseUrl()}/api/rpc`,
+      fallback: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
+      fallback2: `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
     },
-    publicClient: mainnetPublicClient,
+    publicClient: lilNounsMainnetPublicClient,
     addresses: {
       nounsToken: getAddress("0x4b10701Bfd7BFEdc47d50562b76b436fbB5BdB3B"),
       nounsSeeder: getAddress("0xCC8a0FB5ab3C7132c1b2A0109142Fb112c4Ce515"),

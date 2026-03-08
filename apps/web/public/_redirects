@@ -1,5 +1,6 @@
 # API routes - must come before SPA fallback
 /api/discord/events    /.netlify/functions/api-discord-events    200
+/api/rpc               /.netlify/functions/api-rpc                200
 
 # External redirects
 /discord	https://discord.gg/QdEVmGv7Yu	302

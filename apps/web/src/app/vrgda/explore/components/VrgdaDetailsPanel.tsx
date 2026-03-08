@@ -8,10 +8,10 @@ import { Button } from '@/components/ui/button';
 import { imageData } from '@/utils/nounImages/imageData';
 import { useVrgdaBookmarks } from '@/hooks/useVrgdaBookmarks';
 import { formatEther } from 'viem';
-import { buildNounTraitImage } from '@/utils/nounImages/nounImage';
+import { buildNounTraitImage, buildNounImage } from '@/utils/nounImages/nounImage';
 import { NounTraitType } from '@/data/noun/types';
 import { getPartNameForTrait } from '@/utils/nounImages/traitNames';
-import { useReadContract } from 'wagmi';
+import { useReadContract, usePublicClient } from 'wagmi';
 import { CHAIN_CONFIG } from '@/config';
 
 interface VrgdaDetailsPanelProps {
@@ -40,7 +40,14 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
   const { buyNoun, isLoading: isBuying, error: buyError } = useBuyNounVRGDA();
   const { toggleBookmark, isBookmarkInCurrentPool } = useVrgdaBookmarks(allSeeds);
   const [isCurrentSeedBookmarked, setIsCurrentSeedBookmarked] = useState(false);
-  
+
+  // Contract comparison state
+  const [contractSeed, setContractSeed] = useState<{background: number, body: number, accessory: number, head: number, glasses: number} | null>(null);
+  const [isLoadingContract, setIsLoadingContract] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
+  const [contractError, setContractError] = useState<string | null>(null);
+  const publicClient = usePublicClient();
+
   // Check if contract is paused
   const { data: isPaused } = useReadContract({
     address: CHAIN_CONFIG.addresses.lilVRGDAProxy,
@@ -92,7 +99,7 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
 
   const handleBuyNow = async () => {
     if (!seed || !isAvailableForPurchase) return;
-    
+
     try {
       await buyNoun(
         BigInt(seed.blockNumber),
@@ -103,6 +110,97 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
       console.error('Purchase failed:', error);
     }
   };
+
+  // Fetch seed from VRGDA contract for comparison
+  // fetchNoun(blockNumber) returns [nounId, seed, svg, price, hash]
+  // NOTE: blockhash() only works for last 256 blocks (~50 min), older blocks will revert
+  const fetchContractSeed = async () => {
+    if (!seed || !publicClient) return;
+
+    setIsLoadingContract(true);
+    setContractSeed(null);
+    setContractError(null);
+
+    try {
+      const vrgdaAddress = CHAIN_CONFIG.addresses.lilVRGDAProxy;
+
+      // Call fetchNoun on the VRGDA contract - only takes blockNumber
+      // Returns [nounId, seed, svg, price, hash]
+      const result = await publicClient.readContract({
+        address: vrgdaAddress,
+        abi: [{
+          type: 'function',
+          name: 'fetchNoun',
+          inputs: [
+            { name: 'blockNumber', type: 'uint256' }
+          ],
+          outputs: [
+            { name: 'nounId', type: 'uint256' },
+            {
+              name: 'seed',
+              type: 'tuple',
+              components: [
+                { name: 'background', type: 'uint48' },
+                { name: 'body', type: 'uint48' },
+                { name: 'accessory', type: 'uint48' },
+                { name: 'head', type: 'uint48' },
+                { name: 'glasses', type: 'uint48' }
+              ]
+            },
+            { name: 'svg', type: 'string' },
+            { name: 'price', type: 'uint256' },
+            { name: 'hash', type: 'bytes32' }
+          ],
+          stateMutability: 'view'
+        }],
+        functionName: 'fetchNoun',
+        args: [BigInt(seed.blockNumber)],
+      }) as [bigint, { background: bigint, body: bigint, accessory: bigint, head: bigint, glasses: bigint }, string, bigint, string];
+
+      const [contractNounId, contractSeedResult] = result;
+
+      // Check if nounId matches
+      const nounIdMatches = seed.nounId === contractNounId.toString();
+      if (!nounIdMatches) {
+        console.warn('⚠️ NounId mismatch: Pool has', seed.nounId, 'but contract returns', contractNounId.toString(), 'for block', seed.blockNumber);
+      }
+
+      setContractSeed({
+        background: Number(contractSeedResult.background),
+        body: Number(contractSeedResult.body),
+        accessory: Number(contractSeedResult.accessory),
+        head: Number(contractSeedResult.head),
+        glasses: Number(contractSeedResult.glasses)
+      });
+      setContractError(null);
+      setShowComparison(true);
+    } catch (error) {
+      console.error('Failed to fetch contract seed:', error);
+      // blockhash() only works for last 256 blocks
+      setContractError('Block too old (>256 blocks). Cannot verify on-chain.');
+      setShowComparison(true);
+    } finally {
+      setIsLoadingContract(false);
+    }
+  };
+
+  // Generate image from contract seed
+  const contractImageUrl = contractSeed ? buildNounImage({
+    background: { seed: contractSeed.background, name: '' },
+    body: { seed: contractSeed.body, name: '' },
+    accessory: { seed: contractSeed.accessory, name: '' },
+    head: { seed: contractSeed.head, name: '' },
+    glasses: { seed: contractSeed.glasses, name: '' }
+  }, 'full') : null;
+
+  // Check if seeds match
+  const seedsMatch = contractSeed && seed ? (
+    contractSeed.background === seed.background &&
+    contractSeed.body === seed.body &&
+    contractSeed.accessory === seed.accessory &&
+    contractSeed.head === seed.head &&
+    contractSeed.glasses === seed.glasses
+  ) : null;
 
   const fullImageUrl = vrgdaSeedToImage(seed, { imageType: 'full' });
   
@@ -122,16 +220,100 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
   return (
     <motion.div layout className="border-border flex h-full w-full flex-col border-l overflow-hidden">
       <div className="flex h-full flex-col transition-colors duration-300 overflow-y-auto pb-4" style={backgroundStyle}>
-        {/* Responsive VRGDA Noun Image */}
+        {/* VRGDA Noun Image(s) - Pool vs Contract comparison */}
         <div className="relative">
-          <img
-            src={fullImageUrl ?? "/noun-loading-skull.gif"}
-            alt={`VRGDA Noun ${seed.blockNumber}`}
-            className={`mx-auto object-cover ${
-              isCompact ? 'size-[200px]' : 'size-[288px]'
-            }`}
-          />
-          
+          <div className={`flex ${showComparison && (contractImageUrl || contractError) ? 'gap-1' : ''}`}>
+            {/* Pool Image */}
+            <div className="relative flex-1">
+              <img
+                src={fullImageUrl ?? "/noun-loading-skull.gif"}
+                alt={`Pool Noun ${seed.blockNumber}`}
+                className={`mx-auto object-cover ${
+                  showComparison && (contractImageUrl || contractError)
+                    ? (isCompact ? 'size-[100px]' : 'size-[144px]')
+                    : (isCompact ? 'size-[200px]' : 'size-[288px]')
+                }`}
+              />
+              {showComparison && (contractImageUrl || contractError) && (
+                <div className="text-center text-xs font-bold bg-black/50 text-white py-0.5">
+                  POOL
+                </div>
+              )}
+            </div>
+
+            {/* Contract Image (when comparison active) */}
+            {showComparison && contractImageUrl && (
+              <div className="relative flex-1">
+                <img
+                  src={contractImageUrl}
+                  alt={`Contract Noun ${seed.blockNumber}`}
+                  className={`mx-auto object-cover ${
+                    isCompact ? 'size-[100px]' : 'size-[144px]'
+                  }`}
+                />
+                <div className="text-center text-xs font-bold bg-black/50 text-white py-0.5">
+                  CONTRACT
+                </div>
+              </div>
+            )}
+
+            {/* Error message when block too old */}
+            {showComparison && contractError && !contractImageUrl && (
+              <div className="relative flex-1 flex items-center justify-center bg-gray-200" style={{
+                width: isCompact ? '100px' : '144px',
+                height: isCompact ? '100px' : '144px'
+              }}>
+                <div className="text-center p-2">
+                  <div className="text-2xl mb-1">⚠️</div>
+                  <div className="text-xs text-gray-600 font-medium">
+                    {contractError}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Match/Mismatch indicator */}
+          {showComparison && seedsMatch !== null && (
+            <div className={`text-center text-xs font-bold py-1 ${
+              seedsMatch ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`}>
+              {seedsMatch ? '✓ SEEDS MATCH' : '✗ SEEDS DO NOT MATCH'}
+            </div>
+          )}
+
+          {/* Error indicator */}
+          {showComparison && contractError && (
+            <div className="text-center text-xs font-bold py-1 bg-yellow-500 text-black">
+              ⚠️ Cannot verify - block too old
+            </div>
+          )}
+
+          {/* Compare Button */}
+          <div className="absolute top-2 left-2">
+            <motion.button
+              onClick={() => {
+                if (showComparison) {
+                  setShowComparison(false);
+                  setContractSeed(null);
+                  setContractError(null);
+                } else {
+                  fetchContractSeed();
+                }
+              }}
+              disabled={isLoadingContract}
+              className={`px-2 py-1 rounded-full shadow-lg text-xs font-bold transition-colors ${
+                showComparison
+                  ? 'bg-blue-500 text-white hover:bg-blue-600'
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Compare with contract seed"
+            >
+              {isLoadingContract ? '...' : showComparison ? 'Hide' : 'Compare'}
+            </motion.button>
+          </div>
 
           {/* Heart Save Button */}
           <div className="absolute top-2 right-2">
@@ -150,10 +332,10 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
               whileTap={{ scale: 0.9 }}
               title={isCurrentSeedBookmarked ? 'Remove from saved' : 'Save noun'}
             >
-              <svg 
-                className="w-5 h-5" 
-                fill={isCurrentSeedBookmarked ? "currentColor" : "none"} 
-                stroke="currentColor" 
+              <svg
+                className="w-5 h-5"
+                fill={isCurrentSeedBookmarked ? "currentColor" : "none"}
+                stroke="currentColor"
                 viewBox="0 0 24 24"
                 strokeWidth={isCurrentSeedBookmarked ? 0 : 2}
               >

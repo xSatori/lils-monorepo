@@ -99,6 +99,14 @@ VITE_ALCHEMY_API_KEY=your_key
 VITE_INFURA_API_KEY=your_key
 ```
 
+For production (Lil Nouns mainnet RPC via Goldsky): set **server-side only** (never use `VITE_` so it is not exposed to the client):
+
+```
+GOLDSKY_RPC_SECRET=your_goldsky_edge_secret
+```
+
+**Netlify deploy (apps/web):** In Site settings → Environment variables, add `GOLDSKY_RPC_SECRET`. `_redirects` sends `/api/rpc` to the `api-rpc` function. Ensure build has `VITE_ALCHEMY_API_KEY` and `VITE_INFURA_API_KEY` for RPC fallbacks.
+
 ---
 
 ### Adding Dependencies
