@@ -10,10 +10,16 @@
 const GOLDSKY_EVM_1_BASE = "https://edge.goldsky.com/standard/evm/1";
 const UPSTREAM_TIMEOUT_MS = 15_000;
 
-function jsonRpcError(code: number, message: string) {
-  return Response.json(
-    { jsonrpc: "2.0", id: null, error: { code, message } },
-    { status: 200 }
+function jsonRpcError(code: number, message: string, upstreamHeader: string) {
+  return new Response(
+    JSON.stringify({ jsonrpc: "2.0", id: null, error: { code, message } }),
+    {
+      status: 200, // keep viem transport happy; client will read JSON-RPC error
+      headers: {
+        "Content-Type": "application/json",
+        "X-RPC-Upstream": upstreamHeader,
+      },
+    },
   );
 }
 
@@ -22,7 +28,7 @@ export async function POST(request: Request) {
   if (!secret?.trim()) {
     return Response.json(
       { jsonrpc: "2.0", id: null, error: { code: -32603, message: "RPC proxy not configured" } },
-      { status: 503 }
+      { status: 503, headers: { "X-RPC-Upstream": "goldsky-edge:not_configured" } }
     );
   }
 
@@ -51,19 +57,20 @@ export async function POST(request: Request) {
 
     const text = await res.text();
     if (!res.ok) {
-      return jsonRpcError(-32603, "Upstream RPC error");
+      return jsonRpcError(-32603, "Upstream RPC error", "goldsky-edge:failed");
     }
     return new Response(text, {
       status: 200,
       headers: {
         "Content-Type": res.headers.get("Content-Type") ?? "application/json",
+        "X-RPC-Upstream": "goldsky-edge:ok",
       },
     });
   } catch (err) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === "AbortError") {
-      return jsonRpcError(-32603, "Upstream timeout");
+      return jsonRpcError(-32603, "Upstream timeout", "goldsky-edge:timeout");
     }
-    return jsonRpcError(-32603, "Upstream request failed");
+    return jsonRpcError(-32603, "Upstream request failed", "goldsky-edge:request_failed");
   }
 }

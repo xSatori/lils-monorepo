@@ -3,7 +3,7 @@
 /api/rpc               /.netlify/functions/api-rpc                200
 
 # External redirects
-/discord	https://discord.gg/QdEVmGv7Yu	302
+/discord	https://discord.gg/X6gpawuBaX	302
 /docs	https://nouns.notion.site/Explore-Nouns-a2a9dceeb1d54e10b9cbf3f931c2266f	302
 
 # SPA fallback - redirect all routes to index.html for client-side routing

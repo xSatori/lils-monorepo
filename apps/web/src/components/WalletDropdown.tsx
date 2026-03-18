@@ -45,7 +45,7 @@ const MENU_SECTIONS = {
     // { label: "Treasury", href: "/stats/treasury" },
   ],
   COMMUNITY: [
-    { label: "Discord", href: "https://discord.gg/QdEVmGv7Yu", external: true },
+    { label: "Discord", href: "https://discord.gg/X6gpawuBaX", external: true },
     { label: "X", href: "https://x.com/lilnounsdao", external: true },
   ],
 };

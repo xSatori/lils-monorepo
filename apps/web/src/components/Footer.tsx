@@ -27,7 +27,7 @@ const SOCIALS: { name: string; icon: string; href: string }[] = [
   {
     name: "Discord",
     icon: "/socials/discord.svg",
-    href: "https://discord.gg/QdEVmGv7Yu",
+    href: "https://discord.gg/X6gpawuBaX",
   },
 ];
 

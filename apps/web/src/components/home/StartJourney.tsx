@@ -52,7 +52,7 @@ export default function StartJourney() {
          />
        </FeatureHighlightCard>
        <FeatureHighlightCard
-         href="https://discord.gg/QdEVmGv7Yu"
+         href="https://discord.gg/X6gpawuBaX"
          iconSrc="/feature/shop/icon.svg"
          buttonLabel="Join Discord"
          description="Meet 3,600+ Lils building the future together."

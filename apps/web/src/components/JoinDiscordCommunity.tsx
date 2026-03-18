@@ -6,7 +6,7 @@ import Icon from "./ui/Icon";
 export default function JoinDiscordCommunity() {
   return (
     <LinkExternal
-      href="https://discord.gg/QdEVmGv7Yu"
+      href="https://discord.gg/X6gpawuBaX"
       className="flex w-full flex-1 flex-col items-center justify-start gap-6 overflow-hidden rounded-3xl bg-[#5865F2] p-6 text-center text-white md:p-12"
     >
       <Image

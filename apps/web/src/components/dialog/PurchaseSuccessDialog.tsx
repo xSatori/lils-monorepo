@@ -38,7 +38,7 @@ interface PurchaseSuccessDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const DISCORD_INVITE_URL = "https://discord.gg/QdEVmGv7Yu";
+const DISCORD_INVITE_URL = "https://discord.gg/X6gpawuBaX";
 const TWITTER_URL = "https://twitter.com/lilnounsdao";
 
 export default function PurchaseSuccessDialog({

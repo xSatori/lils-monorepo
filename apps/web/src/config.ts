@@ -77,6 +77,7 @@ export interface ChainSpecificData {
 export const mainnetPublicClient = createPublicClient({
   chain: mainnet,
   transport: fallback([
+    http(`${getAppBaseUrl()}/api/rpc`),
     http(
       `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
     ),
@@ -109,12 +110,15 @@ const lilNounsMainnetPublicClient = createPublicClient({
 
 
 // nouns dao specific configs and contract addresses
-const NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
+// (kept for potential future use; currently unused in codebase)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
   [mainnet.id]: {
     chain: mainnet,
     rpcUrl: {
-      primary: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
-      fallback: `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
+      primary: `${getAppBaseUrl()}/api/rpc`,
+      fallback: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
+      fallback2: `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
     },
     publicClient: mainnetPublicClient,
     addresses: {

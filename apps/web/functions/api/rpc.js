@@ -42,7 +42,7 @@ exports.handler = async (event) => {
   if (!secret || !secret.trim()) {
     return {
       statusCode: 503,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-RPC-Upstream": "goldsky-edge:not_configured" },
       body: jsonRpcError(-32603, "RPC proxy not configured"),
     };
   }
@@ -75,14 +75,14 @@ exports.handler = async (event) => {
     if (!res.ok) {
       return {
         statusCode: 502,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-RPC-Upstream": "goldsky-edge:failed" },
         body: jsonRpcError(-32603, "Upstream RPC error"),
       };
     }
     const contentType = res.headers.get("Content-Type") || "application/json";
     return {
       statusCode: 200,
-      headers: { "Content-Type": contentType },
+      headers: { "Content-Type": contentType, "X-RPC-Upstream": "goldsky-edge:ok" },
       body: text,
     };
   } catch (err) {
@@ -90,13 +90,13 @@ exports.handler = async (event) => {
     if (err.name === "AbortError") {
       return {
         statusCode: 504,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-RPC-Upstream": "goldsky-edge:timeout" },
         body: jsonRpcError(-32603, "Upstream timeout"),
       };
     }
     return {
       statusCode: 502,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-RPC-Upstream": "goldsky-edge:request_failed" },
       body: jsonRpcError(-32603, "Upstream request failed"),
     };
   }
