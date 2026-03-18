@@ -24,6 +24,21 @@ export default function NounExplorer({
   const { filteredNounCount } = useFilterEngine();
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const inFlightRef = useRef(false);
+  const loadMoreRef = useRef(loadMore);
+  const isLoadingMoreRef = useRef(isLoadingMore);
+  const hasMoreRef = useRef(hasMore);
+
+  useEffect(() => {
+    loadMoreRef.current = loadMore;
+  }, [loadMore]);
+
+  useEffect(() => {
+    isLoadingMoreRef.current = isLoadingMore;
+  }, [isLoadingMore]);
+
+  useEffect(() => {
+    hasMoreRef.current = hasMore;
+  }, [hasMore]);
 
   const handleSortChange = (newSortOrder: SortOrder) => {
     onSortChange?.(newSortOrder);
@@ -31,16 +46,16 @@ export default function NounExplorer({
 
   // Intersection Observer for seamless infinite scroll
   useEffect(() => {
-    if (!hasMore || !loadMore) return;
+    if (!hasMoreRef.current) return;
     const node = sentinelRef.current;
     if (!node) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry.isIntersecting && !inFlightRef.current && !isLoadingMore) {
+        if (entry.isIntersecting && !inFlightRef.current && !isLoadingMoreRef.current) {
           inFlightRef.current = true;
-          loadMore();
+          loadMoreRef.current?.();
           // allow a short cooldown to avoid rapid retriggers
           setTimeout(() => {
             inFlightRef.current = false;
@@ -59,7 +74,7 @@ export default function NounExplorer({
       observer.unobserve(node);
       observer.disconnect();
     };
-  }, [hasMore, isLoadingMore, loadMore, nouns.length]);
+  }, [hasMore]);
 
   return (
     <div

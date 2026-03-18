@@ -47,8 +47,20 @@ export function FilterEngineProvider({ children }: { children: ReactNode }) {
         let offset = 0;
         const batchSize = 1000;
         let hasMore = true;
+        let iteration = 0;
+        const MAX_ITERATIONS = 500; // Safety fuse: 500 * 1000 = 500k nouns worth of pages
+        let prevBatchFirstId: string | null = null;
         
         while (hasMore) {
+          iteration += 1;
+          if (iteration > MAX_ITERATIONS) {
+            console.warn('🧯 FilterEngine index build hit MAX_ITERATIONS; aborting loop', {
+              iteration,
+              offset,
+            });
+            break;
+          }
+
           const response = await fetch(CHAIN_CONFIG.indexerUrl, {
             method: 'POST',
             headers: {
@@ -77,12 +89,15 @@ export function FilterEngineProvider({ children }: { children: ReactNode }) {
 
           const vpsResponse = result.data;
 
-          if (!vpsResponse?.nouns?.items || vpsResponse.nouns.items.length === 0) {
+          const pageInfo = vpsResponse?.nouns?.pageInfo;
+          const batchItems = vpsResponse?.nouns?.items;
+
+          if (!batchItems || batchItems.length === 0) {
             hasMore = false;
             break;
           }
 
-          const batchNouns = vpsResponse.nouns.items.map((noun: any) => ({
+          const batchNouns = batchItems.map((noun: any) => ({
             id: noun.id,
             background: noun.background,
             body: noun.body,
@@ -91,7 +106,24 @@ export function FilterEngineProvider({ children }: { children: ReactNode }) {
             glasses: noun.glasses,
           }));
 
+          // If the indexer ignores offset, we'll repeatedly receive the same first noun.
+          const batchFirstId = batchNouns[0]?.id ?? null;
+          if (batchFirstId && prevBatchFirstId && batchFirstId === prevBatchFirstId) {
+            console.warn('🧯 FilterEngine index build received same first ID twice; aborting', {
+              offset,
+              batchFirstId,
+            });
+            break;
+          }
+          prevBatchFirstId = batchFirstId;
+
           allNouns.push(...batchNouns);
+
+          // Use pageInfo if available (preferred stopping condition)
+          if (pageInfo && pageInfo.hasNextPage === false) {
+            hasMore = false;
+            break;
+          }
           
           // Check if we got fewer nouns than requested (end of data)
           if (batchNouns.length < batchSize) {

@@ -1,7 +1,7 @@
 // Smart Noun Rendering Hook
 // Uses worker-filtered noun IDs for intelligent fetch strategy
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { useFilterEngine } from '@/contexts/FilterEngineContext';
 import { Noun } from '@/data/noun/types';
 import { CHAIN_CONFIG } from '@/config';
@@ -55,6 +55,7 @@ export function useSmartNounRendering(
   const [matchingNounIds, setMatchingNounIds] = useState<string[]>([]);
   const [currentOffset, setCurrentOffset] = useState(0);
   const BATCH_SIZE = 100;
+  const matchingNounIdsRef = useRef<string[]>(matchingNounIds);
 
   const orderDirection = sortOrder === 'newest' ? OrderDirection.Desc : OrderDirection.Asc;
   const hasMore = currentOffset + BATCH_SIZE < matchingNounIds.length;
@@ -63,6 +64,30 @@ export function useSmartNounRendering(
   const nouns = useMemo(() => {
     return nounIds.map(id => nounEntities.get(id)!).filter(Boolean);
   }, [nounIds, nounEntities]);
+
+  // Stable key so effects don't re-run when filter array references change.
+  const filtersKey = useMemo(() => {
+    const sortedJoin = (arr: string[]) => [...arr].sort().join(',');
+    return [
+      `sort:${sortOrder}`,
+      `b:${sortedJoin(filters.background)}`,
+      `body:${sortedJoin(filters.body)}`,
+      `a:${sortedJoin(filters.accessory)}`,
+      `h:${sortedJoin(filters.head)}`,
+      `g:${sortedJoin(filters.glasses)}`,
+    ].join('|');
+  }, [
+    sortOrder,
+    filters.background,
+    filters.body,
+    filters.accessory,
+    filters.head,
+    filters.glasses,
+  ]);
+
+  useEffect(() => {
+    matchingNounIdsRef.current = matchingNounIds;
+  }, [matchingNounIds]);
 
   // Get filtered noun IDs from worker when filters change
   useEffect(() => {
@@ -114,9 +139,18 @@ export function useSmartNounRendering(
         });
 
         console.log('✅ Got', sortedIds.length, 'matching noun IDs from worker, setting state...');
-        setMatchingNounIds(sortedIds);
-        setCurrentOffset(0); // Reset offset when filters change
-        console.log('✅ State updated with', sortedIds.length, 'IDs');
+        const prevIds = matchingNounIdsRef.current;
+        const areSame =
+          prevIds.length === sortedIds.length &&
+          prevIds.every((id, i) => id === sortedIds[i]);
+
+        if (!areSame) {
+          setMatchingNounIds(sortedIds);
+          setCurrentOffset(0); // Reset offset when filters change
+          console.log('✅ State updated with', sortedIds.length, 'IDs');
+        } else {
+          console.log('⏸️ Filtered IDs unchanged; skipping state reset');
+        }
       } catch (error) {
         console.error('❌ Error getting filtered IDs:', error);
         setIsLoading(false);
@@ -124,7 +158,7 @@ export function useSmartNounRendering(
     };
 
     getFilteredIds();
-  }, [filterEngine, filters.background, filters.body, filters.accessory, filters.head, filters.glasses, sortOrder]);
+  }, [filterEngine, filtersKey]);
 
   // Fetch initial batch when matching IDs change
   useEffect(() => {
@@ -215,7 +249,7 @@ export function useSmartNounRendering(
   }, [matchingNounIds, orderDirection, filterEngine]);
 
   // Load more function
-  const loadMore = async () => {
+  const loadMore = useCallback(async () => {
     if (!hasMore || isLoading) {
       console.log('⏸️ Cannot load more:', { hasMore, isLoading });
       return;
@@ -298,7 +332,15 @@ export function useSmartNounRendering(
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [
+    hasMore,
+    isLoading,
+    currentOffset,
+    matchingNounIds,
+    orderDirection,
+    filterEngine,
+    // matches deps from closure usage
+  ]);
 
   return {
     nouns,
