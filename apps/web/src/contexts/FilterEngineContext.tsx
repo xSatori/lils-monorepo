@@ -15,6 +15,11 @@ interface FilterEngineContextType {
 
 const FilterEngineContext = createContext<FilterEngineContextType | undefined>(undefined);
 
+// In-memory cache so /explore isn't forced to rebuild the full compact index
+// (fetching all nouns from the indexer) on every navigation.
+let sharedCompactIndex: CompactIndexData | null = null;
+let sharedCompactIndexPromise: Promise<CompactIndexData> | null = null;
+
 export function FilterEngineProvider({ children }: { children: ReactNode }) {
   const [filterEngine, setFilterEngine] = useState<NounFilterEngine | null>(null);
   const [filterCounts, setFilterCounts] = useState<FilterCounts | null>(null);
@@ -32,136 +37,153 @@ export function FilterEngineProvider({ children }: { children: ReactNode }) {
     const initializeFilterEngine = async () => {
       try {
         setIsLoading(true);
-        console.log('🚀 Building compact noun index from GraphQL...');
-        
-        // Fetch all nouns in batches to build compact index
-        const allNouns: Array<{
-          id: string;
-          background: number;
-          body: number;
-          accessory: number;
-          head: number;
-          glasses: number;
-        }> = [];
-        
-        let offset = 0;
-        const batchSize = 1000;
-        let hasMore = true;
-        let iteration = 0;
-        const MAX_ITERATIONS = 500; // Safety fuse: 500 * 1000 = 500k nouns worth of pages
-        let prevBatchFirstId: string | null = null;
-        
-        while (hasMore) {
-          iteration += 1;
-          if (iteration > MAX_ITERATIONS) {
-            console.warn('🧯 FilterEngine index build hit MAX_ITERATIONS; aborting loop', {
-              iteration,
-              offset,
-            });
-            break;
+        const compactIndex = await (async (): Promise<CompactIndexData> => {
+          if (sharedCompactIndex) {
+            return sharedCompactIndex;
+          }
+          if (sharedCompactIndexPromise) {
+            return sharedCompactIndexPromise;
           }
 
-          const response = await fetch(CHAIN_CONFIG.indexerUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              query: GetNounsPaginatedDocument,
-              variables: {
-                limit: batchSize,
-                offset,
-                orderBy: "id",
-                orderDirection: OrderDirection.Asc
+          sharedCompactIndexPromise = (async (): Promise<CompactIndexData> => {
+            console.log('🚀 Building compact noun index from GraphQL (cache miss)...');
+
+            // Fetch all nouns in batches to build compact index
+            const allNouns: Array<{
+              id: string;
+              background: number;
+              body: number;
+              accessory: number;
+              head: number;
+              glasses: number;
+            }> = [];
+
+            let offset = 0;
+            const batchSize = 1000;
+            let hasMore = true;
+            let iteration = 0;
+            const MAX_ITERATIONS = 500; // Safety fuse: 500 * 1000 = 500k nouns worth of pages
+            let prevBatchFirstId: string | null = null;
+
+            while (hasMore) {
+              iteration += 1;
+              if (iteration > MAX_ITERATIONS) {
+                console.warn('🧯 FilterEngine index build hit MAX_ITERATIONS; aborting loop', {
+                  iteration,
+                  offset,
+                });
+                break;
               }
-            }),
-          });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+              const response = await fetch(CHAIN_CONFIG.indexerUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  query: GetNounsPaginatedDocument,
+                  variables: {
+                    limit: batchSize,
+                    offset,
+                    orderBy: 'id',
+                    orderDirection: OrderDirection.Asc,
+                  },
+                }),
+              });
+
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+
+              const result = await response.json();
+
+              if (result.errors) {
+                throw new Error(
+                  `GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}`,
+                );
+              }
+
+              const vpsResponse = result.data;
+
+              const pageInfo = vpsResponse?.nouns?.pageInfo;
+              const batchItems = vpsResponse?.nouns?.items;
+
+              if (!batchItems || batchItems.length === 0) {
+                hasMore = false;
+                break;
+              }
+
+              const batchNouns = batchItems.map((noun: any) => ({
+                id: noun.id,
+                background: noun.background,
+                body: noun.body,
+                accessory: noun.accessory,
+                head: noun.head,
+                glasses: noun.glasses,
+              }));
+
+              // If the indexer ignores offset, we'll repeatedly receive the same first noun.
+              const batchFirstId = batchNouns[0]?.id ?? null;
+              if (batchFirstId && prevBatchFirstId && batchFirstId === prevBatchFirstId) {
+                console.warn('🧯 FilterEngine index build received same first ID twice; aborting', {
+                  offset,
+                  batchFirstId,
+                });
+                break;
+              }
+              prevBatchFirstId = batchFirstId;
+
+              allNouns.push(...batchNouns);
+
+              // Use pageInfo if available (preferred stopping condition)
+              if (pageInfo && pageInfo.hasNextPage === false) {
+                hasMore = false;
+                break;
+              }
+
+              // Check if we got fewer nouns than requested (end of data)
+              if (batchNouns.length < batchSize) {
+                hasMore = false;
+              } else {
+                offset += batchSize;
+              }
+            }
+
+            console.log(`✅ Fetched ${allNouns.length} nouns for compact index`);
+
+            // Build compact index
+            const nounIds = allNouns.map((n) => n.id);
+            const seeds = allNouns.map((n) => [
+              n.background,
+              n.body,
+              n.accessory,
+              n.head,
+              n.glasses,
+            ]);
+
+            // Convert seeds to base64 for compact storage
+            const seedsJson = JSON.stringify(seeds);
+            const seedsBase64 = btoa(seedsJson); // Use browser's btoa instead of Buffer
+
+            const builtCompactIndex: CompactIndexData = {
+              version: '1.0.0',
+              totalCount: allNouns.length,
+              nounIds,
+              seedsBase64,
+            };
+
+            sharedCompactIndex = builtCompactIndex;
+            return builtCompactIndex;
+          })();
+
+          try {
+            return await sharedCompactIndexPromise;
+          } finally {
+            sharedCompactIndexPromise = null;
           }
+        })();
 
-          const result = await response.json();
-          
-          if (result.errors) {
-            throw new Error(`GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}`);
-          }
-
-          const vpsResponse = result.data;
-
-          const pageInfo = vpsResponse?.nouns?.pageInfo;
-          const batchItems = vpsResponse?.nouns?.items;
-
-          if (!batchItems || batchItems.length === 0) {
-            hasMore = false;
-            break;
-          }
-
-          const batchNouns = batchItems.map((noun: any) => ({
-            id: noun.id,
-            background: noun.background,
-            body: noun.body,
-            accessory: noun.accessory,
-            head: noun.head,
-            glasses: noun.glasses,
-          }));
-
-          // If the indexer ignores offset, we'll repeatedly receive the same first noun.
-          const batchFirstId = batchNouns[0]?.id ?? null;
-          if (batchFirstId && prevBatchFirstId && batchFirstId === prevBatchFirstId) {
-            console.warn('🧯 FilterEngine index build received same first ID twice; aborting', {
-              offset,
-              batchFirstId,
-            });
-            break;
-          }
-          prevBatchFirstId = batchFirstId;
-
-          allNouns.push(...batchNouns);
-
-          // Use pageInfo if available (preferred stopping condition)
-          if (pageInfo && pageInfo.hasNextPage === false) {
-            hasMore = false;
-            break;
-          }
-          
-          // Check if we got fewer nouns than requested (end of data)
-          if (batchNouns.length < batchSize) {
-            hasMore = false;
-          } else {
-            offset += batchSize;
-          }
-        }
-
-        console.log(`✅ Fetched ${allNouns.length} nouns for compact index`);
-
-        // Build compact index
-        const nounIds = allNouns.map(n => n.id);
-        const seeds = allNouns.map(n => [
-          n.background,
-          n.body,
-          n.accessory,
-          n.head,
-          n.glasses,
-        ]);
-
-        // Convert seeds to base64 for compact storage
-        const seedsJson = JSON.stringify(seeds);
-        const seedsBase64 = btoa(seedsJson); // Use browser's btoa instead of Buffer
-
-        const compactIndex: CompactIndexData = {
-          version: '1.0.0',
-          totalCount: allNouns.length,
-          nounIds,
-          seedsBase64,
-        };
-        console.log('📦 Compact index loaded:', {
-          totalCount: compactIndex.totalCount,
-          version: compactIndex.version,
-          seedsSize: compactIndex.seedsBase64.length,
-        });
-
-        // Create and initialize worker
+        // Create and initialize worker (fast once compactIndex is available)
         engine = new NounFilterEngine();
         const initialResult = await engine.init(compactIndex);
 
