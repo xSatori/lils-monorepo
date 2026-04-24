@@ -99,13 +99,13 @@ VITE_ALCHEMY_API_KEY=your_key
 VITE_INFURA_API_KEY=your_key
 ```
 
-For production (Lil Nouns mainnet RPC via Goldsky): set **server-side only** (never use `VITE_` so it is not exposed to the client):
+**Ethereum mainnet RPC (production):** Set `VITE_ALCHEMY_API_KEY` and `VITE_INFURA_API_KEY` in the build environment.
 
-```
-GOLDSKY_RPC_SECRET=your_goldsky_edge_secret
-```
+**Goldsky Edge RPC (recommended):** Deploy the Cloudflare Worker in **`workers/goldsky-rpc`** (see [workers/goldsky-rpc/README.md](workers/goldsky-rpc/README.md)). From repo root: `bun run deploy:goldsky-rpc` (after `bunx wrangler login` in that folder once). Dashboard + Netlify checklist and a **Claude Code / browser handoff prompt**: [workers/goldsky-rpc/CLOUDFLARE_HANDOFF.md](workers/goldsky-rpc/CLOUDFLARE_HANDOFF.md). Set **`VITE_RPC_PROXY_URL`** in Netlify to the worker `https://` URL at build time. The Goldsky secret lives only in Cloudflare (`wrangler secret put GOLDSKY_RPC_SECRET`), not in `VITE_*` bundle vars. The app uses **proxy → Alchemy → Infura** when `VITE_RPC_PROXY_URL` is set; otherwise **Alchemy → Infura** only (no Netlify RPC function).
 
-**Netlify deploy (apps/web):** In Site settings → Environment variables, add `GOLDSKY_RPC_SECRET`. `_redirects` sends `/api/rpc` to the `api-rpc` function. Ensure build has `VITE_ALCHEMY_API_KEY` and `VITE_INFURA_API_KEY` for RPC fallbacks.
+**Local dev with Goldsky:** Set `GOLDSKY_RPC_SECRET` (not `VITE_`) under `apps/web` and run the web app; the Vite dev server proxies `POST /api/rpc`. Alternatively run `bun run dev` in `workers/goldsky-rpc` with `.dev.vars` and point `VITE_RPC_PROXY_URL` at the local worker when testing that path.
+
+**Netlify:** `/api/discord/events` still uses a Netlify function if you keep that `_redirects` rule; remove it or move Discord to another host if you need zero function invocations site-wide.
 
 ---
 

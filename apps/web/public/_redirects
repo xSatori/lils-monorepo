@@ -1,6 +1,6 @@
 # API routes - must come before SPA fallback
 /api/discord/events    /.netlify/functions/api-discord-events    200
-/api/rpc               /.netlify/functions/api-rpc                200
+# RPC: no Netlify function (avoid per-invocation billing). Use Alchemy/Infura in app; optional VITE_RPC_PROXY_URL for external edge proxy.
 
 # External redirects
 /discord	https://discord.gg/X6gpawuBaX	302

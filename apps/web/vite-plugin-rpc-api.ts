@@ -28,7 +28,7 @@ const UPSTREAM_TIMEOUT_MS = 15_000;
 
 /**
  * Vite plugin to handle /api/rpc in development (Goldsky RPC proxy).
- * Production uses the Netlify function in functions/api/rpc.js.
+ * Production: no Netlify RPC proxy by default (Alchemy/Infura). Optional VITE_RPC_PROXY_URL for an external JSON-RPC proxy.
  */
 export function rpcApiPlugin(): Plugin {
   return {

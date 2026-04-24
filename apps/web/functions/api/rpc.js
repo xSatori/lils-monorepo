@@ -1,6 +1,6 @@
 /**
  * Netlify Function: JSON-RPC proxy for Goldsky EVM RPC.
- * For production: /api/rpc is redirected here via _redirects.
+ * Legacy copy; production does not route here from Netlify. Prefer netlify/functions or an external worker if you re-enable a hosted proxy.
  * Keeps GOLDSKY_RPC_SECRET server-side only; never exposed to client.
  *
  * Env (Netlify UI): GOLDSKY_RPC_SECRET

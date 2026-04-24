@@ -27,7 +27,7 @@ export interface ChainSpecificData {
   rpcUrl: {
     primary: string;
     fallback: string;
-    /** Optional second fallback for 3-way rotation (e.g. Goldsky proxy + Alchemy + Infura) */
+    /** Optional second fallback for 3-way rotation (e.g. external RPC proxy + Alchemy + Infura) */
     fallback2?: string;
   };
   addresses: {
@@ -74,37 +74,46 @@ export interface ChainSpecificData {
   };
 }
 
-export const mainnetPublicClient = createPublicClient({
-  chain: mainnet,
-  transport: fallback([
-    http(`${getAppBaseUrl()}/api/rpc`),
-    http(
-      `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
-    ),
-    http(
-      `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
-    ),
-  ]),
-});
+const alchemyMainnetHttp = `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`;
+const infuraMainnetHttp = `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`;
 
-/** Base URL for the app (no trailing slash). In browser uses current origin so localhost always hits same host/port and avoids loops. */
-function getAppBaseUrl(): string {
-  if (typeof window !== "undefined") return window.location.origin;
-  return import.meta.env.VITE_URL || "https://www.lilnouns.wtf";
+/**
+ * Ethereum mainnet RPC URLs. Default: Alchemy → Infura (no Netlify/serverless per request).
+ * Optional `VITE_RPC_PROXY_URL`: external JSON-RPC proxy (e.g. Cloudflare Worker with Goldsky secret).
+ */
+function getEthereumMainnetRpcUrls(): {
+  primary: string;
+  fallback: string;
+  fallback2?: string;
+} {
+  const proxy = import.meta.env.VITE_RPC_PROXY_URL?.trim();
+  if (proxy) {
+    return {
+      primary: proxy,
+      fallback: alchemyMainnetHttp,
+      fallback2: infuraMainnetHttp,
+    };
+  }
+  return { primary: alchemyMainnetHttp, fallback: infuraMainnetHttp };
 }
 
-/** Lil Nouns mainnet: Goldsky RPC via server-side proxy (secret never exposed), then Alchemy, then Infura. */
+function createEthereumMainnetTransport() {
+  const { primary, fallback: fallbackUrl, fallback2 } = getEthereumMainnetRpcUrls();
+  if (fallback2 != null) {
+    return fallback([http(primary), http(fallbackUrl), http(fallback2)]);
+  }
+  return fallback([http(primary), http(fallbackUrl)]);
+}
+
+export const mainnetPublicClient = createPublicClient({
+  chain: mainnet,
+  transport: createEthereumMainnetTransport(),
+});
+
+/** Lil Nouns mainnet: same transport stack as `mainnetPublicClient`. */
 const lilNounsMainnetPublicClient = createPublicClient({
   chain: mainnet,
-  transport: fallback([
-    http(`${getAppBaseUrl()}/api/rpc`),
-    http(
-      `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
-    ),
-    http(
-      `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
-    ),
-  ]),
+  transport: createEthereumMainnetTransport(),
 });
 
 
@@ -115,11 +124,7 @@ const lilNounsMainnetPublicClient = createPublicClient({
 const _NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
   [mainnet.id]: {
     chain: mainnet,
-    rpcUrl: {
-      primary: `${getAppBaseUrl()}/api/rpc`,
-      fallback: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
-      fallback2: `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
-    },
+    rpcUrl: getEthereumMainnetRpcUrls(),
     publicClient: mainnetPublicClient,
     addresses: {
       nounsToken: getAddress("0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03"),
@@ -251,11 +256,7 @@ const _NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
 export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
   [mainnet.id]: {
     chain: mainnet,
-    rpcUrl: {
-      primary: `${getAppBaseUrl()}/api/rpc`,
-      fallback: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
-      fallback2: `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
-    },
+    rpcUrl: getEthereumMainnetRpcUrls(),
     publicClient: lilNounsMainnetPublicClient,
     addresses: {
       nounsToken: getAddress("0x4b10701Bfd7BFEdc47d50562b76b436fbB5BdB3B"),

@@ -1,0 +1,10 @@
+# Deploy: cd workers/goldsky-rpc && bun run deploy
+# Secret: bunx wrangler secret put GOLDSKY_RPC_SECRET
+name = "lilnouns-goldsky-rpc"
+main = "src/index.ts"
+compatibility_date = "2024-12-30"
+
+# Optional: comma-separated browser origins (e.g. https://www.lilnouns.wtf,https://lilnouns.wtf).
+# If unset, Access-Control-Allow-Origin is *.
+# [vars]
+# ALLOWED_ORIGINS = "https://www.lilnouns.wtf"

@@ -126,6 +126,7 @@ export type VrgdaPoolSeed = {
   __typename?: 'VrgdaPoolSeed';
   id: Scalars['String']['output'];
   blockNumber: Scalars['BigInt']['output'];
+  nounId: Scalars['String']['output'];
   background: Scalars['Int']['output'];
   body: Scalars['Int']['output'];
   accessory: Scalars['Int']['output'];
@@ -228,6 +229,7 @@ export type GetVrgdaPoolSeedsQuery = {
       __typename?: 'VrgdaPoolSeed';
       id: string;
       blockNumber: string;
+      nounId: string;
       background: number;
       body: number;
       accessory: number;
@@ -249,6 +251,7 @@ export type GetVrgdaPoolSeedByBlockQuery = {
     __typename?: 'VrgdaPoolSeed';
     id: string;
     blockNumber: string;
+    nounId: string;
     background: number;
     body: number;
     accessory: number;
@@ -331,6 +334,7 @@ export const GetVrgdaPoolSeedsDocument = /*#__PURE__*/ `
     items {
       id
       blockNumber
+      nounId
       background
       body
       accessory
@@ -348,6 +352,7 @@ export const GetVrgdaPoolSeedByBlockDocument = /*#__PURE__*/ `
   vrgdaPoolSeed(blockNumber: $blockNumber) {
     id
     blockNumber
+    nounId
     background
     body
     accessory
