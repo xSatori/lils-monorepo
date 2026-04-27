@@ -19,6 +19,7 @@ const ALL_DESKTOP_NAV_ITEMS: NavItem[] = [
   { name: "Ideas", icon: "vote", href: "/candidates" },
   { name: "Topics", icon: "lightning", href: "/topics" },
   { name: "Learn", icon: "book", href: "/learn" },
+  { name: "Rounds", icon: "circleCheck", href: "/rounds" },
 ];
 
 const ALL_MOBILE_NAV_ITEMS: NavItem[] = [
@@ -27,6 +28,7 @@ const ALL_MOBILE_NAV_ITEMS: NavItem[] = [
   { name: "Vote", icon: "vote", href: "/vote" },
   { name: "Ideas", icon: "lightning", href: "/candidates" },
   { name: "Learn", icon: "book", href: "/learn" },
+  { name: "Rounds", icon: "circleCheck", href: "/rounds" },
   // { name: "Stats", icon: "stats", href: "/stats" },
 ];
 

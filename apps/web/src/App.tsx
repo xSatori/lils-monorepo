@@ -24,6 +24,7 @@ import VoteDetailPage from './pages/VoteDetailPage'
 import SuccessPage from './pages/SuccessPage'
 import VRGDAExplorePage from './pages/VRGDAExplorePage'
 import LearnPage from './pages/LearnPage'
+import RoundsPage from './pages/RoundsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProposalEditorScreen from './components/ProposalEditor/ProposalEditorScreen'
 
@@ -115,6 +116,8 @@ function App() {
               {/* <Route path="stats/treasury" element={<TreasuryStatsPage />} /> */}
               <Route path="learn" element={<LearnPage />} />
               <Route path="learn/:slug" element={<LearnPage />} />
+              <Route path="rounds" element={<RoundsPage />} />
+              <Route path="rounds/:round" element={<RoundsPage />} />
               <Route path="vrgda/explore" element={<VRGDAExplorePage />} />
               <Route path="traits" element={<TraitsPage />} />
               <Route path="brand" element={<BrandPage />} />
