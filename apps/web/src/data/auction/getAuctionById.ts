@@ -45,7 +45,7 @@ async function getAuctionByIdUncached(
 ): Promise<Auction | undefined> {
 
   const isNounderNoun = BigInt(id) % BigInt(10) == BigInt(0)
-  const isNounsDAONoun = BigInt(id) % BigInt(11) == BigInt(0)
+  const isNounsDAONoun = BigInt(id) % BigInt(10) == BigInt(1)
   const isVRGDANoun = BigInt(id) >= VRGDA_AUCTION_CUTOFF;
 
   // Create mock auctions for Nounder/NounsDAO nouns or any VRGDA noun

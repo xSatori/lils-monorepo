@@ -38,11 +38,18 @@ export default function NounCard({
   const isInView = useInView(ref, { margin: "500px 0px" });
   const minFallbackDuration = 800; // Minimum time to show skeleton
   
-  const isTreasuryNoun = useMemo(
-    () => noun.owner == CHAIN_CONFIG.addresses.nounsTreasury,
-    [noun.owner],
-  );
+  const nounIdNum = parseInt(noun.id);
+  // ID-based: allocation nouns keep their badge regardless of current owner
+  // (post-VRGDA, both nounder and DAO allocations land in the Lil Nouns treasury)
+  const isNounderAllocation = !isNaN(nounIdNum) && nounIdNum % 10 === 0;
+  const isNounsDAOAllocation = !isNaN(nounIdNum) && nounIdNum % 10 === 1;
 
+  // Treasury badge only for non-allocation nouns actively held by the treasury
+  const isTreasuryNoun = useMemo(
+    () => !isNounderAllocation && !isNounsDAOAllocation &&
+          noun.owner == CHAIN_CONFIG.addresses.nounsTreasury,
+    [noun.owner, isNounderAllocation, isNounsDAOAllocation],
+  );
 
   const isAuctionNoun = useMemo(() => {
     return isAddressEqual(
@@ -144,8 +151,36 @@ export default function NounCard({
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                This Noun is held by the treasury. <br />
+                This Lil Noun is held by the Lil Nouns treasury. <br />
                 You can create a swap offer for this Noun.
+              </TooltipContent>
+            </Tooltip>
+          )}
+
+          {isNounderAllocation && enableHover && (
+            <Tooltip>
+              <TooltipTrigger className="absolute left-2 top-2 z-[6]" asChild>
+                <div className="rounded-full bg-white p-[5px] shadow-md">
+                  <Icon icon="treasury" size={size ? size / 10 : 20} className="fill-purple-500" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                Lil Nounder reward. <br />
+                This Lil Noun was automatically sent to the Lil Nounders&apos; multisig.
+              </TooltipContent>
+            </Tooltip>
+          )}
+
+          {isNounsDAOAllocation && enableHover && (
+            <Tooltip>
+              <TooltipTrigger className="absolute left-2 top-2 z-[6]" asChild>
+                <div className="rounded-full bg-white p-[5px] shadow-md">
+                  <Icon icon="treasury" size={size ? size / 10 : 20} className="fill-blue-500" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                Nouns DAO reward. <br />
+                This Lil Noun was automatically sent to the Nouns DAO treasury.
               </TooltipContent>
             </Tooltip>
           )}

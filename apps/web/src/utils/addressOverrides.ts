@@ -27,7 +27,7 @@ function initializeAddressOverrides() {
 
     ADDRESS_OVERRIDES = {
       [treasury.toLowerCase()]: {
-        name: "The Nouns Treasury",
+        name: "Lil Nouns Treasury",
         avatar: "/nouns-treasury.png",
       },
       [auctionHouse.toLowerCase()]: {
