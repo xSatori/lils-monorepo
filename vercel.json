@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "bun run build",
+  "outputDirectory": "apps/web/dist",
+  "redirects": [
+    {
+      "source": "/discord",
+      "destination": "https://discord.gg/X6gpawuBaX",
+      "permanent": false
+    },
+    {
+      "source": "/docs",
+      "destination": "https://nouns.notion.site/Explore-Nouns-a2a9dceeb1d54e10b9cbf3f931c2266f",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
