@@ -13,6 +13,7 @@ import { Separator } from "../ui/separator";
 import { MessageSquare } from "lucide-react";
 import { formatTimeLeft } from "@/utils/format";
 import { Button } from "../ui/button";
+import TopicMarkdownPreview from "../Topic/TopicMarkdownPreview";
 
 interface TopicsDialogProps {
   open: boolean;
@@ -42,9 +43,9 @@ function TopicCard({ topic }: { topic: Topic }) {
     >
       <div className="flex w-full flex-col gap-3">
         <h3 className="heading-6">{topic.title}</h3>
-        <p className="text-content-secondary paragraph-sm line-clamp-2">
+        <TopicMarkdownPreview title={topic.title} className="line-clamp-2">
           {topic.description}
-        </p>
+        </TopicMarkdownPreview>
         
         {/* Sentiment Bar */}
         {totalSignatures > 0 && (
@@ -66,7 +67,7 @@ function TopicCard({ topic }: { topic: Topic }) {
             </span>
           </div>
         )}
-        
+
         <div className="flex items-center gap-4 text-content-secondary label-sm">
           <span className="flex items-center gap-1">
             <MessageSquare className="w-4 h-4" />
@@ -145,4 +146,3 @@ export default function TopicsDialog({ open, onOpenChange }: TopicsDialogProps) 
     </DrawerDialog>
   );
 }
-

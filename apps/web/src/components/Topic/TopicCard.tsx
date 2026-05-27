@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 import { formatTimeLeft } from "@/utils/format";
 import { Topic } from "@/data/goldsky/governance/getTopics";
+import TopicMarkdownPreview from "./TopicMarkdownPreview";
 
 interface TopicCardProps {
   topic: Topic;
@@ -30,9 +31,9 @@ export default function TopicCard({ topic }: TopicCardProps) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col gap-2">
           <h3 className="heading-5">{topic.title}</h3>
-          <p className="text-content-secondary paragraph-sm line-clamp-3">
+          <TopicMarkdownPreview title={topic.title}>
             {topic.description}
-          </p>
+          </TopicMarkdownPreview>
         </div>
         {topic.canceled && (
           <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
@@ -77,4 +78,3 @@ export default function TopicCard({ topic }: TopicCardProps) {
     </Link>
   );
 }
-
