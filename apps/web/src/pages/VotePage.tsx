@@ -416,7 +416,7 @@ function CandidatesCard() {
   const isVersion5 = isDaoVersion5()
   const { data: candidates = [], isLoading } = useQuery({
     queryKey: ['candidates'],
-    queryFn: () => getProposalIdeas(50),
+    queryFn: () => getProposalIdeas(1000),
     staleTime: 30_000,
     gcTime: 5 * 60 * 1000,
   })
@@ -509,7 +509,7 @@ function TopDiscussionsCard() {
   const isVersion5 = isDaoVersion5()
   const { data: topics = [], isLoading } = useQuery({
     queryKey: ['topics'],
-    queryFn: () => getTopics(200),
+    queryFn: () => getTopics(1000),
     staleTime: 30_000,
     gcTime: 5 * 60 * 1000,
   })

@@ -23,7 +23,7 @@ function CandidateFeed({
 }) {
   const { data: candidates = [], isLoading } = useQuery({
     queryKey: ['candidates'],
-    queryFn: () => getProposalIdeas(200), // Fetch first 200 for faster initial load
+    queryFn: () => getProposalIdeas(1000),
     staleTime: 30_000, // 30 seconds - data is fresh for 30s
     gcTime: 5 * 60 * 1000, // 5 minutes - cache for 5 minutes
   })

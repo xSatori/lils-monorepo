@@ -1,4 +1,6 @@
-type CandidateKind = "all" | "topic";
+type CandidateKind = "all" | "proposal" | "topic";
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export interface LilCampCandidateSignature {
   id: string;
@@ -246,10 +248,27 @@ function normalizeCandidate(candidate: Record<string, any>): LilCampCandidate {
   };
 }
 
-function isTopicCandidate(candidate: LilCampCandidate): boolean {
+function isZeroValue(value: string | number | null | undefined): boolean {
   return (
-    (candidate.targets?.length || 0) === 0 &&
-    (candidate.calldatas?.length || 0) === 0
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    value.toString() === "0"
+  );
+}
+
+export function isTopicCandidate(candidate: LilCampCandidate): boolean {
+  const targets = candidate.targets || [];
+  const values = candidate.values || [];
+  const calldatas = candidate.calldatas || [];
+
+  if (targets.length === 0 && calldatas.length === 0) return true;
+
+  return (
+    targets.length === 1 &&
+    targets[0]?.toLowerCase() === ZERO_ADDRESS &&
+    isZeroValue(values[0]) &&
+    (calldatas.length === 0 || calldatas[0] === "0x" || calldatas[0] === "")
   );
 }
 
@@ -274,7 +293,12 @@ export async function fetchLilCampCandidates(
     normalizeCandidate(candidate as Record<string, any>),
   );
 
-  return kind === "topic" ? candidates.filter(isTopicCandidate) : candidates;
+  if (kind === "topic") return candidates.filter(isTopicCandidate);
+  if (kind === "proposal") {
+    return candidates.filter((candidate) => !isTopicCandidate(candidate));
+  }
+
+  return candidates;
 }
 
 export async function fetchLilCampCandidateById(
@@ -307,7 +331,12 @@ export async function fetchLilCampCandidateBySlug(
     ? normalizeCandidate(byQuery.candidate as Record<string, any>)
     : null;
 
-  if (queryCandidate && (kind !== "topic" || isTopicCandidate(queryCandidate))) {
+  if (
+    queryCandidate &&
+    (kind === "all" ||
+      (kind === "topic" && isTopicCandidate(queryCandidate)) ||
+      (kind === "proposal" && !isTopicCandidate(queryCandidate)))
+  ) {
     return queryCandidate;
   }
 
@@ -321,7 +350,9 @@ export async function fetchLilCampCandidateBySlug(
     ? normalizeCandidate(rawPathCandidate as Record<string, any>)
     : null;
 
-  return normalized && (kind !== "topic" || isTopicCandidate(normalized))
-    ? normalized
-    : null;
+  if (!normalized) return null;
+  if (kind === "topic" && !isTopicCandidate(normalized)) return null;
+  if (kind === "proposal" && isTopicCandidate(normalized)) return null;
+
+  return normalized;
 }

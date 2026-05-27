@@ -113,7 +113,7 @@ function mapCandidateToIdea(candidate: LilCampCandidate): ProposalIdea | null {
 
 export async function getProposalIdeas(limit: number = 1000): Promise<ProposalIdea[]> {
   try {
-    const candidates = await fetchLilCampCandidates(limit);
+    const candidates = await fetchLilCampCandidates(limit, "proposal");
     const ideas = candidates
       .map(mapCandidateToIdea)
       .filter((idea): idea is ProposalIdea => idea !== null);

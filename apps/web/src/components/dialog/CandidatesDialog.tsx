@@ -21,7 +21,7 @@ interface CandidatesDialogProps {
 export default function CandidatesDialog({ open, onOpenChange }: CandidatesDialogProps) {
   const { data: candidates = [], isLoading } = useQuery({
     queryKey: ['candidates'],
-    queryFn: () => getProposalIdeas(200),
+    queryFn: () => getProposalIdeas(1000),
     staleTime: 30_000,
     gcTime: 5 * 60 * 1000,
     enabled: open, // Only fetch when dialog is open

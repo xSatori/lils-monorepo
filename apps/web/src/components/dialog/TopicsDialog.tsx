@@ -87,7 +87,7 @@ function TopicCard({ topic }: { topic: Topic }) {
 export default function TopicsDialog({ open, onOpenChange }: TopicsDialogProps) {
   const { data: topics = [], isLoading } = useQuery({
     queryKey: ['topics'],
-    queryFn: () => getTopics(200),
+    queryFn: () => getTopics(1000),
     staleTime: 30_000,
     gcTime: 5 * 60 * 1000,
     enabled: open, // Only fetch when dialog is open

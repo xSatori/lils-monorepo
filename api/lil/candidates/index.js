@@ -10,12 +10,39 @@ function parsePositiveInt(value, fallback, max) {
   return Math.min(parsed, max);
 }
 
-async function fetchCandidateBySlug(slug, kind) {
-  const topicFilter =
-    kind === "topic"
-      ? "AND COALESCE(cardinality(c.targets), 0) = 0 AND COALESCE(cardinality(c.calldatas), 0) = 0"
-      : "";
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
+function isZeroValue(value) {
+  if (value === null || value === undefined || value === "") return true;
+  return String(value) === "0";
+}
+
+function normalizeArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function isTopicCandidate(candidate) {
+  const targets = normalizeArray(candidate.targets);
+  const values = normalizeArray(candidate.values);
+  const calldatas = normalizeArray(candidate.calldatas);
+
+  if (targets.length === 0 && calldatas.length === 0) return true;
+
+  return (
+    targets.length === 1 &&
+    targets[0]?.toLowerCase() === ZERO_ADDRESS &&
+    isZeroValue(values[0]) &&
+    (calldatas.length === 0 || calldatas[0] === "0x" || calldatas[0] === "")
+  );
+}
+
+function matchesKind(candidate, kind) {
+  if (kind === "topic") return isTopicCandidate(candidate);
+  if (kind === "proposal") return !isTopicCandidate(candidate);
+  return true;
+}
+
+async function fetchCandidateBySlug(slug, kind) {
   const rows = await queryLilPonder(
     `
     SELECT c.id, c.slug, c.proposer, c.title, c.description,
@@ -27,7 +54,6 @@ async function fetchCandidateBySlug(slug, kind) {
     FROM ponder_live.lil_candidates c
     LEFT JOIN ponder_live.ens_names e ON LOWER(c.proposer) = LOWER(e.address)
     WHERE c.slug = $1
-      ${topicFilter}
     LIMIT 1
     `,
     [slug],
@@ -36,6 +62,8 @@ async function fetchCandidateBySlug(slug, kind) {
   if (rows.length === 0) return null;
 
   const candidate = rows[0];
+  if (!matchesKind(candidate, kind)) return null;
+
   const [signatures, feedback, versions] = await Promise.all([
     queryLilPonder(
       `
@@ -87,10 +115,15 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const limit = parsePositiveInt(req.query.limit || req.query.first, 20, 200);
+  const limit = parsePositiveInt(req.query.limit || req.query.first, 20, 1000);
   const offset = parsePositiveInt(req.query.offset || req.query.skip, 0, 10_000);
   const slug = typeof req.query.slug === "string" ? req.query.slug : "";
-  const kind = req.query.kind === "topic" ? "topic" : "all";
+  const kind =
+    req.query.kind === "topic"
+      ? "topic"
+      : req.query.kind === "proposal"
+        ? "proposal"
+        : "all";
 
   try {
     if (slug) {
@@ -104,26 +137,27 @@ module.exports = async function handler(req, res) {
       return;
     }
 
-    const topicFilter =
-      kind === "topic"
-        ? "AND COALESCE(cardinality(c.targets), 0) = 0 AND COALESCE(cardinality(c.calldatas), 0) = 0"
-        : "";
+    const queryLimit =
+      kind === "all" ? limit : Math.min(Math.max(limit * 5, limit), 1000);
 
-    const candidates = await queryLilPonder(
+    const rows = await queryLilPonder(
       `
       SELECT c.id, c.slug, c.proposer, c.title, c.description,
+             c.targets, c."values", c.signatures AS signatures_list, c.calldatas,
+             c.encoded_proposal_hash,
              c.created_timestamp, c.last_updated_timestamp, c.canceled,
              c.signature_count, c.proposal_id_to_update, c.block_number,
              e.name as proposer_ens
       FROM ponder_live.lil_candidates c
       LEFT JOIN ponder_live.ens_names e ON LOWER(c.proposer) = LOWER(e.address)
-      WHERE c.canceled = false
-        ${topicFilter}
       ORDER BY c.created_timestamp DESC NULLS LAST
       LIMIT $1 OFFSET $2
       `,
-      [limit, offset],
+      [queryLimit, offset],
     );
+    const candidates = rows
+      .filter((candidate) => matchesKind(candidate, kind))
+      .slice(0, limit);
 
     sendJson(
       res,
