@@ -23,6 +23,7 @@ const DEFAULT_LIL_SCHEMAS = [
 ].filter(Boolean);
 
 let pool;
+let selectedSchema;
 
 function getDatabaseUrl() {
   for (const key of DATABASE_URL_KEYS) {
@@ -99,14 +100,36 @@ function isMissingRelationError(error) {
 }
 
 async function queryLilPonder(query, values = []) {
+  const schema = await getSelectedLilSchema();
+  const rewrittenQuery = query.replaceAll("ponder_live.", `${schema}.`);
+  const result = await getPool().query(rewrittenQuery, values);
+  return result.rows;
+}
+
+async function getSelectedLilSchema() {
+  if (selectedSchema) return selectedSchema;
+
   const schemas = getLilSchemas();
+  const candidates = [];
   let lastError;
 
   for (const schema of schemas) {
     try {
-      const rewrittenQuery = query.replaceAll("ponder_live.", `${schema}.`);
-      const result = await getPool().query(rewrittenQuery, values);
-      return result.rows;
+      const result = await getPool().query(
+        `
+        SELECT
+          COUNT(*)::int AS candidate_count,
+          MAX(created_timestamp)::numeric AS newest_candidate_timestamp
+        FROM ${schema}.lil_candidates
+        `,
+      );
+      candidates.push({
+        schema,
+        candidateCount: Number(result.rows[0]?.candidate_count || 0),
+        newestCandidateTimestamp: Number(
+          result.rows[0]?.newest_candidate_timestamp || 0,
+        ),
+      });
     } catch (error) {
       lastError = error;
 
@@ -116,7 +139,20 @@ async function queryLilPonder(query, values = []) {
     }
   }
 
-  throw lastError || new Error("No Lil Camp Ponder schemas configured");
+  if (candidates.length === 0) {
+    throw lastError || new Error("No Lil Camp Ponder schemas configured");
+  }
+
+  candidates.sort((a, b) => {
+    if (b.newestCandidateTimestamp !== a.newestCandidateTimestamp) {
+      return b.newestCandidateTimestamp - a.newestCandidateTimestamp;
+    }
+
+    return b.candidateCount - a.candidateCount;
+  });
+
+  selectedSchema = candidates[0].schema;
+  return selectedSchema;
 }
 
 function sendJson(res, statusCode, body, cacheControl) {

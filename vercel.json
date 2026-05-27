@@ -2,26 +2,31 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bun run build",
   "outputDirectory": "apps/web/dist",
-  "redirects": [
+  "routes": [
     {
-      "source": "/discord",
-      "destination": "https://discord.gg/X6gpawuBaX",
-      "permanent": false
+      "src": "/discord",
+      "status": 307,
+      "headers": {
+        "Location": "https://discord.gg/X6gpawuBaX"
+      }
     },
     {
-      "source": "/docs",
-      "destination": "https://nouns.notion.site/Explore-Nouns-a2a9dceeb1d54e10b9cbf3f931c2266f",
-      "permanent": false
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/ponder/graphql",
-      "destination": "https://graphql.lilnouns.wtf/"
+      "src": "/docs",
+      "status": 307,
+      "headers": {
+        "Location": "https://nouns.notion.site/Explore-Nouns-a2a9dceeb1d54e10b9cbf3f931c2266f"
+      }
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/api/ponder/graphql",
+      "dest": "https://graphql.lilnouns.wtf/"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
