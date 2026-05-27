@@ -17,8 +17,8 @@ const DEFAULT_LIL_SCHEMAS = [
   process.env.LIL_PONDER_SCHEMA,
   process.env.PONDER_LIVE_SCHEMA,
   process.env.PONDER_SCHEMA,
-  "ponder_live_lilcamp_v2",
   "ponder_live_lilcamp",
+  "ponder_live_lilcamp_v2",
   "ponder_live",
 ].filter(Boolean);
 
