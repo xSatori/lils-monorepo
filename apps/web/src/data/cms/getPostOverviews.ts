@@ -1,6 +1,6 @@
 import { graphql } from "@/data/generated/cms";
 import { graphQLFetch } from "../utils/graphQLFetch";
-import { normalizeCmsMediaUrl } from "@/utils/cmsUrl";
+import { getCmsGraphqlUrl, normalizeCmsMediaUrl } from "@/utils/cmsUrl";
 
 const query = graphql(/* GraphQL */ `
   query GetPosts {
@@ -26,7 +26,7 @@ const query = graphql(/* GraphQL */ `
 export async function getPostOverviews() {
   try {
     const data = await graphQLFetch(
-      import.meta.env.VITE_CMS_URL!,
+      getCmsGraphqlUrl(),
       query,
       {},
       {

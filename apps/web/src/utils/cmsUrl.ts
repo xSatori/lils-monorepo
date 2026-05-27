@@ -1,6 +1,11 @@
+const DEFAULT_CMS_GRAPHQL_URL = 'https://cms.lilnouns.wtf/api/graphql';
+
+export function getCmsGraphqlUrl(): string {
+  return (import.meta.env.VITE_CMS_URL || DEFAULT_CMS_GRAPHQL_URL).trim();
+}
+
 export function getCmsOrigin(): string {
-  const url = (import.meta.env.VITE_CMS_URL || '').trim();
-  if (!url) return '';
+  const url = getCmsGraphqlUrl();
   try {
     const u = new URL(url);
     // If pointing directly to /api/graphql, drop the path

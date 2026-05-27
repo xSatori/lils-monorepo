@@ -1,153 +1,10 @@
-import { graphQLFetch } from "@/data/utils/graphQLFetch";
-import { CHAIN_CONFIG, NOUNS_DAO_GOLDSKY_URL } from "@/config";
 import { getAddress } from "viem";
-import { getTopicsOnchain } from "@/data/nounsDaoData/getTopicsOnchain";
-
-// Helpers to resolve endpoints (prefer Goldsky, fallback to The Graph)
-const getGoldskyUrls = () => CHAIN_CONFIG.goldskyUrl;
-const getGraphUrls = () => CHAIN_CONFIG.subgraphUrl;
-
-/** Topics exist only on Lil Nouns subgraph; Nouns DAO subgraph has no `topics` field */
-function isTopicsSupportedSubgraph(): boolean {
-  const primary = getGoldskyUrls().primary;
-  return primary !== NOUNS_DAO_GOLDSKY_URL;
-}
-
-const query = `
-  query GetTopics($first: Int = 1000) {
-    topics(
-      first: $first
-      orderBy: createdTimestamp
-      orderDirection: desc
-    ) {
-      id
-      creator {
-        id
-      }
-      slug
-      title
-      description
-      encodedTopicHash
-      canceled
-      createdTimestamp
-      createdBlock
-      createdTransactionHash
-      lastUpdatedTimestamp
-      lastUpdatedBlock
-      lastUpdatedTransactionHash
-    }
-  }
-`;
-
-const batchFeedbackQuery = `
-  query GetBatchTopicFeedback($topicIds: [ID!]!) {
-    topicFeedbacks(
-      where: {
-        topic_in: $topicIds
-      }
-      orderBy: createdTimestamp
-      orderDirection: desc
-    ) {
-      id
-      topic {
-        id
-      }
-      voter {
-        id
-      }
-      support
-      reason
-      voteReplies {
-        reply
-        quotedReason
-        replyVote {
-          id
-          voter { id }
-          support
-          reason
-        }
-      }
-      createdTimestamp
-      createdBlock
-      createdTransactionHash
-    }
-  }
-`;
-
-const batchSignaturesQuery = `
-  query GetBatchTopicSignatures($topicIds: [ID!]!) {
-    topicSignatures(
-      where: {
-        topic_in: $topicIds
-      }
-      orderBy: createdTimestamp
-      orderDirection: desc
-    ) {
-      id
-      topic {
-        id
-      }
-      signer {
-        id
-      }
-      sig
-      expirationTimestamp
-      support
-      sigDigest
-      reason
-      createdTimestamp
-      createdBlock
-      createdTransactionHash
-    }
-  }
-`;
-
-const feedbackQuery = `
-  query GetTopicFeedback($topicId: ID!) {
-    topicFeedbacks(
-      where: {
-        topic: $topicId
-      }
-      orderBy: createdTimestamp
-      orderDirection: desc
-    ) {
-      id
-      voter {
-        id
-      }
-      support
-      reason
-      createdTimestamp
-      createdBlock
-      createdTransactionHash
-    }
-  }
-`;
-
-const signaturesQuery = `
-  query GetTopicSignatures($topicId: ID!) {
-    topicSignatures(
-      where: {
-        topic: $topicId
-      }
-      orderBy: createdTimestamp
-      orderDirection: desc
-    ) {
-      id
-      signer {
-        id
-      }
-      sig
-      expirationTimestamp
-      support
-      sigDigest
-      reason
-      createdTimestamp
-      createdBlock
-      createdTransactionHash
-    }
-  }
-`;
+import {
+  fetchLilCampCandidateById,
+  fetchLilCampCandidateBySlug,
+  fetchLilCampCandidates,
+  LilCampCandidate,
+} from "@/data/ponder/lilCampApi";
 
 export interface Topic {
   id: string;
@@ -170,7 +27,7 @@ export interface Topic {
 export interface TopicFeedback {
   id: string;
   voterAddress: string;
-  support: number; // 0=against, 1=for, 2=abstain
+  support: number;
   reason: string;
   voteReplies?: Array<{
     reply: string;
@@ -192,422 +49,141 @@ export interface TopicSignature {
   signerAddress: string;
   sig: string;
   expirationTimestamp: number;
-  support: number; // 0=against, 1=for, 2=abstain
+  support: number;
   sigDigest: string;
   reason: string;
   createdTimestamp: number;
   createdBlock: number;
   createdTransactionHash: string;
-  status: 'valid' | 'expired';
+  status: "valid" | "expired";
 }
 
-interface TopicsResponse {
-  topics: Array<{
-    id: string;
-    creator: {
-      id: string;
-    };
-    slug: string;
-    title: string;
-    description: string;
-    encodedTopicHash: string;
-    canceled: boolean;
-    createdTimestamp: string;
-    createdBlock: string;
-    createdTransactionHash: string;
-    lastUpdatedTimestamp: string;
-    lastUpdatedBlock: string;
-    lastUpdatedTransactionHash: string;
-  }>;
+function toNumber(value: string | number | null | undefined): number {
+  if (value === null || value === undefined || value === "") {
+    return 0;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
-interface TopicFeedbackResponse {
-  topicFeedbacks: Array<{
-    id: string;
-    topic?: {
-      id: string;
-    };
-    voter: {
-      id: string;
-    };
-    support: number;
-    reason: string;
-    voteReplies?: Array<{
-      reply: string;
-      quotedReason?: string | null;
-      replyVote: {
-        id: string;
-        voter: { id: string };
-        support?: number | null;
-        reason?: string | null;
-      };
-    }>;
-    createdTimestamp: string;
-    createdBlock: string;
-    createdTransactionHash: string;
-  }>;
-}
-
-interface TopicSignaturesResponse {
-  topicSignatures: Array<{
-    id: string;
-    topic?: {
-      id: string;
-    };
-    signer: {
-      id: string;
-    };
-    sig: string;
-    expirationTimestamp: string;
-    support: number;
-    sigDigest: string;
-    reason: string;
-    createdTimestamp: string;
-    createdBlock: string;
-    createdTransactionHash: string;
-  }>;
-}
-
-/**
- * Fetch all topics from Goldsky subgraph.
- * Topics are a Lil Nouns–only feature; when config points at Nouns DAO subgraph, returns [].
- */
-export async function getTopics(limit: number = 1000): Promise<Topic[]> {
+function mapCandidateToTopic(candidate: LilCampCandidate): Topic | null {
   try {
-    if (!isTopicsSupportedSubgraph()) {
-      return [];
-    }
-    // Try Goldsky first, fall back to decentralized subgraph if needed
-    let data = await graphQLFetch(
-      getGoldskyUrls().primary,
-      query,
-      { first: limit },
-      { cache: "no-cache" }
-    ) as TopicsResponse | null;
+    const createdTimestamp = toNumber(candidate.created_timestamp);
+    const lastUpdatedTimestamp =
+      toNumber(candidate.last_updated_timestamp) || createdTimestamp;
+    const createdBlock = toNumber(candidate.block_number);
 
-    if (!data && getGoldskyUrls().fallback) {
-      data = await graphQLFetch(
-        getGoldskyUrls().fallback,
-        query,
-        { first: limit },
-        { cache: "no-cache" }
-      ) as TopicsResponse | null;
-    }
-
-    if (!data && getGraphUrls()?.primary) {
-      data = await graphQLFetch(
-        getGraphUrls().primary,
-        query,
-        { first: limit },
-        { cache: "no-cache" }
-      ) as TopicsResponse | null;
-    }
-
-    if (!data && getGraphUrls()?.fallback) {
-      data = await graphQLFetch(
-        getGraphUrls().fallback,
-        query,
-        { first: limit },
-        { cache: "no-cache" }
-      ) as TopicsResponse | null;
-    }
-
-    if (!data?.topics || data.topics.length === 0) {
-      const onchainTopics = await getTopicsOnchain();
-      return onchainTopics;
-    }
-
-    // Fetch all feedback and signatures in batch queries (much faster than N+1 queries)
-    const topicIds = data.topics.map(t => t.id);
-    let allFeedback: Record<string, TopicFeedback[]> = {};
-    let allSignatures: Record<string, TopicSignature[]> = {};
-
-    // Fetch feedback in batch
-    try {
-      const feedbackData = await graphQLFetch(
-        getGoldskyUrls().primary,
-        batchFeedbackQuery,
-        { topicIds },
-        { cache: "no-cache" }
-      ) as TopicFeedbackResponse;
-
-      // Group feedback by topic ID
-      (feedbackData?.topicFeedbacks || []).forEach(fb => {
-        const topicId = fb.topic?.id || '';
-        if (!allFeedback[topicId]) {
-          allFeedback[topicId] = [];
-        }
-        allFeedback[topicId].push({
-          id: fb.id,
-          voterAddress: fb.voter.id,
-          support: fb.support,
-          reason: fb.reason || '',
-          voteReplies: fb.voteReplies?.map((vr) => ({
-            reply: vr.reply,
-            quotedReason: vr.quotedReason ?? undefined,
-            replyVote: {
-              id: vr.replyVote.id,
-              voter: { id: vr.replyVote.voter.id },
-              support: vr.replyVote.support ?? fb.support,
-              reason: vr.replyVote.reason ?? '',
-            },
-          })) || [],
-          createdTimestamp: parseInt(fb.createdTimestamp),
-          createdBlock: parseInt(fb.createdBlock),
-          createdTransactionHash: fb.createdTransactionHash,
-        });
-      });
-    } catch (error) {
-      console.error('Failed to fetch batch feedback:', error);
-    }
-
-    // Fetch signatures in batch
-    try {
-      const signaturesData = await graphQLFetch(
-        getGoldskyUrls().primary,
-        batchSignaturesQuery,
-        { topicIds },
-        { cache: "no-cache" }
-      ) as TopicSignaturesResponse;
-
-      // Group signatures by topic ID
-      (signaturesData?.topicSignatures || []).forEach(sig => {
-        const topicId = sig.topic?.id || '';
-        if (!allSignatures[topicId]) {
-          allSignatures[topicId] = [];
-        }
-
-        const expirationTimestamp = parseInt(sig.expirationTimestamp);
-        const isExpired = expirationTimestamp * 1000 < Date.now();
-
-        allSignatures[topicId].push({
-          id: sig.id,
-          signerAddress: sig.signer.id,
-          sig: sig.sig,
-          expirationTimestamp,
-          support: sig.support,
-          sigDigest: sig.sigDigest,
-          reason: sig.reason || '',
-          createdTimestamp: parseInt(sig.createdTimestamp),
-          createdBlock: parseInt(sig.createdBlock),
-          createdTransactionHash: sig.createdTransactionHash,
-          status: isExpired ? 'expired' : 'valid',
-        });
-      });
-    } catch (error) {
-      console.error('Failed to fetch batch signatures:', error);
-    }
-
-    // Convert topics to Topic format; filter out malformed records missing creator
-    const topics = data.topics
-      .filter((topic) => !!topic.creator?.id)
-      .map((topic) => {
-        let creator: string;
-        try {
-          creator = getAddress(topic.creator.id);
-        } catch (e) {
-          console.warn('Skipping topic with invalid creator address', topic.id, topic.creator?.id);
-          return null;
-        }
+    const signatures: TopicSignature[] = (candidate.signatures || []).map(
+      (signature) => {
+        const expirationTimestamp = toNumber(signature.expiration_timestamp);
+        const expired = expirationTimestamp > 0 && expirationTimestamp * 1000 < Date.now();
 
         return {
-          id: topic.id,
-          creator,
-          slug: topic.slug,
-          title: topic.title,
-          description: topic.description,
-          encodedTopicHash: topic.encodedTopicHash,
-          canceled: topic.canceled,
-          createdTimestamp: parseInt(topic.createdTimestamp),
-          createdBlock: parseInt(topic.createdBlock),
-          createdTransactionHash: topic.createdTransactionHash,
-          lastUpdatedTimestamp: parseInt(topic.lastUpdatedTimestamp),
-          lastUpdatedBlock: parseInt(topic.lastUpdatedBlock),
-          lastUpdatedTransactionHash: topic.lastUpdatedTransactionHash,
-          feedback: allFeedback[topic.id] || [],
-          signatures: allSignatures[topic.id] || [],
+          id: signature.id,
+          signerAddress: getAddress(signature.signer),
+          sig: signature.sig,
+          expirationTimestamp,
+          support: 1,
+          sigDigest: "",
+          reason: signature.reason || "",
+          createdTimestamp: toNumber(signature.block_timestamp),
+          createdBlock,
+          createdTransactionHash: "0x",
+          status: expired ? "expired" : "valid",
         };
-      })
-      .filter((t): t is Topic => t !== null);
+      },
+    );
 
-    return topics;
-  } catch (error) {
-    console.error('Failed to fetch topics:', error);
-    return [];
-  }
-}
-
-const singleTopicQuery = `
-  query GetTopic($id: ID!) {
-    topic(id: $id) {
-      id
-      creator {
-        id
-      }
-      slug
-      title
-      description
-      encodedTopicHash
-      canceled
-      createdTimestamp
-      createdBlock
-      createdTransactionHash
-      lastUpdatedTimestamp
-      lastUpdatedBlock
-      lastUpdatedTransactionHash
-    }
-  }
-`;
-
-/**
- * Fetch a single topic by ID from Goldsky subgraph
- */
-export async function getTopic(id: string): Promise<Topic | null> {
-  try {
-    // Try Goldsky first, fallback to decentralized subgraph
-    let data = await graphQLFetch(
-      getGoldskyUrls().primary,
-      singleTopicQuery,
-      { id },
-      { cache: "no-cache" }
-    ) as { topic: TopicsResponse['topics'][0] | null } | null;
-
-    if (!data && getGoldskyUrls().fallback) {
-      data = await graphQLFetch(
-        getGoldskyUrls().fallback,
-        singleTopicQuery,
-        { id },
-        { cache: "no-cache" }
-      ) as { topic: TopicsResponse['topics'][0] | null } | null;
-    }
-
-    if (!data && getGraphUrls()?.primary) {
-      data = await graphQLFetch(
-        getGraphUrls().primary,
-        singleTopicQuery,
-        { id },
-        { cache: "no-cache" }
-      ) as { topic: TopicsResponse['topics'][0] | null } | null;
-    }
-
-    if (!data && getGraphUrls()?.fallback) {
-      data = await graphQLFetch(
-        getGraphUrls().fallback,
-        singleTopicQuery,
-        { id },
-        { cache: "no-cache" }
-      ) as { topic: TopicsResponse['topics'][0] | null } | null;
-    }
-
-    if (!data?.topic) {
-      const onchainTopics = await getTopicsOnchain();
-      const fallback = onchainTopics.find(t => t.id === id);
-      return fallback || null;
-    }
-
-    const topic = data.topic;
-
-    // Fetch feedback for this topic
-    let feedback: TopicFeedback[] = [];
-    try {
-      const feedbackData = await graphQLFetch(
-        getGoldskyUrls().primary,
-        feedbackQuery,
-        { topicId: topic.id },
-        { cache: "no-cache" }
-      ) as TopicFeedbackResponse;
-
-      feedback = (feedbackData?.topicFeedbacks || []).map(fb => ({
-        id: fb.id,
-        voterAddress: fb.voter.id,
-        support: fb.support,
-        reason: fb.reason || '',
-        createdTimestamp: parseInt(fb.createdTimestamp),
-        createdBlock: parseInt(fb.createdBlock),
-        createdTransactionHash: fb.createdTransactionHash,
-      }));
-    } catch (error) {
-      console.error('Failed to fetch feedback for topic:', error);
-    }
-
-    // Fetch signatures for this topic
-    let signatures: TopicSignature[] = [];
-    try {
-        const signaturesData = await graphQLFetch(
-          getGoldskyUrls().primary,
-          signaturesQuery,
-          { topicId: topic.id },
-          { cache: "no-cache" }
-        ) as TopicSignaturesResponse;
-
-        signatures = (signaturesData?.topicSignatures || [])
-          .filter(sig => !!sig.signer?.id)
-          .map(sig => {
-            const expirationTimestamp = parseInt(sig.expirationTimestamp);
-            const isExpired = expirationTimestamp * 1000 < Date.now();
-
-            return {
-              id: sig.id,
-              signerAddress: sig.signer.id,
-              sig: sig.sig,
-              expirationTimestamp,
-              support: sig.support,
-              sigDigest: sig.sigDigest,
-              reason: sig.reason || '',
-              createdTimestamp: parseInt(sig.createdTimestamp),
-              createdBlock: parseInt(sig.createdBlock),
-              createdTransactionHash: sig.createdTransactionHash,
-              status: isExpired ? 'expired' : 'valid',
-            };
-          });
-    } catch (error) {
-      console.error('Failed to fetch signatures for topic:', error);
-    }
+    const feedback: TopicFeedback[] = (candidate.feedback || []).map((item) => ({
+      id: item.id,
+      voterAddress: getAddress(item.msg_sender),
+      support: item.support,
+      reason: item.reason || "",
+      createdTimestamp: toNumber(item.block_timestamp),
+      createdBlock,
+      createdTransactionHash: "0x",
+    }));
 
     return {
-      id: topic.id,
-      creator: getAddress(topic.creator.id),
-      slug: topic.slug,
-      title: topic.title,
-      description: topic.description,
-      encodedTopicHash: topic.encodedTopicHash,
-      canceled: topic.canceled,
-      createdTimestamp: parseInt(topic.createdTimestamp),
-      createdBlock: parseInt(topic.createdBlock),
-      createdTransactionHash: topic.createdTransactionHash,
-      lastUpdatedTimestamp: parseInt(topic.lastUpdatedTimestamp),
-      lastUpdatedBlock: parseInt(topic.lastUpdatedBlock),
-      lastUpdatedTransactionHash: topic.lastUpdatedTransactionHash,
+      id: candidate.id,
+      creator: getAddress(candidate.proposer),
+      slug: candidate.slug,
+      title: candidate.title || candidate.slug.replace(/-/g, " "),
+      description: candidate.description || "",
+      encodedTopicHash: candidate.encoded_proposal_hash || "",
+      canceled: !!candidate.canceled,
+      createdTimestamp,
+      createdBlock,
+      createdTransactionHash: "0x",
+      lastUpdatedTimestamp,
+      lastUpdatedBlock: createdBlock,
+      lastUpdatedTransactionHash: "0x",
       feedback,
       signatures,
     };
   } catch (error) {
-    console.error('Failed to fetch topic:', error);
+    console.warn("[getTopics] Skipping malformed Ponder topic", {
+      id: candidate.id,
+      proposer: candidate.proposer,
+      error,
+    });
     return null;
   }
 }
 
-// Helper functions
+export async function getTopics(limit: number = 1000): Promise<Topic[]> {
+  try {
+    const candidates = await fetchLilCampCandidates(limit, "topic");
+    return candidates
+      .map(mapCandidateToTopic)
+      .filter((topic): topic is Topic => topic !== null);
+  } catch (error) {
+    console.error("[getTopics] Failed to fetch Ponder topics:", error);
+    return [];
+  }
+}
+
+export async function getTopic(id: string): Promise<Topic | null> {
+  try {
+    let candidate = await fetchLilCampCandidateById(id);
+
+    if (!candidate) {
+      candidate = await fetchLilCampCandidateBySlug(extractSlugFromTopicId(id), "topic");
+    }
+
+    return candidate ? mapCandidateToTopic(candidate) : null;
+  } catch (error) {
+    try {
+      const candidate = await fetchLilCampCandidateBySlug(
+        extractSlugFromTopicId(id),
+        "topic",
+      );
+      return candidate ? mapCandidateToTopic(candidate) : null;
+    } catch (fallbackError) {
+      console.error("[getTopic] Failed to fetch Ponder topic:", {
+        id,
+        error,
+        fallbackError,
+      });
+      return null;
+    }
+  }
+}
+
 export function normalizeTopicId(id: string): string {
-  // ID format from URL can be: slug-creator (without 0x) or creator-slug (with 0x)
-  // Return format should be: creator-slug (lowercase creator, with 0x)
   const fullyDecodedId = decodeURIComponent(id);
   const parts = fullyDecodedId.split("-");
 
-  // Check if first part is an address (starts with 0x)
-  const creatorFirst = parts[0].startsWith("0x");
-
-  if (creatorFirst) {
-    // Format: 0xabc-some-slug
+  if (parts[0].startsWith("0x")) {
     const creatorId = parts[0].toLowerCase();
     const slug = parts.slice(1).join("-");
     return `${creatorId}-${slug}`;
-  } else {
-    // Format: some-slug-abc (where abc is the creator without 0x)
-    const creatorId = `0x${parts[parts.length - 1]}`.toLowerCase();
-    const slug = parts.slice(0, -1).join("-");
-    return `${creatorId}-${slug}`;
   }
+
+  const creatorId = `0x${parts[parts.length - 1]}`.toLowerCase();
+  const slug = parts.slice(0, -1).join("-");
+  return `${creatorId}-${slug}`;
 }
 
 export function extractSlugFromTopicId(topicId: string): string {

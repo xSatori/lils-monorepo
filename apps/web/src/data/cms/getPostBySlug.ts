@@ -1,6 +1,6 @@
 import { graphql } from "@/data/generated/cms";
 import { graphQLFetch } from "../utils/graphQLFetch";
-import { normalizeCmsMediaUrl } from "@/utils/cmsUrl";
+import { getCmsGraphqlUrl, normalizeCmsMediaUrl } from "@/utils/cmsUrl";
 import { unstable_cache } from "@/utils/viteCache";
 
 const query = graphql(/* GraphQL */ `
@@ -30,7 +30,7 @@ const query = graphql(/* GraphQL */ `
 const fetchPostBySlug = unstable_cache(
   async (slug: string) => {
     const data = await graphQLFetch(
-      import.meta.env.VITE_CMS_URL!,
+      getCmsGraphqlUrl(),
       query,
       {}
     );

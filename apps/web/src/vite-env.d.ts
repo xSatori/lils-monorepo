@@ -5,9 +5,10 @@ interface ImportMetaEnv {
   readonly VITE_INFURA_API_KEY?: string
   readonly VITE_DECENTRALIZED_SUBGRAPH_API_KEY: string
   readonly VITE_INDEXER_URL: string
+  readonly VITE_LIL_CAMP_API_URL?: string
   readonly VITE_CHAIN_ID: string
   readonly VITE_URL: string
-  readonly VITE_CMS_URL: string
+  readonly VITE_CMS_URL?: string
   readonly VITE_WALLETCONNECT_PROJECT_ID: string
   readonly VITE_WHISK_API_KEY: string
   /** Primary Ethereum mainnet RPC URL. */
