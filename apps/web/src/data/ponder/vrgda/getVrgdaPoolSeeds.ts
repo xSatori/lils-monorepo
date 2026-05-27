@@ -141,7 +141,6 @@ export async function getVrgdaPoolSeeds(
                 id
                 blockNumber
                 nounId
-                blockHash
                 background
                 body
                 accessory
@@ -175,7 +174,6 @@ export async function getVrgdaPoolSeeds(
       id: seed.id,
       nounId: seed.nounId,
       blockNumber: seed.blockNumber,
-      blockHash: seed.blockHash,
       background: seed.background,
       body: seed.body,
       accessory: seed.accessory,

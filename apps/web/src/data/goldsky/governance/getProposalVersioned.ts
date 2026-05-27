@@ -10,6 +10,10 @@ import { DaoType } from './getProposalOverviews'
 export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Promise<DetailedProposal | null> {
   const daoVersion = getDaoVersion()
   
+  if (daoType === 'lilnouns') {
+    return getProposalV2(id, daoType)
+  }
+
   if (daoVersion === 5) {
     return getProposalV5(id, daoType)
   } else {

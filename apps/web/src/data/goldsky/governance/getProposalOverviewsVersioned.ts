@@ -10,6 +10,10 @@ import { DaoType } from './getProposalOverviews'
 export async function getProposalOverviews(limit: number = 500, daoType: DaoType = 'lilnouns'): Promise<ProposalOverview[]> {
   const daoVersion = getDaoVersion()
   
+  if (daoType === 'lilnouns') {
+    return getProposalOverviewsV2(limit, daoType)
+  }
+
   if (daoVersion === 5) {
     return getProposalOverviewsV5(limit, daoType)
   } else {
@@ -27,6 +31,10 @@ export async function getProposalOverviewsPaginated(
 ): Promise<{ proposals: ProposalOverview[], hasMore: boolean }> {
   const daoVersion = getDaoVersion()
   
+  if (daoType === 'lilnouns') {
+    return getProposalOverviewsPaginatedV2(page, pageSize, daoType)
+  }
+
   if (daoVersion === 5) {
     return getProposalOverviewsPaginatedV5(page, pageSize, daoType)
   } else {

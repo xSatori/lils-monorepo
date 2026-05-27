@@ -88,10 +88,11 @@ export async function getProposalOverviews(limit: number = 500, daoType: DaoType
   try {
     const goldskyUrl = getGoldskyUrl(daoType);
     console.log('[getProposalOverviews] Fetching proposals from Goldsky:', goldskyUrl, 'daoType:', daoType);
+    const overviewQuery = daoType === 'lilnouns' ? digestQuery : query;
     
     const data = await graphQLFetch(
       goldskyUrl,
-      query,
+      overviewQuery,
       { first: limit, skip: 0 },
       {
         next: { revalidate: 300 }, // Cache for 5 minutes
@@ -193,10 +194,11 @@ export async function getProposalOverviewsPaginated(
     const skip = page * pageSize;
     const first = pageSize + 1; // Fetch one extra to check if there are more
     const goldskyUrl = getGoldskyUrl(daoType);
+    const overviewQuery = daoType === 'lilnouns' ? digestQuery : query;
     
     const data = await graphQLFetch(
       goldskyUrl,
-      query,
+      overviewQuery,
       { first, skip },
       {
         next: { revalidate: 60 },

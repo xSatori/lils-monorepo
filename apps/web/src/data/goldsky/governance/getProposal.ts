@@ -7,6 +7,7 @@ import { DetailedProposal, ProposalTransaction, ProposalVote } from "./common";
 import { getProposalState } from "./proposalStateParser";
 import { getBlockNumber } from "viem/actions";
 import { DaoType } from "./getProposalOverviews";
+import { getProposal as getProposalV2 } from "./v2/getProposal";
 
 const query = `
   query GetProposal($id: ID!) {
@@ -78,6 +79,10 @@ function getGoldskyUrl(daoType: DaoType): string {
 
 export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Promise<DetailedProposal | null> {
   try {
+    if (daoType === 'lilnouns') {
+      return getProposalV2(id, daoType);
+    }
+
     const blockNumber = Number(await getBlockNumber(CHAIN_CONFIG.publicClient));
     const blockTimestamp = new Date();
     const goldskyUrl = getGoldskyUrl(daoType);
