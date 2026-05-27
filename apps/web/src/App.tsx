@@ -58,7 +58,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Lilnouns.wtf | Lil Nouns DAO Governance Hub</title>
+        <title>lilnouns.club</title>
         <meta name="description" content="Lilnouns.wtf – Lil Nouns DAO" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />

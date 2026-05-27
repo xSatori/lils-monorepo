@@ -66,7 +66,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Lilnouns.wtf | Lil Nouns DAO Governance Hub</title>
+        <title>lilnouns.club</title>
         <meta name="description" content="Into the world of lils. Learn how Lil Nouns DAO funds ideas through community governance." />
         <link rel="canonical" href="https://www.lilnouns.wtf/" />
         
