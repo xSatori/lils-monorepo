@@ -114,7 +114,60 @@ export async function getSnapshotVotes(proposalId: string): Promise<SnapshotVote
   }
 }
 
-// Match Snapshot proposals with Nouns DAO proposals using transaction hash or URL
+function normalizeSnapshotText(value?: string): string {
+  return (value || "").toLowerCase();
+}
+
+function snapshotProposalContainsProposalId(
+  snapshotProposal: SnapshotProposal,
+  proposalId: number,
+): boolean {
+  const id = String(proposalId);
+  const bodyLower = normalizeSnapshotText(snapshotProposal.body);
+  const titleLower = normalizeSnapshotText(snapshotProposal.title);
+
+  const urlPatterns = [
+    `https://lilnouns.wtf/vote/nouns/${id}`,
+    `https://www.lilnouns.wtf/vote/nouns/${id}`,
+    `lilnouns.wtf/vote/nouns/${id}`,
+    `www.lilnouns.wtf/vote/nouns/${id}`,
+    `/vote/nouns/${id}`,
+    `https://nouns.game/proposals/${id}`,
+    `https://www.nouns.game/proposals/${id}`,
+    `nouns.game/proposals/${id}`,
+    `www.nouns.game/proposals/${id}`,
+    `/proposals/${id}`,
+    `https://nouns.wtf/vote/${id}`,
+    `https://www.nouns.wtf/vote/${id}`,
+    `nouns.wtf/vote/${id}`,
+    `www.nouns.wtf/vote/${id}`,
+    `/vote/${id}`,
+  ];
+
+  if (urlPatterns.some((pattern) => bodyLower.includes(pattern))) {
+    return true;
+  }
+
+  const titlePatterns = [
+    `${id}:`,
+    `#${id}:`,
+    `nouns #${id}:`,
+    `nouns ${id}:`,
+    `proposal ${id}:`,
+  ];
+
+  if (titlePatterns.some((pattern) => titleLower.startsWith(pattern))) {
+    return true;
+  }
+
+  return (
+    bodyLower.includes(`prop ${id}`) ||
+    bodyLower.includes(`proposal ${id}`) ||
+    bodyLower.includes(`#${id}`)
+  );
+}
+
+// Match Snapshot proposals with Nouns DAO proposals using transaction hash, canonical links, or title ID.
 export function matchSnapshotProposal(
   daoProposal: { createdTransactionHash?: string; id?: number },
   snapshotProposals: SnapshotProposal[]
@@ -129,7 +182,7 @@ export function matchSnapshotProposal(
     // Strategy 1: Match by transaction hash (most reliable)
     if (daoProposal.createdTransactionHash) {
       const hashLower = daoProposal.createdTransactionHash.toLowerCase();
-      const bodyLower = snapshotProposal.body.toLowerCase();
+      const bodyLower = normalizeSnapshotText(snapshotProposal.body);
       
       // Check for hash with or without 0x prefix
       if (bodyLower.includes(hashLower) || 
@@ -138,26 +191,9 @@ export function matchSnapshotProposal(
       }
     }
     
-    // Strategy 2: Match by proposal URL (various formats)
+    // Strategy 2: Match by proposal URL or title ID (metagov title format is "<id>: <title>")
     if (daoProposal.id) {
-      const urlPatterns = [
-        `https://lilnouns.wtf/vote/nouns/${daoProposal.id}`,
-        `https://nouns.wtf/vote/${daoProposal.id}`,
-        `lilnouns.wtf/vote/nouns/${daoProposal.id}`,
-        `nouns.wtf/vote/${daoProposal.id}`,
-        `/vote/nouns/${daoProposal.id}`,
-        `/vote/${daoProposal.id}`,
-        `prop ${daoProposal.id}`,
-        `proposal ${daoProposal.id}`,
-        `#${daoProposal.id}`,
-      ];
-      
-      const bodyLower = snapshotProposal.body.toLowerCase();
-      for (const pattern of urlPatterns) {
-        if (bodyLower.includes(pattern.toLowerCase())) {
-          return true;
-        }
-      }
+      return snapshotProposalContainsProposalId(snapshotProposal, daoProposal.id);
     }
     
     return false;

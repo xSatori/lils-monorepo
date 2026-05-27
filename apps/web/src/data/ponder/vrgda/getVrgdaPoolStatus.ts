@@ -3,6 +3,32 @@ import { VrgdaPoolStatus } from "./types";
 import { cleanGraphQLFetch } from "../utils/cleanGraphQLFetch";
 import { GetLatestVrgdaPoolStatusDocument, GetVrgdaPoolSeedsDocument, OrderDirection } from "@/data/generated/ponder/clean-graphql";
 import { isSepoliaNetwork } from "@/utils/networkDetection";
+import { getOnChainVrgdaPoolCandidates } from "@/data/vrgda/getOnChainVrgdaPool";
+
+async function getOnChainFallbackPoolStatus(): Promise<VrgdaPoolStatus> {
+  const seeds = await getOnChainVrgdaPoolCandidates({
+    limit: 256,
+    includeUsed: true,
+    sortDirection: "desc",
+  });
+  const usedSeeds = seeds.filter((seed) => seed.isUsed);
+  const oldestBlock = seeds.length > 0 ? seeds[seeds.length - 1].blockNumber : "0";
+  const newestBlock = seeds.length > 0 ? seeds[0].blockNumber : "0";
+  const blocksSpanned = seeds.length > 0 ? Number(BigInt(newestBlock) - BigInt(oldestBlock) + 1n) : 0;
+
+  return {
+    currentBlock: newestBlock,
+    poolSize: seeds.length,
+    availableSeeds: seeds.length - usedSeeds.length,
+    usedSeeds: usedSeeds.length,
+    latestSeedBlock: newestBlock,
+    poolCoverage: {
+      oldestBlock,
+      newestBlock,
+      blocksSpanned,
+    },
+  };
+}
 
 export async function getVrgdaPoolStatus(): Promise<VrgdaPoolStatus> {
   // Disable VRGDA pool queries on Sepolia - VPS not configured for Sepolia yet
@@ -64,18 +90,7 @@ export async function getVrgdaPoolStatus(): Promise<VrgdaPoolStatus> {
     };
   } catch (error) {
     console.error('Failed to fetch VRGDA pool status from Ponder:', error);
-    return {
-      currentBlock: '0',
-      poolSize: 0,
-      availableSeeds: 0,
-      usedSeeds: 0,
-      latestSeedBlock: '0',
-      poolCoverage: {
-        oldestBlock: '0',
-        newestBlock: '0',
-        blocksSpanned: 0
-      }
-    };
+    return getOnChainFallbackPoolStatus();
   }
 }
 

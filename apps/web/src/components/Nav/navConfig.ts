@@ -30,8 +30,8 @@ const ALL_MOBILE_NAV_ITEMS: NavItem[] = [
   // { name: "Stats", icon: "stats", href: "/stats" },
 ];
 
-// Filter nav items based on DAO version
-// Hide topics and ideas (candidates) if not version 5
+// Filter nav items based on DAO version.
+// Hide topics and ideas (candidates) before v5 support exists.
 export const DESKTOP_NAV_ITEMS: NavItem[] = isDaoVersion5()
   ? ALL_DESKTOP_NAV_ITEMS
   : ALL_DESKTOP_NAV_ITEMS.filter(

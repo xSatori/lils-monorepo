@@ -112,7 +112,7 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
   };
 
   // Fetch seed from VRGDA contract for comparison
-  // fetchNoun(blockNumber) returns [nounId, seed, svg, price, hash]
+  // fetchNoun(blockNumber) returns [nounId, seed, svg, price, hash, blockNumber]
   // NOTE: blockhash() only works for last 256 blocks (~50 min), older blocks will revert
   const fetchContractSeed = async () => {
     if (!seed || !publicClient) return;
@@ -125,7 +125,7 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
       const vrgdaAddress = CHAIN_CONFIG.addresses.lilVRGDAProxy;
 
       // Call fetchNoun on the VRGDA contract - only takes blockNumber
-      // Returns [nounId, seed, svg, price, hash]
+      // Returns [nounId, seed, svg, price, hash, blockNumber]
       const result = await publicClient.readContract({
         address: vrgdaAddress,
         abi: [{
@@ -149,13 +149,21 @@ export const VrgdaDetailsPanel: React.FC<VrgdaDetailsPanelProps> = ({
             },
             { name: 'svg', type: 'string' },
             { name: 'price', type: 'uint256' },
-            { name: 'hash', type: 'bytes32' }
+            { name: 'hash', type: 'bytes32' },
+            { name: 'blockNum', type: 'uint256' }
           ],
           stateMutability: 'view'
         }],
         functionName: 'fetchNoun',
         args: [BigInt(seed.blockNumber)],
-      }) as [bigint, { background: bigint, body: bigint, accessory: bigint, head: bigint, glasses: bigint }, string, bigint, string];
+      }) as unknown as readonly [
+        bigint,
+        { background: bigint | number, body: bigint | number, accessory: bigint | number, head: bigint | number, glasses: bigint | number },
+        string,
+        bigint,
+        string,
+        bigint,
+      ];
 
       const [contractNounId, contractSeedResult] = result;
 

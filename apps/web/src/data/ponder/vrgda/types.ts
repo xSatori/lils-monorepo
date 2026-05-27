@@ -2,13 +2,16 @@ export interface VrgdaPoolSeed {
   id: string;
   nounId: string;
   blockNumber: string; // BigInt as string
+  blockHash?: string;
   background: number;
   body: number;
   accessory: number;
   head: number;
   glasses: number;
   isUsed: boolean;
+  isValid?: boolean;
   generatedAt: string; // BigInt timestamp as string
+  invalidatedAt?: string | null;
 }
 
 export interface VrgdaPoolSeedsResult {

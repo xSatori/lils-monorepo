@@ -33,6 +33,8 @@ export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading, hasVoted
   );
   const [reason, setReason] = useState(userVote?.reason || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   
   // Update form when userVote changes
   useEffect(() => {
@@ -46,19 +48,25 @@ export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading, hasVoted
     if (selectedChoice === null) return;
 
     setIsSubmitting(true);
+    setSubmitError(null);
+    setSubmitSuccess(false);
     try {
       await onVote(selectedChoice, reason || undefined);
-      // Reset form after successful vote
-      setSelectedChoice(null);
-      setReason("");
+      setSubmitSuccess(true);
     } catch (error) {
       console.error("Failed to vote:", error);
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Snapshot rejected the vote. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const choices = snapshotProposal.choices || ["For", "Against", "Abstain"];
+  const isVoteDisabled = isLoading || isSubmitting;
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-[16px] border p-6">
@@ -104,8 +112,12 @@ export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading, hasVoted
                   return (
                     <button
                       key={choiceNum}
-                      onClick={() => setSelectedChoice(choiceNum)}
-                      disabled={isSubmitting}
+                      onClick={() => {
+                        setSelectedChoice(choiceNum);
+                        setSubmitError(null);
+                        setSubmitSuccess(false);
+                      }}
+                      disabled={isVoteDisabled}
                       className={clsx(
                         "flex items-center gap-3 rounded-[12px] border p-4 text-left transition-all",
                         isSelected
@@ -138,18 +150,34 @@ export function SnapshotVoteForm({ snapshotProposal, onVote, isLoading, hasVoted
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="Share your reasoning for this vote..."
                   rows={4}
-                  disabled={isSubmitting}
+                  disabled={isVoteDisabled}
                   className="resize-none"
                 />
               </div>
 
+              {submitError && (
+                <div className="rounded-[12px] border border-red-200 bg-red-50 p-3">
+                  <p className="text-sm text-red-700">{submitError}</p>
+                </div>
+              )}
+
+              {submitSuccess && (
+                <div className="rounded-[12px] border border-green-200 bg-green-50 p-3">
+                  <p className="text-sm text-green-700">
+                    Vote submitted to Snapshot. It may take a few seconds to appear.
+                  </p>
+                </div>
+              )}
+
               <Button
                 onClick={handleVote}
-                disabled={selectedChoice === null || isSubmitting}
+                disabled={selectedChoice === null || isVoteDisabled}
                 className="w-full"
               >
-                {isSubmitting 
+                {isSubmitting
                   ? "Submitting vote..." 
+                  : isLoading
+                  ? "Loading Snapshot votes..."
                   : hasVoted 
                   ? "Update Vote" 
                   : "Submit Vote"}

@@ -88,6 +88,7 @@ export const VrgdaExploreViewer: React.FC = () => {
       accessory: bookmark.seed.accessory,
       head: bookmark.seed.head,
       glasses: bookmark.seed.glasses,
+      isUsed: false,
       generatedAt: bookmark.savedAt.toString(),
     }));
   }, [bookmarkedSeeds]);
@@ -325,7 +326,7 @@ export const VrgdaExploreViewer: React.FC = () => {
             layout
             ref={containerRef}
             className="flex-1 overflow-y-auto overscroll-contain p-3"
-            onScroll={(e) => {
+            onScroll={(e: React.UIEvent<HTMLDivElement>) => {
               const target = e.currentTarget;
               setScrollPosition(target.scrollTop);
             }}

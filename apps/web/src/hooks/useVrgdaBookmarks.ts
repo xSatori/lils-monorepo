@@ -6,7 +6,7 @@ const BOOKMARKS_STORAGE_KEY = 'vrgda-bookmarks';
 
 interface BookmarkedSeed {
   nounId: string;
-  blockNumber: number;
+  blockNumber: string;
   blockHash: string;
   seed: {
     background: number;
@@ -19,7 +19,7 @@ interface BookmarkedSeed {
 }
 
 interface BookmarkStorage {
-  currentPoolBlock?: number;
+  currentPoolBlock?: string;
   seeds: BookmarkedSeed[];
 }
 
@@ -40,7 +40,7 @@ export const useVrgdaBookmarks = (currentPoolSeeds?: VrgdaPoolSeed[]) => {
             const currentBlockNumber = currentPoolSeeds[0]?.blockNumber;
             
             // If stored pool block is different or seeds are no longer valid, clear them
-            if (data.currentPoolBlock !== currentBlockNumber || !areBookmarksValid(data.seeds, currentPoolSeeds)) {
+            if (String(data.currentPoolBlock) !== currentBlockNumber || !areBookmarksValid(data.seeds, currentPoolSeeds)) {
               setBookmarkedSeeds([]);
               saveBookmarks([], currentBlockNumber);
             } else {
@@ -70,7 +70,7 @@ export const useVrgdaBookmarks = (currentPoolSeeds?: VrgdaPoolSeed[]) => {
   };
 
   // Save bookmarks to localStorage
-  const saveBookmarks = useCallback((seeds: BookmarkedSeed[], currentBlock?: number) => {
+  const saveBookmarks = useCallback((seeds: BookmarkedSeed[], currentBlock?: string) => {
     try {
       const data: BookmarkStorage = {
         currentPoolBlock: currentBlock,
@@ -87,7 +87,7 @@ export const useVrgdaBookmarks = (currentPoolSeeds?: VrgdaPoolSeed[]) => {
     const newBookmark: BookmarkedSeed = {
       nounId: seed.nounId,
       blockNumber: seed.blockNumber,
-      blockHash: seed.blockHash,
+      blockHash: seed.blockHash ?? '',
       seed: {
         background: seed.background,
         body: seed.body,
@@ -106,9 +106,9 @@ export const useVrgdaBookmarks = (currentPoolSeeds?: VrgdaPoolSeed[]) => {
   }, [bookmarkedSeeds, currentPoolSeeds, saveBookmarks]);
 
   // Remove a seed from bookmarks (blockNumber is primary identifier)
-  const removeBookmark = useCallback((nounId: string, blockNumber: number) => {
+  const removeBookmark = useCallback((nounId: string, blockNumber: string) => {
     const updatedBookmarks = bookmarkedSeeds.filter(bookmark => 
-      !(bookmark.blockNumber === blockNumber && bookmark.nounId === nounId)
+      !(String(bookmark.blockNumber) === blockNumber && bookmark.nounId === nounId)
     );
     setBookmarkedSeeds(updatedBookmarks);
     
@@ -117,9 +117,9 @@ export const useVrgdaBookmarks = (currentPoolSeeds?: VrgdaPoolSeed[]) => {
   }, [bookmarkedSeeds, currentPoolSeeds, saveBookmarks]);
 
   // Check if a seed is bookmarked (blockNumber is primary identifier)
-  const isBookmarked = useCallback((nounId: string, blockNumber: number): boolean => {
+  const isBookmarked = useCallback((nounId: string, blockNumber: string): boolean => {
     return bookmarkedSeeds.some(bookmark => 
-      bookmark.blockNumber === blockNumber && bookmark.nounId === nounId
+      String(bookmark.blockNumber) === blockNumber && bookmark.nounId === nounId
     );
   }, [bookmarkedSeeds]);
 
@@ -137,7 +137,7 @@ export const useVrgdaBookmarks = (currentPoolSeeds?: VrgdaPoolSeed[]) => {
     if (!currentPoolSeeds || currentPoolSeeds.length === 0) return false;
     
     return currentPoolSeeds.some(poolSeed => 
-      poolSeed.blockNumber === bookmark.blockNumber && poolSeed.nounId === bookmark.nounId
+      poolSeed.blockNumber === String(bookmark.blockNumber) && poolSeed.nounId === bookmark.nounId
     );
   }, [currentPoolSeeds]);
 

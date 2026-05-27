@@ -15,9 +15,9 @@ export function getDaoVersion(): number {
 }
 
 /**
- * Check if DAO version is 5 (supports candidates and topics)
+ * Check if DAO version supports candidates and topics.
  */
 export function isDaoVersion5(): boolean {
-  return getDaoVersion() === 5
+  return getDaoVersion() >= 5
 }
 

@@ -1,100 +1,127 @@
-
-import { VrgdaPoolSeed, VrgdaPoolSeedsResult, VrgdaFilters, VrgdaSortField, SortDirection } from "./types";
-import { cleanGraphQLFetch, CLEAN_GRAPHQL_ENDPOINT } from "../utils/cleanGraphQLFetch";
-import { GetVrgdaPoolSeedsDocument, OrderDirection, VrgdaPoolSeedWhereInput } from "@/data/generated/ponder/clean-graphql";
+import {
+  SortDirection,
+  VrgdaFilters,
+  VrgdaPoolSeed,
+  VrgdaPoolSeedsResult,
+  VrgdaSortField,
+} from "./types";
+import { CLEAN_GRAPHQL_ENDPOINT } from "../utils/cleanGraphQLFetch";
 import { isSepoliaNetwork } from "@/utils/networkDetection";
+import { getOnChainVrgdaPoolCandidates } from "@/data/vrgda/getOnChainVrgdaPool";
+
+function matchesFilters(seed: VrgdaPoolSeed, filters: VrgdaFilters) {
+  if (filters.isUsed !== undefined && seed.isUsed !== filters.isUsed) return false;
+  if (filters.blockNumberGt && BigInt(seed.blockNumber) <= BigInt(filters.blockNumberGt)) return false;
+  if (filters.blockNumberGte && BigInt(seed.blockNumber) < BigInt(filters.blockNumberGte)) return false;
+  if (filters.blockNumberLt && BigInt(seed.blockNumber) >= BigInt(filters.blockNumberLt)) return false;
+  if (filters.blockNumberLte && BigInt(seed.blockNumber) > BigInt(filters.blockNumberLte)) return false;
+  if (filters.blockNumbers?.length && !filters.blockNumbers.includes(seed.blockNumber)) return false;
+  if (filters.background !== undefined && seed.background !== filters.background) return false;
+  if (filters.backgrounds?.length && !filters.backgrounds.includes(seed.background)) return false;
+  if (filters.body !== undefined && seed.body !== filters.body) return false;
+  if (filters.bodies?.length && !filters.bodies.includes(seed.body)) return false;
+  if (filters.accessory !== undefined && seed.accessory !== filters.accessory) return false;
+  if (filters.accessories?.length && !filters.accessories.includes(seed.accessory)) return false;
+  if (filters.head !== undefined && seed.head !== filters.head) return false;
+  if (filters.heads?.length && !filters.heads.includes(seed.head)) return false;
+  if (filters.glasses !== undefined && seed.glasses !== filters.glasses) return false;
+  if (filters.glassesOptions?.length && !filters.glassesOptions.includes(seed.glasses)) return false;
+
+  return true;
+}
+
+function compareSeeds(
+  left: VrgdaPoolSeed,
+  right: VrgdaPoolSeed,
+  sortField: VrgdaSortField,
+  sortDirection: SortDirection,
+) {
+  const direction = sortDirection === "asc" ? 1 : -1;
+  const leftValue = left[sortField];
+  const rightValue = right[sortField];
+
+  if (sortField === "blockNumber" || sortField === "generatedAt") {
+    return Number(BigInt(leftValue as string) - BigInt(rightValue as string)) * direction;
+  }
+
+  if (typeof leftValue === "boolean" && typeof rightValue === "boolean") {
+    return (Number(leftValue) - Number(rightValue)) * direction;
+  }
+
+  return (Number(leftValue) - Number(rightValue)) * direction;
+}
+
+async function getOnChainFallbackPoolSeeds(
+  filters: VrgdaFilters,
+  sortField: VrgdaSortField,
+  sortDirection: SortDirection,
+  limit: number,
+  offset: number,
+): Promise<VrgdaPoolSeedsResult> {
+  const scanLimit = Math.min(256, Math.max(limit + offset + 32, limit));
+  const candidates = await getOnChainVrgdaPoolCandidates({
+    limit: scanLimit,
+    includeUsed: filters.isUsed !== false,
+    sortDirection: sortField === "blockNumber" ? sortDirection : "desc",
+  });
+
+  const sortedSeeds = candidates
+    .filter((seed) => matchesFilters(seed, filters))
+    .sort((left, right) => compareSeeds(left, right, sortField, sortDirection));
+
+  return {
+    seeds: sortedSeeds.slice(offset, offset + limit),
+    hasMore: sortedSeeds.length > offset + limit,
+    total: sortedSeeds.length,
+  };
+}
 
 export async function getVrgdaPoolSeeds(
   filters: VrgdaFilters = {},
-  sortField: VrgdaSortField = 'blockNumber',
-  sortDirection: SortDirection = 'desc',
+  sortField: VrgdaSortField = "blockNumber",
+  sortDirection: SortDirection = "desc",
   limit: number = 50,
-  offset: number = 0
+  offset: number = 0,
 ): Promise<VrgdaPoolSeedsResult> {
-  // Disable VRGDA pool queries on Sepolia - VPS not configured for Sepolia yet
   if (isSepoliaNetwork()) {
-    console.log('VRGDA pool queries disabled on Sepolia - VPS not configured');
+    console.log("VRGDA pool queries disabled on Sepolia - VPS not configured");
     return { seeds: [], hasMore: false };
   }
 
   try {
-    // Build proper where object from filters
-    const where: any = {};
-    if (filters.isUsed !== undefined) {
-      where.isUsed = filters.isUsed;
-    }
-    if (filters.blockNumberGt) {
-      where.blockNumber_gt = filters.blockNumberGt;
-    }
-    if (filters.blockNumberGte) {
-      where.blockNumber_gte = filters.blockNumberGte;
-    }
-    if (filters.blockNumberLt) {
-      where.blockNumber_lt = filters.blockNumberLt;
-    }
-    if (filters.blockNumberLte) {
-      where.blockNumber_lte = filters.blockNumberLte;
-    }
-    if (filters.blockNumbers && filters.blockNumbers.length > 0) {
-      where.blockNumber_in = filters.blockNumbers;
-    }
-    if (filters.background !== undefined) {
-      where.background = filters.background;
-    }
-    if (filters.backgrounds && filters.backgrounds.length > 0) {
-      where.background_in = filters.backgrounds;
-    }
-    if (filters.body !== undefined) {
-      where.body = filters.body;
-    }
-    if (filters.bodies && filters.bodies.length > 0) {
-      where.body_in = filters.bodies;
-    }
-    if (filters.accessory !== undefined) {
-      where.accessory = filters.accessory;
-    }
-    if (filters.accessories && filters.accessories.length > 0) {
-      where.accessory_in = filters.accessories;
-    }
-    if (filters.head !== undefined) {
-      where.head = filters.head;
-    }
-    if (filters.heads && filters.heads.length > 0) {
-      where.head_in = filters.heads;
-    }
-    if (filters.glasses !== undefined) {
-      where.glasses = filters.glasses;
-    }
-    if (filters.glassesOptions && filters.glassesOptions.length > 0) {
-      where.glasses_in = filters.glassesOptions;
-    }
+    const where: Record<string, unknown> = {};
+    if (filters.isUsed !== undefined) where.isUsed = filters.isUsed;
+    if (filters.blockNumberGt) where.blockNumber_gt = filters.blockNumberGt;
+    if (filters.blockNumberGte) where.blockNumber_gte = filters.blockNumberGte;
+    if (filters.blockNumberLt) where.blockNumber_lt = filters.blockNumberLt;
+    if (filters.blockNumberLte) where.blockNumber_lte = filters.blockNumberLte;
+    if (filters.blockNumbers?.length) where.blockNumber_in = filters.blockNumbers;
+    if (filters.background !== undefined) where.background = filters.background;
+    if (filters.backgrounds?.length) where.background_in = filters.backgrounds;
+    if (filters.body !== undefined) where.body = filters.body;
+    if (filters.bodies?.length) where.body_in = filters.bodies;
+    if (filters.accessory !== undefined) where.accessory = filters.accessory;
+    if (filters.accessories?.length) where.accessory_in = filters.accessories;
+    if (filters.head !== undefined) where.head = filters.head;
+    if (filters.heads?.length) where.head_in = filters.heads;
+    if (filters.glasses !== undefined) where.glasses = filters.glasses;
+    if (filters.glassesOptions?.length) where.glasses_in = filters.glassesOptions;
 
-    // Build variables for filters/sorting/pagination
-    const variables: any = {
+    const variables: Record<string, unknown> = {
       limit,
       offset,
+      orderBy: sortField,
+      orderDirection: sortDirection,
     };
-    
-    // Only include optional parameters if they have values
-    if (sortField) {
-      variables.orderBy = sortField;
-    }
-    if (sortDirection) {
-      variables.orderDirection = sortDirection;
-    }
-    
-    // Only include where if it has any filters
+
     if (Object.keys(where).length > 0) {
       variables.where = where;
     }
 
-    console.log('getVrgdaPoolSeeds - Endpoint:', CLEAN_GRAPHQL_ENDPOINT);
-    console.log('getVrgdaPoolSeeds - Variables:', variables);
-
     const response = await fetch(CLEAN_GRAPHQL_ENDPOINT, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         query: `
@@ -106,10 +133,15 @@ export async function getVrgdaPoolSeeds(
               offset: $offset
               where: $where
             ) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+              }
               items {
                 id
                 blockNumber
                 nounId
+                blockHash
                 background
                 body
                 accessory
@@ -130,31 +162,20 @@ export async function getVrgdaPoolSeeds(
     }
 
     const result = await response.json();
-    console.log('getVrgdaPoolSeeds - GraphQL result:', result);
-    console.log('getVrgdaPoolSeeds - result.data:', result.data);
 
     if (result.errors) {
-      console.error('getVrgdaPoolSeeds - GraphQL errors:', result.errors);
-      throw new Error(`GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}`);
+      throw new Error(`GraphQL errors: ${result.errors.map((e: any) => e.message).join(", ")}`);
     }
 
-    if (!result.data) {
-      console.error('getVrgdaPoolSeeds - No data in response');
-      throw new Error('No data returned from GraphQL query');
+    if (!result.data?.vrgdaPoolSeeds) {
+      throw new Error("No vrgdaPoolSeeds in GraphQL response");
     }
 
-    if (!result.data.vrgdaPoolSeeds) {
-      console.error('getVrgdaPoolSeeds - No vrgdaPoolSeeds in data:', result.data);
-      throw new Error('No vrgdaPoolSeeds in GraphQL response');
-    }
-
-    console.log('getVrgdaPoolSeeds - result.data.vrgdaPoolSeeds:', result.data.vrgdaPoolSeeds);
-    console.log('getVrgdaPoolSeeds - result.data.vrgdaPoolSeeds.items:', result.data.vrgdaPoolSeeds.items);
-
-    const seeds: VrgdaPoolSeed[] = result.data.vrgdaPoolSeeds.items.map(seed => ({
+    const seeds: VrgdaPoolSeed[] = result.data.vrgdaPoolSeeds.items.map((seed: any) => ({
       id: seed.id,
-      nounId: seed.nounId, // ✅ nounId field now exists in GraphQL schema
+      nounId: seed.nounId,
       blockNumber: seed.blockNumber,
+      blockHash: seed.blockHash,
       background: seed.background,
       body: seed.body,
       accessory: seed.accessory,
@@ -164,44 +185,43 @@ export async function getVrgdaPoolSeeds(
       generatedAt: seed.generatedAt,
     }));
 
-    
-
-    console.log('getVrgdaPoolSeeds - mapped seeds:', seeds);
+    if (seeds.length === 0 && offset === 0) {
+      console.warn("VRGDA Ponder pool returned no seeds; falling back to on-chain pool scan");
+      return getOnChainFallbackPoolSeeds(filters, sortField, sortDirection, limit, offset);
+    }
 
     return {
       seeds,
-      hasMore: false, // For now, simplified
+      hasMore: Boolean(result.data.vrgdaPoolSeeds.pageInfo?.hasNextPage),
     };
   } catch (error) {
-    console.error('Failed to fetch VRGDA pool seeds from Ponder:', error);
-    return { seeds: [], hasMore: false };
+    console.error("Failed to fetch VRGDA pool seeds from Ponder:", error);
+    return getOnChainFallbackPoolSeeds(filters, sortField, sortDirection, limit, offset);
   }
 }
 
-// Helper function to get only available (unused) seeds
 export async function getAvailableVrgdaSeeds(
   limit: number = 50,
-  offset: number = 0
+  offset: number = 0,
 ): Promise<VrgdaPoolSeedsResult> {
   return getVrgdaPoolSeeds(
     { isUsed: false },
-    'blockNumber',
-    'desc',
+    "blockNumber",
+    "desc",
     limit,
-    offset
+    offset,
   );
 }
 
-// Helper function to get the latest N seeds
 export async function getLatestVrgdaSeeds(
-  limit: number = 10
+  limit: number = 10,
 ): Promise<VrgdaPoolSeed[]> {
   const result = await getVrgdaPoolSeeds(
     {},
-    'blockNumber',
-    'desc',
+    "blockNumber",
+    "desc",
     limit,
-    0
+    0,
   );
   return result.seeds;
 }

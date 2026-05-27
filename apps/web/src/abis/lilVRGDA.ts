@@ -63,7 +63,8 @@ export const lilVRGDAAbi = [
       },
       { name: "svg", type: "string" },
       { name: "price", type: "uint256" },
-      { name: "hash", type: "bytes32" }
+      { name: "hash", type: "bytes32" },
+      { name: "blockNum", type: "uint256" }
     ],
     stateMutability: "view",
     type: "function"
@@ -86,7 +87,8 @@ export const lilVRGDAAbi = [
       },
       { name: "svg", type: "string" },
       { name: "price", type: "uint256" },
-      { name: "hash", type: "bytes32" }
+      { name: "hash", type: "bytes32" },
+      { name: "blockNumber", type: "uint256" }
     ],
     stateMutability: "view",
     type: "function"
@@ -102,6 +104,27 @@ export const lilVRGDAAbi = [
     inputs: [],
     name: "nextNounIdForCaller",
     outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [],
+    name: "getSeederBlockNumber",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [],
+    name: "targetPrice",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [],
+    name: "paused",
+    outputs: [{ name: "", type: "bool" }],
     stateMutability: "view",
     type: "function"
   },
