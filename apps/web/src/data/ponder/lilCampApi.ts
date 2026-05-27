@@ -72,8 +72,9 @@ class LilCampApiError extends Error {
   }
 }
 
-function getLilCampApiBaseUrl(): string {
-  return import.meta.env.VITE_LIL_CAMP_API_URL?.trim() || "";
+function getLilCampApiBaseUrls(): string[] {
+  const configuredBaseUrl = import.meta.env.VITE_LIL_CAMP_API_URL?.trim();
+  return configuredBaseUrl ? ["", configuredBaseUrl] : [""];
 }
 
 function withQuery(url: string, params?: URLSearchParams): string {
@@ -86,24 +87,27 @@ function joinApiPath(baseUrl: string, path: string): string {
 }
 
 function buildLilCampApiUrls(path: string, params?: URLSearchParams): string[] {
-  const baseUrl = getLilCampApiBaseUrl().replace(/\/+$/, "");
   const urls = new Set<string>();
 
-  if (baseUrl.endsWith("/api/candidates") || baseUrl.endsWith("/api/lil/candidates")) {
-    const candidatesPath = "/candidates";
-    urls.add(
-      path === candidatesPath
-        ? baseUrl
-        : joinApiPath(baseUrl, path.replace(candidatesPath, "")),
-    );
-  } else if (baseUrl.endsWith("/api/lil")) {
-    urls.add(joinApiPath(baseUrl, path));
-  } else if (baseUrl.endsWith("/api")) {
-    urls.add(joinApiPath(baseUrl, `/lil${path}`));
-    urls.add(joinApiPath(baseUrl, path));
-  } else {
-    urls.add(joinApiPath(baseUrl, `/api/lil${path}`));
-    urls.add(joinApiPath(baseUrl, `/api${path}`));
+  for (const rawBaseUrl of getLilCampApiBaseUrls()) {
+    const baseUrl = rawBaseUrl.replace(/\/+$/, "");
+
+    if (baseUrl.endsWith("/api/candidates") || baseUrl.endsWith("/api/lil/candidates")) {
+      const candidatesPath = "/candidates";
+      urls.add(
+        path === candidatesPath
+          ? baseUrl
+          : joinApiPath(baseUrl, path.replace(candidatesPath, "")),
+      );
+    } else if (baseUrl.endsWith("/api/lil")) {
+      urls.add(joinApiPath(baseUrl, path));
+    } else if (baseUrl.endsWith("/api")) {
+      urls.add(joinApiPath(baseUrl, `/lil${path}`));
+      urls.add(joinApiPath(baseUrl, path));
+    } else {
+      urls.add(joinApiPath(baseUrl, `/api/lil${path}`));
+      urls.add(joinApiPath(baseUrl, `/api${path}`));
+    }
   }
 
   return Array.from(urls).map((url) => withQuery(url, params));
