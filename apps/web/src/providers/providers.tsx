@@ -29,17 +29,13 @@ if (typeof window !== 'undefined' && !PROJECT_ID) {
 }
 
 // Create minimal wagmi config without WalletConnect for SSR
+const rpcUrls = [
+  CHAIN_CONFIG.rpcUrl.primary,
+  ...CHAIN_CONFIG.rpcUrl.fallbacks,
+].filter(Boolean);
+const rpcTransports = rpcUrls.map((url) => http(url));
 const transports =
-  CHAIN_CONFIG.rpcUrl.fallback2 != null
-    ? fallback([
-        http(CHAIN_CONFIG.rpcUrl.primary),
-        http(CHAIN_CONFIG.rpcUrl.fallback),
-        http(CHAIN_CONFIG.rpcUrl.fallback2),
-      ])
-    : fallback([
-        http(CHAIN_CONFIG.rpcUrl.primary),
-        http(CHAIN_CONFIG.rpcUrl.fallback),
-      ]);
+  rpcTransports.length === 1 ? rpcTransports[0] : fallback(rpcTransports);
 
 const config = typeof window === 'undefined' 
   ? createConfig({

@@ -41,15 +41,15 @@ Dashboard-only steps and a **prompt for Claude Code + browser** are in [CLOUDFLA
 
 5. (Optional) Custom domain: Workers & Pages → worker → Triggers → Custom Domains.
 
-## Web app (Netlify / CI)
+## Web app (legacy optional)
 
-Set at **build** time:
+If manually testing the worker, set at **build** time:
 
 ```bash
 VITE_RPC_PROXY_URL=https://<your-worker>.workers.dev
 ```
 
-The site uses **proxy → Alchemy → Infura** for mainnet RPC when this is set.
+The site now uses `VITE_MAINNET_RPC_URL` as the default mainnet RPC. This worker is retained for manual fallback testing and is not part of the default transport.
 
 ## Local dev
 

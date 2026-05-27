@@ -26,8 +26,11 @@ export interface ChainSpecificData {
   publicClient: PublicClient;
   rpcUrl: {
     primary: string;
-    fallback: string;
-    /** Optional second fallback for 3-way rotation (e.g. external RPC proxy + Alchemy + Infura) */
+    /** Optional fallback URLs, ordered by priority. Keep Alchemy last when configured. */
+    fallbacks: string[];
+    /** @deprecated Use `fallbacks`; retained for older call sites/debug output. */
+    fallback?: string;
+    /** @deprecated Use `fallbacks`; retained for older call sites/debug output. */
     fallback2?: string;
   };
   addresses: {
@@ -74,35 +77,54 @@ export interface ChainSpecificData {
   };
 }
 
-const alchemyMainnetHttp = `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`;
-const infuraMainnetHttp = `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`;
+function splitRpcUrls(value?: string): string[] {
+  return (value ?? "")
+    .split(",")
+    .map((url) => url.trim())
+    .filter(Boolean);
+}
+
+function getRequiredRpcUrl(value: string | undefined, envKey: string): string {
+  const url = value?.trim();
+  if (!url) {
+    throw new Error(`Missing ${envKey}. Set it to the Ethereum mainnet RPC URL.`);
+  }
+  return url;
+}
 
 /**
- * Ethereum mainnet RPC URLs. Default: Alchemy → Infura (no Netlify/serverless per request).
- * Optional `VITE_RPC_PROXY_URL`: external JSON-RPC proxy (e.g. Cloudflare Worker with Goldsky secret).
+ * Ethereum mainnet RPC URLs. Default: configured primary RPC only.
+ * Optional `VITE_MAINNET_RPC_FALLBACKS`: comma-separated fallbacks, with Alchemy last when configured.
  */
 function getEthereumMainnetRpcUrls(): {
   primary: string;
-  fallback: string;
+  fallbacks: string[];
+  fallback?: string;
   fallback2?: string;
 } {
-  const proxy = import.meta.env.VITE_RPC_PROXY_URL?.trim();
-  if (proxy) {
-    return {
-      primary: proxy,
-      fallback: alchemyMainnetHttp,
-      fallback2: infuraMainnetHttp,
-    };
-  }
-  return { primary: alchemyMainnetHttp, fallback: infuraMainnetHttp };
+  const [fallbackUrl, fallback2] = splitRpcUrls(
+    import.meta.env.VITE_MAINNET_RPC_FALLBACKS,
+  );
+  const fallbacks = [fallbackUrl, fallback2].filter(
+    (url): url is string => Boolean(url),
+  );
+
+  return {
+    primary: getRequiredRpcUrl(
+      import.meta.env.VITE_MAINNET_RPC_URL,
+      "VITE_MAINNET_RPC_URL",
+    ),
+    fallbacks,
+    fallback: fallbackUrl,
+    fallback2,
+  };
 }
 
 function createEthereumMainnetTransport() {
-  const { primary, fallback: fallbackUrl, fallback2 } = getEthereumMainnetRpcUrls();
-  if (fallback2 != null) {
-    return fallback([http(primary), http(fallbackUrl), http(fallback2)]);
-  }
-  return fallback([http(primary), http(fallbackUrl)]);
+  const { primary, fallbacks } = getEthereumMainnetRpcUrls();
+  const transports = [primary, ...fallbacks].map((url) => http(url));
+
+  return transports.length === 1 ? transports[0] : fallback(transports);
 }
 
 export const mainnetPublicClient = createPublicClient({
@@ -165,6 +187,9 @@ const _NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
     chain: sepolia,
     rpcUrl: {
       primary: `https://eth-sepolia.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
+      fallbacks: [
+        `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
+      ],
       fallback: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
     },
     publicClient: createPublicClient({
@@ -302,6 +327,9 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
     chain: sepolia,
     rpcUrl: {
       primary: `https://eth-sepolia.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY!}`,
+      fallbacks: [
+        `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
+      ],
       fallback: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY!}`,
     },
     publicClient: createPublicClient({

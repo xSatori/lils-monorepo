@@ -95,15 +95,15 @@ Example (root):
 
 ```
 VITE_CHAIN_ID=1
-VITE_ALCHEMY_API_KEY=your_key
-VITE_INFURA_API_KEY=your_key
+VITE_MAINNET_RPC_URL=https://evm.stupidtech.net/v1/1
+VITE_MAINNET_RPC_FALLBACKS=
 ```
 
-**Ethereum mainnet RPC (production):** Set `VITE_ALCHEMY_API_KEY` and `VITE_INFURA_API_KEY` in the build environment.
+**Ethereum mainnet RPC (production):** Set `VITE_MAINNET_RPC_URL` to the primary public aggregator. Leave `VITE_MAINNET_RPC_FALLBACKS` empty while testing only the primary RPC. If a last-resort Alchemy fallback is needed, set it to the full Alchemy mainnet RPC URL.
 
-**Goldsky Edge RPC (recommended):** Deploy the Cloudflare Worker in **`workers/goldsky-rpc`** (see [workers/goldsky-rpc/README.md](workers/goldsky-rpc/README.md)). From repo root: `bun run deploy:goldsky-rpc` (after `bunx wrangler login` in that folder once). Dashboard + Netlify checklist and a **Claude Code / browser handoff prompt**: [workers/goldsky-rpc/CLOUDFLARE_HANDOFF.md](workers/goldsky-rpc/CLOUDFLARE_HANDOFF.md). Set **`VITE_RPC_PROXY_URL`** in Netlify to the worker `https://` URL at build time. The Goldsky secret lives only in Cloudflare (`wrangler secret put GOLDSKY_RPC_SECRET`), not in `VITE_*` bundle vars. The app uses **proxy → Alchemy → Infura** when `VITE_RPC_PROXY_URL` is set; otherwise **Alchemy → Infura** only (no Netlify RPC function).
+**Goldsky Edge RPC (legacy optional):** The Cloudflare Worker in **`workers/goldsky-rpc`** can still be deployed for manual testing, but it is no longer part of the default frontend mainnet transport.
 
-**Local dev with Goldsky:** Set `GOLDSKY_RPC_SECRET` (not `VITE_`) under `apps/web` and run the web app; the Vite dev server proxies `POST /api/rpc`. Alternatively run `bun run dev` in `workers/goldsky-rpc` with `.dev.vars` and point `VITE_RPC_PROXY_URL` at the local worker when testing that path.
+**Local dev with Goldsky:** Set `GOLDSKY_RPC_SECRET` (not `VITE_`) under `apps/web` and run the web app if you need to manually test `POST /api/rpc`. The default app transport does not use that proxy.
 
 **Netlify:** `/api/discord/events` still uses a Netlify function if you keep that `_redirects` rule; remove it or move Discord to another host if you need zero function invocations site-wide.
 
