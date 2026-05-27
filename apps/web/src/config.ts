@@ -276,6 +276,7 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       noundersMultisig: getAddress(
         "0x3cf6a7f06015aCad49F76044d3c63D7fE477D945",
       ),
+      nounsDAOTreasury: getAddress("0xb1a32FC9F9D8b2cf86C068Cae13108809547ef71"), // Nouns DAO executor — receives DAO reward nouns (1, 11, 21...)
       usdc: getAddress("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"),
       nounsPayer: getAddress("0xd97Bcd9f47cEe35c0a9ec1dc40C1269afc9E8E1D"),
       nounsTokenBuyer: getAddress("0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"),
@@ -352,6 +353,7 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       nounsPayer: getAddress(sepoliaAddresses.nounsPayer),
       nounsTokenBuyer: getAddress(sepoliaAddresses.nounsTokenBuyer || "0x4f2acdc74f6941390d9b1804fabc3e780388cfe5"),
       noundersMultisig: getAddress(sepoliaAddresses.noundersMultisig),
+      nounsDAOTreasury: getAddress("0x0000000000000000000000000000000000000000"), // No Nouns DAO treasury on Sepolia
     },
     nounsGovernanceUrl: "https://sepolia.lilnouns.wtf/",
     subgraphUrl: {

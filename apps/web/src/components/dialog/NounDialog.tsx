@@ -122,8 +122,8 @@ export default function NounDialog() {
   }, [displayNoun]);
 
   // Check if this is a special reward token
-  // Every 10th token (0, 10, 20, 30...) goes to lilnounders
-  // Every 11th token (1, 11, 21, 31...) goes to Nouns DAO
+  // Every 10th token (0, 10, 20, 30...) goes to lil nounders
+  // Every 10th token offset by 1 (1, 11, 21, 31...) goes to Nouns DAO
   const rewardInfo = useMemo(() => {
     if (!nounId) return null;
     const idNum = parseInt(nounId);

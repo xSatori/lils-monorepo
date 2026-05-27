@@ -312,13 +312,13 @@ export default function VRGDAClient({ initialNounId }: VRGDAClientProps) {
             </span>
           </div>
           <div className="flex whitespace-pre-wrap heading-1">
-            Lil Noun {currentNounId}
+            Lil Noun {nounData?.id ?? currentNounId}
           </div>
         </div>
 
         <VRGDAuctionInterface
           auction={{
-            nounId: { toNumber: () => currentNounIdNum },
+            nounId: { toNumber: () => nounData?.id ? parseInt(nounData.id) : (currentNounIdNum ?? 0) },
             blockNumber: blockNumber,
             isPaused: isPaused ? true : false,
           }}

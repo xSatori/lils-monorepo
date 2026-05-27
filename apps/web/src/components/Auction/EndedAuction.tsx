@@ -90,7 +90,7 @@ export function EndedAuction({
                     />
                   </TooltipTrigger>
                   <TooltipContent className="text-wrap bg-background-dark text-center">
-                    Thanks NounsDAO for your support! Every 11th Noun goes to the Nouns Treasury.
+                    Thanks NounsDAO for your support! Every 10th Lil Noun (ids #1, #11, #21...) goes to the Nouns DAO Treasury.
                   </TooltipContent>
                 </Tooltip>
               )}

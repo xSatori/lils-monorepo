@@ -12,6 +12,16 @@ interface UseBuyNounVRGDAReturnType extends Omit<UseSendTransactionReturnType, "
   buyNoun: (expectedBlockNumber: bigint, expectedNounId: bigint, maxPrice?: bigint) => void;
 }
 
+// Compute the first purchasable noun ID from the raw nextNounId counter,
+// skipping lil nounders allocations (% 10 === 0) and DAO allocations (% 10 === 1).
+function getNextPurchasableNounId(rawNextNounId: bigint): bigint {
+  let id = rawNextNounId;
+  while (id % 10n === 0n || id % 10n === 1n) {
+    id++;
+  }
+  return id;
+}
+
 export function useBuyNounVRGDA(): UseBuyNounVRGDAReturnType {
   const { sendTransaction, ...other } = useSendTransaction();
 
@@ -53,12 +63,14 @@ export function useBuyNounVRGDA(): UseBuyNounVRGDAReturnType {
         allowFailure: false,
       });
 
-      // Validate expected noun ID matches contract state
-      if (expectedNounId !== nextNounId) {
+      // Validate expected noun ID matches the next purchasable noun.
+      // nextNounId() is the raw counter (includes auto-allocated founder/DAO nouns),
+      // so we skip ids where % 10 === 0 (lil nounders) or % 10 === 1 (Nouns DAO).
+      const purchasableNounId = getNextPurchasableNounId(nextNounId);
+      if (expectedNounId !== purchasableNounId) {
         return new CustomTransactionValidationError(
-          "INVALID_NOUN_ID", 
-          'This noun is no longer available as its not in the current pool. Please refresh and try again.'
-          // `Expected noun ID ${expectedNounId} but contract expects ${nextNounId}. Please refresh and try again.`
+          "INVALID_NOUN_ID",
+          'This noun is no longer available. Please refresh and try again.'
         );
       }
 
