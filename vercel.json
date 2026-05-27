@@ -16,6 +16,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/ponder/graphql",
+      "destination": "https://graphql.lilnouns.wtf/"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

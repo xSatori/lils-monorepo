@@ -20,6 +20,37 @@ const getChainAddresses = (chainId: string): Record<string, string> =>
   (addresses as Record<string, Record<string, string>>)[chainId] ?? {};
 
 const sepoliaAddresses = getChainAddresses("11155111");
+const DEFAULT_INDEXER_URL = "https://graphql.lilnouns.wtf";
+export const PONDER_GRAPHQL_PROXY_PATH = "/api/ponder/graphql";
+
+function shouldUsePonderProxy(indexerUrl: string): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  try {
+    const url = new URL(indexerUrl);
+    return (
+      url.hostname === "graphql.lilnouns.wtf" &&
+      window.location.hostname !== url.hostname
+    );
+  } catch {
+    return false;
+  }
+}
+
+function getIndexerUrl(): string {
+  const configuredUrl =
+    import.meta.env.VITE_INDEXER_URL?.trim() || DEFAULT_INDEXER_URL;
+
+  if (configuredUrl.startsWith("/")) {
+    return configuredUrl;
+  }
+
+  return shouldUsePonderProxy(configuredUrl)
+    ? PONDER_GRAPHQL_PROXY_PATH
+    : configuredUrl;
+}
 
 export interface ChainSpecificData {
   chain: Chain;
@@ -179,7 +210,7 @@ const _NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       primary: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/nouns/1.0.2/gn",
       fallback: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/nouns/1.0.2/gn",
     },
-    indexerUrl: import.meta.env.VITE_INDEXER_URL!,
+    indexerUrl: getIndexerUrl(),
     swapForWrappedNativeUrl:
       "https://app.uniswap.org/swap?outputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&chain=mainnet",
   },
@@ -255,7 +286,7 @@ const _NOUNSDAO_CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       primary: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/lil-nouns-sepolia/0.1.17/gn",
       fallback: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/lil-nouns-sepolia/0.1.17/gn",
     },
-    indexerUrl: import.meta.env.VITE_INDEXER_URL!, // mainnet for now, didn't deploy for sepolia yet
+    indexerUrl: getIndexerUrl(), // mainnet for now, didn't deploy for sepolia yet
     swapForWrappedNativeUrl: "",
     daoParams: {
       votingPeriod: 80,
@@ -317,9 +348,7 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       primary: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/lil-nouns-subgraph/1.0.10/gn",
       fallback: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/lil-nouns-subgraph/1.0.10/gn",
     },
-  indexerUrl:
-    import.meta.env.VITE_INDEXER_URL ||
-    "https://graphql.lilnouns.wtf",
+    indexerUrl: getIndexerUrl(),
     swapForWrappedNativeUrl:
       "https://app.uniswap.org/swap?outputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&chain=mainnet",
   },
@@ -392,7 +421,7 @@ export const CHAIN_SPECIFIC_CONFIGS: Record<number, ChainSpecificData> = {
       primary: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/lil-nouns-sepolia/0.1.17/gn",
       fallback: "https://api.goldsky.com/api/public/project_cldjvjgtylso13swq3dre13sf/subgraphs/lil-nouns-sepolia/0.1.17/gn",
     },
-    indexerUrl: import.meta.env.VITE_INDEXER_URL!, // mainnet for now, didn't deploy for sepolia yet
+    indexerUrl: getIndexerUrl(), // mainnet for now, didn't deploy for sepolia yet
     swapForWrappedNativeUrl: "",
     daoParams: {
       votingPeriod: 20,

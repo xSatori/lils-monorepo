@@ -130,6 +130,24 @@ async function fetchUsedBlockNumbers(blockNumbers: bigint[]) {
   return usedBlocks;
 }
 
+export async function getOnChainVrgdaCandidateByBlock(
+  blockNumber: bigint | string,
+): Promise<OnChainVrgdaCandidate | null> {
+  const normalizedBlockNumber = BigInt(blockNumber);
+  const [candidate] = await fetchCandidatesForBlocks([normalizedBlockNumber]);
+
+  if (!candidate) {
+    return null;
+  }
+
+  const usedBlocks = await fetchUsedBlockNumbers([normalizedBlockNumber]);
+
+  return {
+    ...candidate,
+    isUsed: usedBlocks.has(candidate.blockNumber),
+  };
+}
+
 export async function getOnChainVrgdaPoolCandidates({
   limit = MAX_ONCHAIN_SCAN_COUNT,
   offset = 0,

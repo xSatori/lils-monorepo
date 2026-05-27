@@ -3,6 +3,16 @@ import { VrgdaPoolSeed } from "./types";
 import { cleanGraphQLFetch } from "../utils/cleanGraphQLFetch";
 import { GetVrgdaPoolSeedByBlockDocument } from "@/data/generated/ponder/clean-graphql";
 import { isSepoliaNetwork } from "@/utils/networkDetection";
+import { getOnChainVrgdaCandidateByBlock } from "@/data/vrgda/getOnChainVrgdaPool";
+
+async function getOnChainFallbackSeedByBlock(blockNumber: string): Promise<VrgdaPoolSeed | null> {
+  try {
+    return await getOnChainVrgdaCandidateByBlock(blockNumber);
+  } catch (error) {
+    console.error("Failed to fetch VRGDA seed by block from contract:", error);
+    return null;
+  }
+}
 
 export async function getVrgdaSeedByBlock(blockNumber: string): Promise<VrgdaPoolSeed | null> {
   // Disable VRGDA pool queries on Sepolia - VPS not configured for Sepolia yet
@@ -17,7 +27,7 @@ export async function getVrgdaSeedByBlock(blockNumber: string): Promise<VrgdaPoo
     });
     
     if (!result.vrgdaPoolSeed) {
-      return null;
+      return getOnChainFallbackSeedByBlock(blockNumber);
     }
 
     return {
@@ -34,7 +44,7 @@ export async function getVrgdaSeedByBlock(blockNumber: string): Promise<VrgdaPoo
     };
   } catch (error) {
     console.error('Failed to fetch VRGDA seed by block from Ponder:', error);
-    return null;
+    return getOnChainFallbackSeedByBlock(blockNumber);
   }
 }
 

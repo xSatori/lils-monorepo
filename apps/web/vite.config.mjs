@@ -9,6 +9,11 @@ import { rpcApiPlugin } from './vite-plugin-rpc-api.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+const ponderGraphqlProxy = {
+  target: 'https://graphql.lilnouns.wtf',
+  changeOrigin: true,
+  rewrite: () => '/',
+}
 
 export default defineConfig({
   plugins: [
@@ -93,6 +98,9 @@ export default defineConfig({
     port: 3000,
     host: '0.0.0.0', // Allow access via subdomain (sepolia.localhost)
     open: true,
+    proxy: {
+      '/api/ponder/graphql': ponderGraphqlProxy,
+    },
     hmr: {
       port: 3000, // Use same port for HMR to avoid connection issues
       host: 'localhost', // HMR should connect via localhost
@@ -100,6 +108,12 @@ export default defineConfig({
     fs: {
       // Allow serving files from workspace packages
       allow: ['..', '../..'],
+    },
+  },
+
+  preview: {
+    proxy: {
+      '/api/ponder/graphql': ponderGraphqlProxy,
     },
   },
   
