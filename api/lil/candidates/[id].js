@@ -1,4 +1,8 @@
-const { queryLilPonder, sendJson } = require("../../_lil-camp-db");
+const {
+  getDatabaseDebugInfo,
+  queryLilPonder,
+  sendJson,
+} = require("../../_lil-camp-db");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "GET") {
@@ -85,7 +89,17 @@ module.exports = async function handler(req, res) {
       "s-maxage=30, stale-while-revalidate=120",
     );
   } catch (error) {
-    console.error("Failed to fetch Lil Camp candidate:", error);
-    sendJson(res, 500, { error: "Failed to fetch candidate" });
+    const debug = getDatabaseDebugInfo();
+    console.error("Failed to fetch Lil Camp candidate:", {
+      message: error?.message,
+      code: error?.code,
+      debug,
+    });
+    sendJson(res, 500, {
+      error: "Failed to fetch candidate",
+      code: error?.code || null,
+      message: error?.message || "Unknown error",
+      debug,
+    });
   }
 };

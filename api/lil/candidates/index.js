@@ -1,4 +1,8 @@
-const { queryLilPonder, sendJson } = require("../../_lil-camp-db");
+const {
+  getDatabaseDebugInfo,
+  queryLilPonder,
+  sendJson,
+} = require("../../_lil-camp-db");
 
 function parsePositiveInt(value, fallback, max) {
   const parsed = Number.parseInt(String(value || ""), 10);
@@ -128,7 +132,17 @@ module.exports = async function handler(req, res) {
       "s-maxage=30, stale-while-revalidate=120",
     );
   } catch (error) {
-    console.error("Failed to fetch Lil Camp candidates:", error);
-    sendJson(res, 500, { error: "Failed to fetch candidates" });
+    const debug = getDatabaseDebugInfo();
+    console.error("Failed to fetch Lil Camp candidates:", {
+      message: error?.message,
+      code: error?.code,
+      debug,
+    });
+    sendJson(res, 500, {
+      error: "Failed to fetch candidates",
+      code: error?.code || null,
+      message: error?.message || "Unknown error",
+      debug,
+    });
   }
 };

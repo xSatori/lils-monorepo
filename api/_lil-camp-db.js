@@ -1,6 +1,9 @@
 const { Pool } = require("pg");
 
 const DATABASE_URL_KEYS = [
+  "RAILWAY_DATABASE_PUBLIC_URL",
+  "DATABASE_PUBLIC_URL",
+  "POSTGRES_PUBLIC_URL",
   "DATABASE_URL",
   "POSTGRES_URL",
   "POSTGRES_URL_NON_POOLING",
@@ -32,6 +35,31 @@ function getDatabaseUrl() {
   return null;
 }
 
+function getDatabaseDebugInfo() {
+  const activeKey = DATABASE_URL_KEYS.find((key) => {
+    const value = process.env[key];
+    return Boolean(value && value.trim());
+  });
+  const activeValue = activeKey ? process.env[activeKey] : "";
+
+  let hostname = null;
+  try {
+    hostname = activeValue ? new URL(activeValue).hostname : null;
+  } catch {
+    hostname = "invalid-url";
+  }
+
+  return {
+    activeKey: activeKey || null,
+    hostname,
+    configuredKeys: DATABASE_URL_KEYS.filter((key) => {
+      const value = process.env[key];
+      return Boolean(value && value.trim());
+    }),
+    schemas: getLilSchemas(),
+  };
+}
+
 function getPool() {
   if (pool) return pool;
 
@@ -50,8 +78,8 @@ function getPool() {
     connectionString,
     ssl,
     max: 1,
-    idleTimeoutMillis: 20_000,
-    connectionTimeoutMillis: 15_000,
+    idleTimeoutMillis: 5_000,
+    connectionTimeoutMillis: 3_000,
   });
 
   return pool;
@@ -101,6 +129,7 @@ function sendJson(res, statusCode, body, cacheControl) {
 }
 
 module.exports = {
+  getDatabaseDebugInfo,
   queryLilPonder,
   sendJson,
 };
