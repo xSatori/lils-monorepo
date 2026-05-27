@@ -24,10 +24,22 @@ module.exports = async function handler(req, res) {
         SELECT c.id, c.slug, c.proposer, c.title, c.description,
                c.targets, c."values", c.signatures AS signatures_list, c.calldatas,
                c.encoded_proposal_hash, c.proposal_id_to_update,
+               promoted.proposal_id,
                c.canceled, c.signature_count,
                c.created_timestamp, c.last_updated_timestamp, c.block_number,
                e.name as proposer_ens
         FROM ponder_live.lil_candidates c
+        LEFT JOIN LATERAL (
+          SELECT p.id AS proposal_id
+          FROM ponder_live.lil_proposals p
+          WHERE LOWER(p.proposer) = LOWER(c.proposer)
+            AND p.title = c.title
+            AND p.description = c.description
+            AND p.created_timestamp >= c.created_timestamp
+            AND c.proposal_id_to_update IS NULL
+          ORDER BY p.created_timestamp ASC
+          LIMIT 1
+        ) promoted ON TRUE
         LEFT JOIN ponder_live.ens_names e ON LOWER(c.proposer) = LOWER(e.address)
         WHERE c.id = $1
         LIMIT 1

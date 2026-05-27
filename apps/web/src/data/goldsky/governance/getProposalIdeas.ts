@@ -94,7 +94,7 @@ function mapCandidateToIdea(candidate: LilCampCandidate): ProposalIdea | null {
           calldatas: candidate.calldatas || [],
         },
         targetProposalId: toProposalId(candidate.proposal_id_to_update),
-        proposalId: null,
+        proposalId: toProposalId(candidate.proposal_id),
         contentSignatures: sponsors,
       },
       versions,

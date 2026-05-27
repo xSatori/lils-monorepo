@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
-import { ProposalCandidate } from "@/data/goldsky/governance/ideaTypes";
+import { ProposalIdea } from "@/data/goldsky/governance/ideaTypes";
 import { EnsAvatar } from "../EnsAvatar";
 import { EnsName } from "../EnsName";
 import { getAddress } from "viem";
 import { formatTimeLeft } from "@/utils/format";
 import VotingBar from "./VotingBar";
 import { makeUrlId } from "@/data/goldsky/governance/getProposalIdeas";
-import clsx from "clsx";
 import { useReadNounsNftTokenGetCurrentVotes } from "@/data/generated/wagmi";
 
 interface CandidateCardProps {
-  candidate: ProposalCandidate;
+  candidate: ProposalIdea;
   proposalThreshold: number;
 }
 
@@ -42,10 +41,13 @@ export default function CandidateCard({ candidate, proposalThreshold }: Candidat
   };
 
   const status = getStatus();
+  const promotedProposalId = candidate.latestVersion.proposalId;
+  const candidatePath = `/candidates/${makeUrlId(candidate.id)}`;
+  const cardPath = promotedProposalId ? `/vote/${promotedProposalId}` : candidatePath;
 
   return (
     <Link
-      to={`/candidates/${makeUrlId(candidate.id)}`}
+      to={cardPath}
       className="flex flex-col gap-4 rounded-[16px] border p-6 transition-all hover:border-content-secondary"
     >
       {/* Status badges */}
@@ -57,7 +59,7 @@ export default function CandidateCard({ candidate, proposalThreshold }: Candidat
         )}
         {status === "promoted" && (
           <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
-            Promoted
+            Promoted to Proposal {promotedProposalId}
           </span>
         )}
         {status === "update" && (
@@ -85,6 +87,7 @@ export default function CandidateCard({ candidate, proposalThreshold }: Candidat
       <div className="flex items-center gap-4 text-content-secondary paragraph-sm">
         <span>{candidate.feedbackPosts?.length || 0} comments</span>
         <span>{validSponsors.length} sponsors</span>
+        {promotedProposalId && <span>View onchain proposal</span>}
       </div>
     </Link>
   );

@@ -366,7 +366,11 @@ function CandidateTopWrapper({ candidateId }: { candidateId: string }) {
         <div className="flex gap-2 text-content-secondary label-sm">
           <span>{timeAgo} ago</span>
           {candidate.canceledTimestamp && <ProposalStateBadge state="cancelled" />}
-          {candidate.latestVersion.proposalId && <ProposalStateBadge state="executed" />}
+          {candidate.latestVersion.proposalId && (
+            <span className="font-medium text-semantic-positive">
+              Promoted to Proposal {candidate.latestVersion.proposalId}
+            </span>
+          )}
         </div>
       </div>
 

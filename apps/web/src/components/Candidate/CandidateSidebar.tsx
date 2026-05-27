@@ -107,7 +107,7 @@ export default function CandidateSidebar({
             className="flex flex-col gap-2 rounded-[12px] border border-semantic-positive bg-green-50 p-4 transition-all hover:bg-green-100"
           >
             <p className="text-sm font-medium text-content-primary">
-              This candidate has been sponsored
+              This candidate has been promoted to a proposal
             </p>
             <p className="text-xs text-content-secondary">
               View Proposal {proposalId} →

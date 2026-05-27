@@ -42,6 +42,7 @@ export interface LilCampCandidate {
   calldatas?: string[] | null;
   encoded_proposal_hash?: string | null;
   proposal_id_to_update?: string | number | null;
+  proposal_id?: string | number | null;
   created_timestamp?: string | number | null;
   last_updated_timestamp?: string | number | null;
   block_number?: string | number | null;
@@ -231,6 +232,7 @@ function normalizeCandidate(candidate: Record<string, any>): LilCampCandidate {
     calldatas: candidate.calldatas,
     encoded_proposal_hash: getField(candidate, "encoded_proposal_hash", "encodedProposalHash"),
     proposal_id_to_update: getField(candidate, "proposal_id_to_update", "proposalIdToUpdate"),
+    proposal_id: getField(candidate, "proposal_id", "proposalId"),
     created_timestamp: getField(candidate, "created_timestamp", "createdTimestamp"),
     last_updated_timestamp: getField(candidate, "last_updated_timestamp", "lastUpdatedTimestamp"),
     block_number: getField(candidate, "block_number", "blockNumber"),
