@@ -23,9 +23,9 @@ const ALL_DESKTOP_NAV_ITEMS: NavItem[] = [
       { name: "Vote", icon: "vote", href: "/vote" },
       { name: "Ideas", icon: "vote", href: "/candidates" },
       { name: "Topics", icon: "lightning", href: "/topics" },
+      { name: "Feed", icon: "clock", href: "/feed" },
     ],
   },
-  { name: "Feed", icon: "clock", href: "/feed" },
   { name: "Learn", icon: "book", href: "/learn" },
 ];
 

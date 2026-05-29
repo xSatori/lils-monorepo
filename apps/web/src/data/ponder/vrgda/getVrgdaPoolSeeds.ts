@@ -88,6 +88,10 @@ export async function getVrgdaPoolSeeds(
     return { seeds: [], hasMore: false };
   }
 
+  if (filters.isUsed === false) {
+    return getOnChainFallbackPoolSeeds(filters, sortField, sortDirection, limit, offset);
+  }
+
   try {
     const where: Record<string, unknown> = {};
     if (filters.isUsed !== undefined) where.isUsed = filters.isUsed;

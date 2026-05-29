@@ -1,10 +1,11 @@
 import { CHAIN_CONFIG } from "@/config";
 import { lilVRGDAConfig } from "@/config/lilVRGDAConfig";
 import type { VrgdaPoolSeed } from "@/data/ponder/vrgda/types";
-import { multicall } from "viem/actions";
 
-const MAX_ONCHAIN_SCAN_COUNT = 1024;
-const MULTICALL_CHUNK_SIZE = 12;
+const MAX_ONCHAIN_SCAN_COUNT = 256;
+const CONTRACT_READ_CHUNK_SIZE = 12;
+const ZERO_BLOCK_HASH =
+  "0x0000000000000000000000000000000000000000000000000000000000000000";
 
 interface VrgdaSeedTuple {
   background: bigint | number;
@@ -69,18 +70,23 @@ function normalizeCandidate(
   };
 }
 
+function isValidCandidate(candidate: OnChainVrgdaCandidate) {
+  return candidate.blockHash !== ZERO_BLOCK_HASH;
+}
+
 async function fetchCandidatesForBlocks(blockNumbers: bigint[]) {
-  const chunks = chunkArray(blockNumbers, MULTICALL_CHUNK_SIZE);
+  const chunks = chunkArray(blockNumbers, CONTRACT_READ_CHUNK_SIZE);
   const settledChunks = await Promise.allSettled(
     chunks.map((chunk) =>
-      multicall(CHAIN_CONFIG.publicClient, {
-        allowFailure: true,
-        contracts: chunk.map((blockNumber) => ({
-          ...lilVRGDAConfig,
-          functionName: "fetchNoun",
-          args: [blockNumber],
-        })),
-      }),
+      Promise.allSettled(
+        chunk.map((blockNumber) =>
+          CHAIN_CONFIG.publicClient.readContract({
+            ...lilVRGDAConfig,
+            functionName: "fetchNoun",
+            args: [blockNumber],
+          }),
+        ),
+      ),
     ),
   );
 
@@ -90,28 +96,29 @@ async function fetchCandidatesForBlocks(blockNumbers: bigint[]) {
     }
 
     return chunk.value.flatMap((result) => {
-      if (result.status !== "success") {
+      if (result.status !== "fulfilled" || !result.value) {
         return [];
       }
 
-      return [normalizeCandidate(result.result as VrgdaCandidateTuple)];
+      return [normalizeCandidate(result.value as VrgdaCandidateTuple)];
     });
   });
 }
 
 async function fetchUsedBlockNumbers(blockNumbers: bigint[]) {
-  const chunks = chunkArray(blockNumbers, MULTICALL_CHUNK_SIZE);
+  const chunks = chunkArray(blockNumbers, CONTRACT_READ_CHUNK_SIZE);
   const usedBlocks = new Set<string>();
   const settledChunks = await Promise.allSettled(
     chunks.map((chunk) =>
-      multicall(CHAIN_CONFIG.publicClient, {
-        allowFailure: true,
-        contracts: chunk.map((blockNumber) => ({
-          ...lilVRGDAConfig,
-          functionName: "usedBlockNumbers",
-          args: [blockNumber],
-        })),
-      }),
+      Promise.allSettled(
+        chunk.map((blockNumber) =>
+          CHAIN_CONFIG.publicClient.readContract({
+            ...lilVRGDAConfig,
+            functionName: "usedBlockNumbers",
+            args: [blockNumber],
+          }),
+        ),
+      ),
     ),
   );
 
@@ -122,7 +129,7 @@ async function fetchUsedBlockNumbers(blockNumbers: bigint[]) {
 
     const sourceBlocks = chunks[chunkIndex];
     chunk.value.forEach((result, resultIndex) => {
-      if (result.status === "success" && result.result === true) {
+      if (result.status === "fulfilled" && result.value === true) {
         usedBlocks.add(sourceBlocks[resultIndex].toString());
       }
     });
@@ -156,11 +163,22 @@ export async function getOnChainVrgdaPoolCandidates({
   sortDirection = "desc",
   scanLimit = MAX_ONCHAIN_SCAN_COUNT,
 }: GetOnChainVrgdaPoolOptions = {}): Promise<OnChainVrgdaCandidate[]> {
-  const [latestBlockNumber] = await Promise.all([
+  const [latestBlockNumber, poolSizeResult] = await Promise.all([
     CHAIN_CONFIG.publicClient.getBlockNumber(),
+    CHAIN_CONFIG.publicClient.readContract({
+      ...lilVRGDAConfig,
+      functionName: "poolSize",
+    }),
   ]);
 
-  const scanCount = Math.min(scanLimit, MAX_ONCHAIN_SCAN_COUNT);
+  const poolSize = Number(poolSizeResult);
+  const latestHistoryCount = Number(latestBlockNumber > 1n ? latestBlockNumber - 1n : 0n);
+  const scanCount = Math.min(
+    scanLimit,
+    MAX_ONCHAIN_SCAN_COUNT,
+    poolSize,
+    latestHistoryCount,
+  );
 
   let anchorBlockNumber: bigint | null = null;
   let anchorCandidate: OnChainVrgdaCandidate | null = null;
@@ -193,7 +211,7 @@ export async function getOnChainVrgdaPoolCandidates({
 
   const candidatesByBlock = new Map<string, OnChainVrgdaCandidate>();
   [anchorCandidate, ...historyCandidates].forEach((candidate) => {
-    if (candidate) {
+    if (candidate && isValidCandidate(candidate)) {
       candidatesByBlock.set(candidate.blockNumber, candidate);
     }
   });
