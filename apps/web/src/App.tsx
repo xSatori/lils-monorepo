@@ -19,6 +19,8 @@ import CandidateDetailPage from './pages/CandidateDetailPage'
 import TopicsPage from './pages/TopicsPage'
 import VotePage from './pages/VotePage'
 import VoteDetailPage from './pages/VoteDetailPage'
+import FeedPage from './features/governance-feed/FeedPage'
+import ProGovernancePage from './features/governance-feed/ProGovernancePage'
 // import StatsPage from './pages/StatsPage'
 // import TreasuryStatsPage from './pages/TreasuryStatsPage'
 import SuccessPage from './pages/SuccessPage'
@@ -31,6 +33,7 @@ import ProposalEditorScreen from './components/ProposalEditor/ProposalEditorScre
 import '@rainbow-me/rainbowkit/styles.css'
 import TopicDetailPage from './pages/TopicDetailPage'
 import ProfilesPage from './pages/ProfilesPage'
+import VoterProfilePage from './pages/VoterProfilePage'
 import TraitsPage from './pages/TraitsPage'
 import BrandPage from './pages/BrandPage'
 
@@ -41,6 +44,10 @@ function NounsDaoRedirect() {
 }
 
 function App() {
+  const isProHost =
+    typeof window !== 'undefined' &&
+    window.location.hostname.toLowerCase() === 'pro.lilnouns.club'
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -96,10 +103,10 @@ function App() {
           <Routes>
             {/* Main routes with layout */}
             <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
+              <Route index element={isProHost ? <ProGovernancePage /> : <HomePage />} />
               <Route path="explore" element={<ExplorePage />} />
               <Route path="profile" element={<ProposalsPage />} />
-              <Route path="profile/:address" element={<ProposalsPage />} />
+              <Route path="profile/:address" element={<VoterProfilePage />} />
               <Route path="vote" element={<VotePage />} />
               <Route path="vote/nouns" element={<VotePage />} />
               <Route path="vote/nounsdao" element={<VotePage />} />
@@ -110,7 +117,11 @@ function App() {
               <Route path="candidates/:id" element={<CandidateDetailPage />} />
               <Route path="topics" element={<TopicsPage />} />
               <Route path="topics/:id" element={<TopicDetailPage/>} />
+              <Route path="feed" element={<FeedPage />} />
+              <Route path="pro" element={<ProGovernancePage />} />
               <Route path="profiles" element={<ProfilesPage />} />
+              <Route path="voters" element={<ProfilesPage />} />
+              <Route path="voters/:address" element={<VoterProfilePage />} />
               {/* <Route path="stats" element={<StatsPage />} /> */}
               {/* <Route path="stats/treasury" element={<TreasuryStatsPage />} /> */}
               <Route path="learn" element={<LearnPage />} />

@@ -1,9 +1,10 @@
 "use client";
-import { useEnsAvatar, useEnsName } from "wagmi";
-import { Address } from "viem";
+import { Address, getAddress } from "viem";
 import { HTMLAttributes, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/utils/shadcn";
 import { getAddressOverrides } from "@/utils/addressOverrides";
+import { resolveEnsAvatar, resolveEnsName } from "@/utils/ensIdentity";
 
 interface EnsAvatarProps extends HTMLAttributes<HTMLDivElement> {
   address: Address;
@@ -23,7 +24,7 @@ function generateGradientFromAddress(address: string): string {
 }
 
 /**
- * Avatar component using wagmi's ENS avatar with caching
+ * Avatar component using mainnet ENS avatar resolution with caching
  * Falls back to generated gradient avatar if ENS avatar is not available
  */
 export function EnsAvatar({
@@ -32,28 +33,28 @@ export function EnsAvatar({
   className,
   ...props
 }: EnsAvatarProps) {
-  const normalizedAddress = address.toLowerCase() as Address;
+  const normalizedAddress = getAddress(address);
   
   // Check for address overrides first
   const override = getAddressOverrides(normalizedAddress);
   const overrideAvatar = override?.avatar;
 
-  // Get ENS name for the address (wagmi caches this automatically)
-  const { data: ensName } = useEnsName({
-    address: normalizedAddress,
-    chainId: 1, // ENS is on mainnet
-    query: {
-      enabled: !overrideAvatar, // Skip if we have an override
-    },
+  const { data: ensName } = useQuery({
+    queryKey: ["ens-name", normalizedAddress],
+    queryFn: () => resolveEnsName(normalizedAddress),
+    enabled: !overrideAvatar,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 7 * 24 * 60 * 60 * 1000,
+    retry: 1,
   });
 
-  // Get ENS avatar (wagmi caches this automatically)
-  const { data: ensAvatar } = useEnsAvatar({
-    name: ensName ?? undefined,
-    chainId: 1, // ENS is on mainnet
-    query: {
-      enabled: !!ensName && !overrideAvatar, // Skip if we have an override
-    },
+  const { data: ensAvatar } = useQuery({
+    queryKey: ["ens-avatar", ensName],
+    queryFn: () => resolveEnsAvatar(ensName!),
+    enabled: !!ensName && !overrideAvatar,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 7 * 24 * 60 * 60 * 1000,
+    retry: 1,
   });
 
   const avatarUrl = overrideAvatar || ensAvatar;

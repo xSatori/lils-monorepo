@@ -167,6 +167,7 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
              state === 'UPDATABLE' ? 'updatable' :
              state.toLowerCase() as any,
       creationBlock: createdBlock,
+      createdTimestamp,
       createdTransactionHash: proposal.createdTransactionHash || undefined,
       votingStartBlock: startBlock,
       votingStartTimestamp: votingStartTimestamp,

@@ -193,6 +193,7 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
       quorumVotes: parseInt(proposal.quorumVotes),
       state: mappedState as any,
       creationBlock: createdBlock,
+      createdTimestamp,
       createdTransactionHash: proposal.createdTransactionHash || undefined,
       votingStartBlock: startBlock,
       votingStartTimestamp: votingStartTimestamp,

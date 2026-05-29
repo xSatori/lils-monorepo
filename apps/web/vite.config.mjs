@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { discordApiPlugin } from './vite-plugin-discord-api.js'
 import { ogImagesPlugin } from './vite-plugin-og-images.js'
 import { rpcApiPlugin } from './vite-plugin-rpc-api.js'
+import { lilCampApiPlugin } from './vite-plugin-lil-camp-api.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -24,6 +25,7 @@ export default defineConfig({
     discordApiPlugin(), // Handle Discord API proxy in dev
     ogImagesPlugin(), // Handle OG image API routes in dev
     rpcApiPlugin(), // Handle /api/rpc (Goldsky proxy) in dev
+    lilCampApiPlugin(), // Handle Lil Camp candidate/topic API routes in dev
     // Inject process polyfill
     {
       name: 'inject-process-polyfill',

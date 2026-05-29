@@ -44,6 +44,7 @@ function mapCandidateToIdea(candidate: LilCampCandidate): ProposalIdea | null {
             nounsRepresented: [],
           },
           expirationTimestamp,
+          createdTimestamp: toNumber(signature.block_timestamp),
           canceled: expired,
           status: expired ? "expired" : "valid",
         };
@@ -128,7 +129,9 @@ export async function getProposalIdeas(limit: number = 1000): Promise<ProposalId
 
 export async function getProposalIdea(id: string): Promise<ProposalIdea | null> {
   try {
-    let candidate = await fetchLilCampCandidateById(id);
+    let candidate = id.startsWith("0x")
+      ? await fetchLilCampCandidateBySlug(extractSlugFromId(id), "proposal")
+      : await fetchLilCampCandidateById(id);
 
     if (!candidate) {
       candidate = await fetchLilCampCandidateBySlug(extractSlugFromId(id));

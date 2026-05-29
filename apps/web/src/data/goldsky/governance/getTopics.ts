@@ -146,7 +146,9 @@ export async function getTopics(limit: number = 1000): Promise<Topic[]> {
 
 export async function getTopic(id: string): Promise<Topic | null> {
   try {
-    let candidate = await fetchLilCampCandidateById(id);
+    let candidate = id.startsWith("0x")
+      ? await fetchLilCampCandidateBySlug(extractSlugFromTopicId(id), "topic")
+      : await fetchLilCampCandidateById(id);
 
     if (!candidate) {
       candidate = await fetchLilCampCandidateBySlug(extractSlugFromTopicId(id), "topic");

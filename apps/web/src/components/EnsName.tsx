@@ -1,24 +1,19 @@
 "use client";
-import { useEnsName } from "wagmi";
 import { Address, getAddress } from "viem";
 import { HTMLAttributes } from "react";
-import { cn } from "@/utils/shadcn";
+import { useQuery } from "@tanstack/react-query";
 import { getAddressOverrides } from "@/utils/addressOverrides";
+import {
+  resolveEnsName,
+  truncateAddressForDisplay,
+} from "@/utils/ensIdentity";
 
 interface EnsNameProps extends HTMLAttributes<HTMLSpanElement> {
   address: Address;
 }
 
 /**
- * Truncate an address for display
- */
-function truncateAddress(address: string): string {
-  if (address.length <= 10) return address;
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
-}
-
-/**
- * Name component using wagmi's ENS name with caching
+ * Name component using mainnet ENS resolution with caching
  * Falls back to truncated address if ENS name is not available
  */
 export function EnsName({
@@ -32,16 +27,17 @@ export function EnsName({
   const override = getAddressOverrides(normalizedAddress);
   const overrideName = override?.name;
 
-  // Get ENS name (wagmi caches this automatically via react-query)
-  const { data: ensName } = useEnsName({
-    address: normalizedAddress,
-    chainId: 1, // ENS is on mainnet
-    query: {
-      enabled: !overrideName, // Skip if we have an override
-    },
+  const { data: ensName } = useQuery({
+    queryKey: ["ens-name", normalizedAddress],
+    queryFn: () => resolveEnsName(normalizedAddress),
+    enabled: !overrideName,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 7 * 24 * 60 * 60 * 1000,
+    retry: 1,
   });
 
-  const displayName = overrideName || ensName || truncateAddress(normalizedAddress);
+  const displayName =
+    overrideName || ensName || truncateAddressForDisplay(normalizedAddress);
 
   return (
     <span className={className} {...props}>

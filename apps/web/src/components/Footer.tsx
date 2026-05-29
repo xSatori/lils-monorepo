@@ -19,6 +19,7 @@ const NAV_ITEMS: { name: string; href: string; external?: boolean }[][] = [
   [
     { name: "FAQ's", href: "/#faq" },
     { name: "Classic site", href: "https://classic.lilnouns.wtf" },
+    { name: "Pro dashboard", href: "https://pro.lilnouns.club", external: true },
   ],
 ];
 

@@ -77,6 +77,7 @@ export interface SponsorSignature {
     nounsRepresented: Array<{ id: string }>;
   };
   expirationTimestamp: number;
+  createdTimestamp?: number;
   canceled: boolean;
   status?: 'valid' | 'expired' | 'canceled' | 'redundant' | 'busy';
 }

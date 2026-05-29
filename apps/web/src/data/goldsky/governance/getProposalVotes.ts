@@ -58,10 +58,67 @@ const allVotesQuery = `
   }
 `;
 
+const recentVotesQuery = `
+  query GetRecentProposalVotes($first: Int!) {
+    votes(
+      first: $first
+      orderBy: blockTimestamp
+      orderDirection: desc
+    ) {
+      id
+      proposal {
+        id
+        title
+      }
+      voter {
+        id
+      }
+      supportDetailed
+      votes
+      reason
+      transactionHash
+      blockTimestamp
+      nouns {
+        id
+      }
+    }
+  }
+`;
+
 interface ProposalVotesResponse {
   votes: Vote[];
 }
 
+interface RecentProposalVotesResponse {
+  votes: Array<
+    Vote & {
+      proposal: {
+        id: string;
+        title: string;
+      };
+    }
+  >;
+}
+
+function mapVoteToProposalVote(
+  vote: Vote,
+  proposal?: { id: string; title: string },
+): ProposalVote {
+  return {
+    id: vote.id,
+    proposalId: proposal ? Number(proposal.id) : undefined,
+    proposalTitle: proposal?.title,
+    voterAddress: getAddress(vote.voter.id),
+    supportDetailed: vote.supportDetailed,
+    votes: vote.votes,
+    weight: parseInt(vote.votes),
+    reason: vote.reason,
+    transactionHash: vote.transactionHash,
+    blockTimestamp: vote.blockTimestamp,
+    timestamp: vote.blockTimestamp,
+    nouns: vote.nouns || [],
+  };
+}
 
 export async function getProposalVotes(
   proposalId: string,
@@ -80,20 +137,35 @@ export async function getProposalVotes(
       return [];
     }
 
-    return data.votes.map((vote) => ({
-      id: vote.id,
-      voterAddress: getAddress(vote.voter.id),
-      supportDetailed: vote.supportDetailed,
-      votes: vote.votes,
-      weight: parseInt(vote.votes), // Alias for backward compatibility
-      reason: vote.reason,
-      transactionHash: vote.transactionHash,
-      blockTimestamp: vote.blockTimestamp,
-      timestamp: vote.blockTimestamp, // Alias for backward compatibility
-      nouns: vote.nouns || [],
-    }));
+    return data.votes.map((vote) => mapVoteToProposalVote(vote));
   } catch (error) {
     console.error('Failed to fetch proposal votes from Goldsky:', error);
+    throw error;
+  }
+}
+
+export async function getRecentProposalVotes(
+  limit: number = 200,
+): Promise<ProposalVote[]> {
+  try {
+    const data = await graphQLFetch(
+      CHAIN_CONFIG.goldskyUrl.primary,
+      recentVotesQuery,
+      { first: limit },
+      {
+        cache: "no-cache",
+      },
+    ) as RecentProposalVotesResponse;
+
+    if (!data?.votes) {
+      return [];
+    }
+
+    return data.votes.map((vote) =>
+      mapVoteToProposalVote(vote, vote.proposal),
+    );
+  } catch (error) {
+    console.error("Failed to fetch recent proposal votes from Goldsky:", error);
     throw error;
   }
 }
@@ -116,18 +188,7 @@ export async function getProposalVotesAfterTimestamp(
       return [];
     }
 
-    return data.votes.map((vote) => ({
-      id: vote.id,
-      voterAddress: getAddress(vote.voter.id),
-      supportDetailed: vote.supportDetailed,
-      votes: vote.votes,
-      weight: parseInt(vote.votes), // Alias for backward compatibility
-      reason: vote.reason,
-      transactionHash: vote.transactionHash,
-      blockTimestamp: vote.blockTimestamp,
-      timestamp: vote.blockTimestamp, // Alias for backward compatibility
-      nouns: vote.nouns || [],
-    }));
+    return data.votes.map((vote) => mapVoteToProposalVote(vote));
   } catch (error) {
     console.error('Failed to fetch proposal votes after timestamp from Goldsky:', error);
     throw error;

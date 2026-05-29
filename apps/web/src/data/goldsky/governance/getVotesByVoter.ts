@@ -1,6 +1,5 @@
 import { graphQLFetch } from "@/data/utils/graphQLFetch";
 import { CHAIN_CONFIG } from "@/config";
-import { Vote } from "@/data/generated/goldsky/graphql";
 import { getAddress, Address } from "viem";
 
 const votesByVoterQuery = `
@@ -16,22 +15,89 @@ const votesByVoterQuery = `
       id
       proposal {
         id
+        title
       }
+      supportDetailed
       votes
+      reason
+      transactionHash
       blockTimestamp
+      nouns {
+        id
+      }
     }
   }
 `;
+
+export interface VoterVote {
+  id: string;
+  proposalId: number;
+  proposalTitle: string;
+  supportDetailed: number;
+  votes: number;
+  reason?: string;
+  transactionHash?: string;
+  blockTimestamp: number;
+  nouns: Array<{ id: string }>;
+}
 
 interface VotesByVoterResponse {
   votes: Array<{
     id: string;
     proposal: {
       id: string;
+      title: string;
     };
+    supportDetailed: number;
     votes: string;
+    reason?: string | null;
+    transactionHash?: string | null;
     blockTimestamp: string;
+    nouns?: Array<{ id: string }>;
   }>;
+}
+
+async function fetchVotesByVoter(
+  endpoint: string,
+  voterAddress: Address,
+): Promise<VoterVote[]> {
+  const normalizedAddress = getAddress(voterAddress).toLowerCase();
+  const data = await graphQLFetch(
+    endpoint,
+    votesByVoterQuery,
+    { voterAddress: normalizedAddress },
+    { cache: "no-cache" },
+  ) as VotesByVoterResponse;
+
+  if (!data?.votes) return [];
+
+  return data.votes
+    .map((vote) => ({
+      id: vote.id,
+      proposalId: Number(vote.proposal.id),
+      proposalTitle: vote.proposal.title,
+      supportDetailed: vote.supportDetailed,
+      votes: parseInt(vote.votes),
+      reason: vote.reason || undefined,
+      transactionHash: vote.transactionHash || undefined,
+      blockTimestamp: Number(vote.blockTimestamp || 0),
+      nouns: vote.nouns || [],
+    }))
+    .filter((vote) => vote.votes > 0 && Number.isFinite(vote.proposalId));
+}
+
+export async function getVotesForVoter(voterAddress: Address): Promise<VoterVote[]> {
+  try {
+    return await fetchVotesByVoter(CHAIN_CONFIG.goldskyUrl.primary, voterAddress);
+  } catch (error) {
+    console.error("Failed to fetch votes by voter from Goldsky:", error);
+    try {
+      return await fetchVotesByVoter(CHAIN_CONFIG.goldskyUrl.fallback, voterAddress);
+    } catch (fallbackError) {
+      console.error("Failed to fetch votes by voter from fallback:", fallbackError);
+      return [];
+    }
+  }
 }
 
 /**
@@ -40,64 +106,7 @@ interface VotesByVoterResponse {
 export async function getProposalsVotedCount(
   voterAddress: Address
 ): Promise<number> {
-  try {
-    const normalizedAddress = getAddress(voterAddress).toLowerCase();
-    
-    const data = await graphQLFetch(
-      CHAIN_CONFIG.goldskyUrl.primary,
-      votesByVoterQuery,
-      { voterAddress: normalizedAddress },
-      {
-        cache: "no-cache",
-      }
-    ) as VotesByVoterResponse;
-
-    if (!data?.votes) {
-      return 0;
-    }
-
-    // Filter votes with weight > 0 and get unique proposals
-    const proposalsWithVotes = new Set<string>();
-    
-    data.votes.forEach((vote) => {
-      const weight = parseInt(vote.votes);
-      if (weight > 0 && vote.proposal?.id) {
-        proposalsWithVotes.add(vote.proposal.id);
-      }
-    });
-
-    return proposalsWithVotes.size;
-  } catch (error) {
-    console.error("Failed to fetch votes by voter from Goldsky:", error);
-    // Try fallback URL
-    try {
-      const normalizedAddress = getAddress(voterAddress).toLowerCase();
-      const data = await graphQLFetch(
-        CHAIN_CONFIG.goldskyUrl.fallback,
-        votesByVoterQuery,
-        { voterAddress: normalizedAddress },
-        {
-          cache: "no-cache",
-        }
-      ) as VotesByVoterResponse;
-
-      if (!data?.votes) {
-        return 0;
-      }
-
-      const proposalsWithVotes = new Set<string>();
-      data.votes.forEach((vote) => {
-        const weight = parseInt(vote.votes);
-        if (weight > 0 && vote.proposal?.id) {
-          proposalsWithVotes.add(vote.proposal.id);
-        }
-      });
-
-      return proposalsWithVotes.size;
-    } catch (fallbackError) {
-      console.error("Failed to fetch votes by voter from fallback:", fallbackError);
-      return 0;
-    }
-  }
+  const votes = await getVotesForVoter(voterAddress);
+  return new Set(votes.map((vote) => vote.proposalId)).size;
 }
 

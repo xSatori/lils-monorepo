@@ -32,6 +32,7 @@ export type ProposalOverview = {
   quorumVotes: number;
   state: ProposalState;
   creationBlock: number;
+  createdTimestamp?: number;
   createdTransactionHash?: string;
   votingStartBlock: number;
   votingStartTimestamp: number;
@@ -52,6 +53,8 @@ export interface ProposalTransaction {
 
 export interface ProposalVote {
   id: string;
+  proposalId?: number;
+  proposalTitle?: string;
   voterAddress: Address;
   supportDetailed: number;
   votes: string;
@@ -171,6 +174,7 @@ export async function mapGoldskyProposalToOverview(
     quorumVotes: parseInt(proposal.quorumVotes),
     state: mappedState,
     creationBlock: createdBlock,
+    createdTimestamp,
     createdTransactionHash: proposal.createdTransactionHash,
     votingStartBlock: startBlock,
     votingStartTimestamp: votingStartTimestamp,

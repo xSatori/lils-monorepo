@@ -1,5 +1,5 @@
 import { getAddress, isAddress } from 'viem'
-import { CHAIN_CONFIG } from '@/config'
+import { resolveEnsAddress as resolveEnsAddressRecord } from '@/utils/ensIdentity'
 
 /**
  * Resolve a single ENS name or address to a checksummed address
@@ -12,9 +12,7 @@ export async function resolveEnsAddress(input: string): Promise<string> {
   
   // Try to resolve ENS name
   try {
-    const resolvedAddress = await CHAIN_CONFIG.publicClient.getEnsAddress({
-      name: input,
-    })
+    const resolvedAddress = await resolveEnsAddressRecord(input)
     
     if (resolvedAddress) {
       return getAddress(resolvedAddress)
