@@ -4,7 +4,12 @@ import { getBlockNumber } from "viem/actions";
 import { CHAIN_CONFIG } from "@/config";
 import { ProposalState as UtilsProposalState } from "@/utils/types";
 // Re-export types from main common.ts for compatibility
-import { ProposalOverview, ProposalTransaction, ProposalVote, DetailedProposal } from "../common";
+import {
+  ProposalOverview,
+  ProposalTransaction,
+  ProposalVote,
+  DetailedProposal,
+} from "../common";
 
 const ETHEREUM_BLOCK_TIME_S = 12;
 
@@ -27,10 +32,16 @@ export async function mapGoldskyProposalToOverviewV2(
     startBlock: string;
     endBlock: string;
     executionETA?: string;
+    canceledBlock?: string | null;
+    canceledTimestamp?: string | null;
+    queuedBlock?: string | null;
+    queuedTimestamp?: string | null;
+    executedBlock?: string | null;
+    executedTimestamp?: string | null;
     createdTimestamp: string;
   },
   currentBlockNumber?: number,
-  currentDate?: Date
+  currentDate?: Date,
 ): Promise<ProposalOverview> {
   const dateNow = currentDate ?? new Date();
 
@@ -51,13 +62,15 @@ export async function mapGoldskyProposalToOverviewV2(
   const createdBlock = parseInt(proposal.createdBlock);
   const startBlock = parseInt(proposal.startBlock);
   const endBlock = parseInt(proposal.endBlock);
-  
+
   // Use creation timestamp as baseline and estimate start/end times from there
   const blocksFromCreationToStart = startBlock - createdBlock;
   const blocksFromCreationToEnd = endBlock - createdBlock;
-  
-  const votingStartTimestamp = createdTimestamp + (blocksFromCreationToStart * ETHEREUM_BLOCK_TIME_S);
-  const votingEndTimestamp = createdTimestamp + (blocksFromCreationToEnd * ETHEREUM_BLOCK_TIME_S);
+
+  const votingStartTimestamp =
+    createdTimestamp + blocksFromCreationToStart * ETHEREUM_BLOCK_TIME_S;
+  const votingEndTimestamp =
+    createdTimestamp + blocksFromCreationToEnd * ETHEREUM_BLOCK_TIME_S;
 
   return {
     id: parseInt(proposal.id),
@@ -74,7 +87,27 @@ export async function mapGoldskyProposalToOverviewV2(
     votingStartTimestamp: votingStartTimestamp,
     votingEndBlock: endBlock,
     votingEndTimestamp: votingEndTimestamp,
-    executionEtaTimestamp: proposal.executionETA ? parseInt(proposal.executionETA) : undefined,
+    canceledBlock: proposal.canceledBlock
+      ? parseInt(proposal.canceledBlock)
+      : undefined,
+    canceledTimestamp: proposal.canceledTimestamp
+      ? parseInt(proposal.canceledTimestamp)
+      : undefined,
+    queuedBlock: proposal.queuedBlock
+      ? parseInt(proposal.queuedBlock)
+      : undefined,
+    queuedTimestamp: proposal.queuedTimestamp
+      ? parseInt(proposal.queuedTimestamp)
+      : undefined,
+    executedBlock: proposal.executedBlock
+      ? parseInt(proposal.executedBlock)
+      : undefined,
+    executedTimestamp: proposal.executedTimestamp
+      ? parseInt(proposal.executedTimestamp)
+      : undefined,
+    executionEtaTimestamp: proposal.executionETA
+      ? parseInt(proposal.executionETA)
+      : undefined,
     // V2 doesn't have objectionPeriodEndBlock - leave undefined
     objectionPeriodEndBlock: undefined,
   };
@@ -82,31 +115,32 @@ export async function mapGoldskyProposalToOverviewV2(
 
 // Map ProposalState enum values to lowercase strings for backward compatibility
 // V2 doesn't support updatable or objection period states
-function mapProposalStateToLowercase(state: UtilsProposalState): ProposalOverview['state'] {
+function mapProposalStateToLowercase(
+  state: UtilsProposalState,
+): ProposalOverview["state"] {
   switch (state) {
     case UtilsProposalState.Pending:
-      return 'pending';
+      return "pending";
     case UtilsProposalState.Active:
-      return 'active';
+      return "active";
     case UtilsProposalState.Cancelled:
-      return 'cancelled';
+      return "cancelled";
     case UtilsProposalState.Vetoed:
-      return 'vetoed';
+      return "vetoed";
     case UtilsProposalState.Queued:
-      return 'queued';
+      return "queued";
     case UtilsProposalState.Executed:
-      return 'executed';
+      return "executed";
     case UtilsProposalState.Succeeded:
-      return 'successful';
+      return "successful";
     case UtilsProposalState.Defeated:
-      return 'failed';
+      return "failed";
     // V2 doesn't support these states
     case UtilsProposalState.Updatable:
     case UtilsProposalState.ObjectionPeriod:
       // Fallback to failed for unknown states
-      return 'failed';
+      return "failed";
     default:
-      return 'failed';
+      return "failed";
   }
 }
-

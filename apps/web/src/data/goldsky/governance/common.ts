@@ -17,10 +17,10 @@ export type ProposalState =
   | "cancelled"
   | "expired"
   | "vetoed"
-  | "updatable"           // Proposal is in updateable period (V6)
-  | "metagov_active"      // Snapshot vote is active
-  | "metagov_closed"      // Snapshot vote closed, awaiting Nouns DAO vote
-  | "metagov_pending";    // Snapshot vote hasn't started yet
+  | "updatable" // Proposal is in updateable period (V6)
+  | "metagov_active" // Snapshot vote is active
+  | "metagov_closed" // Snapshot vote closed, awaiting Nouns DAO vote
+  | "metagov_pending"; // Snapshot vote hasn't started yet
 
 export type ProposalOverview = {
   id: number;
@@ -38,6 +38,12 @@ export type ProposalOverview = {
   votingStartTimestamp: number;
   votingEndBlock: number;
   votingEndTimestamp: number;
+  canceledBlock?: number;
+  canceledTimestamp?: number;
+  queuedBlock?: number;
+  queuedTimestamp?: number;
+  executedBlock?: number;
+  executedTimestamp?: number;
   executionEtaTimestamp?: number;
   objectionPeriodEndBlock?: number;
   isDummy?: boolean; // Test flag - indicates this is a dummy/test proposal
@@ -115,12 +121,18 @@ export async function mapGoldskyProposalToOverview(
     startBlock: string;
     endBlock: string;
     executionETA?: string;
+    canceledBlock?: string | null;
+    canceledTimestamp?: string | null;
+    queuedBlock?: string | null;
+    queuedTimestamp?: string | null;
+    executedBlock?: string | null;
+    executedTimestamp?: string | null;
     createdTimestamp: string;
     updatePeriodEndBlock?: string;
     objectionPeriodEndBlock?: string;
   },
   currentBlockNumber?: number,
-  currentDate?: Date
+  currentDate?: Date,
 ): Promise<ProposalOverview> {
   const dateNow = currentDate ?? new Date();
 
@@ -133,20 +145,22 @@ export async function mapGoldskyProposalToOverview(
     quorumVotes: proposal.quorumVotes,
     executionETA: proposal.executionETA,
     updatePeriodEndBlock: proposal.updatePeriodEndBlock,
-      objectionPeriodEndBlock: proposal.objectionPeriodEndBlock,
+    objectionPeriodEndBlock: proposal.objectionPeriodEndBlock,
   });
 
   const mappedState = mapProposalStateToLowercase(state);
 
   // Debug: Log when Goldsky status is ACTIVE but our mapped state is not active
-  if (proposal.status.toUpperCase() === 'ACTIVE' && mappedState !== 'active') {
-    console.log('🔍 State mapping debug for proposal', proposal.id, {
+  if (proposal.status.toUpperCase() === "ACTIVE" && mappedState !== "active") {
+    console.log("🔍 State mapping debug for proposal", proposal.id, {
       goldskyStatus: proposal.status,
       calculatedEnum: state,
       mappedState: mappedState,
       currentBlock: currentBlockNumber,
       endBlock: proposal.endBlock,
-      hasEnded: currentBlockNumber ? currentBlockNumber > parseInt(proposal.endBlock) : 'unknown'
+      hasEnded: currentBlockNumber
+        ? currentBlockNumber > parseInt(proposal.endBlock)
+        : "unknown",
     });
   }
 
@@ -155,14 +169,16 @@ export async function mapGoldskyProposalToOverview(
   const createdBlock = parseInt(proposal.createdBlock);
   const startBlock = parseInt(proposal.startBlock);
   const endBlock = parseInt(proposal.endBlock);
-  
+
   // Use creation timestamp as baseline and estimate start/end times from there
   // This is more accurate than using current time for past/present proposals
   const blocksFromCreationToStart = startBlock - createdBlock;
   const blocksFromCreationToEnd = endBlock - createdBlock;
-  
-  const votingStartTimestamp = createdTimestamp + (blocksFromCreationToStart * ETHEREUM_BLOCK_TIME_S);
-  const votingEndTimestamp = createdTimestamp + (blocksFromCreationToEnd * ETHEREUM_BLOCK_TIME_S);
+
+  const votingStartTimestamp =
+    createdTimestamp + blocksFromCreationToStart * ETHEREUM_BLOCK_TIME_S;
+  const votingEndTimestamp =
+    createdTimestamp + blocksFromCreationToEnd * ETHEREUM_BLOCK_TIME_S;
 
   return {
     id: parseInt(proposal.id),
@@ -180,36 +196,60 @@ export async function mapGoldskyProposalToOverview(
     votingStartTimestamp: votingStartTimestamp,
     votingEndBlock: endBlock,
     votingEndTimestamp: votingEndTimestamp,
-    executionEtaTimestamp: proposal.executionETA ? parseInt(proposal.executionETA) : undefined,
-    objectionPeriodEndBlock: proposal.objectionPeriodEndBlock ? parseInt(proposal.objectionPeriodEndBlock) : undefined,
+    canceledBlock: proposal.canceledBlock
+      ? parseInt(proposal.canceledBlock)
+      : undefined,
+    canceledTimestamp: proposal.canceledTimestamp
+      ? parseInt(proposal.canceledTimestamp)
+      : undefined,
+    queuedBlock: proposal.queuedBlock
+      ? parseInt(proposal.queuedBlock)
+      : undefined,
+    queuedTimestamp: proposal.queuedTimestamp
+      ? parseInt(proposal.queuedTimestamp)
+      : undefined,
+    executedBlock: proposal.executedBlock
+      ? parseInt(proposal.executedBlock)
+      : undefined,
+    executedTimestamp: proposal.executedTimestamp
+      ? parseInt(proposal.executedTimestamp)
+      : undefined,
+    executionEtaTimestamp: proposal.executionETA
+      ? parseInt(proposal.executionETA)
+      : undefined,
+    objectionPeriodEndBlock: proposal.objectionPeriodEndBlock
+      ? parseInt(proposal.objectionPeriodEndBlock)
+      : undefined,
   };
 }
 
 // Map ProposalState enum values to lowercase strings for backward compatibility
-function mapProposalStateToLowercase(state: UtilsProposalState): ProposalOverview['state'] {
+function mapProposalStateToLowercase(
+  state: UtilsProposalState,
+): ProposalOverview["state"] {
   switch (state) {
     case UtilsProposalState.Pending:
-      return 'pending';
+      return "pending";
     case UtilsProposalState.Active:
-      return 'active';
+      return "active";
     case UtilsProposalState.Cancelled:
-      return 'cancelled';
+      return "cancelled";
     case UtilsProposalState.Vetoed:
-      return 'vetoed';
+      return "vetoed";
     case UtilsProposalState.Queued:
-      return 'queued';
+      return "queued";
     case UtilsProposalState.Executed:
-      return 'executed';
+      return "executed";
     case UtilsProposalState.Succeeded:
-      return 'successful';
+      return "successful";
     case UtilsProposalState.Defeated:
-      return 'failed';
+      return "failed";
     case UtilsProposalState.Updatable:
-      return 'updatable'; // Keep updatable state separate for edit functionality
+      return "updatable"; // Keep updatable state separate for edit functionality
     case UtilsProposalState.ObjectionPeriod:
-      return 'successful'; // Show as "successful" but with objection period indicator
+      return "successful"; // Show as "successful" but with objection period indicator
     default:
-      return 'failed';
+      return "failed";
   }
 }
 
@@ -217,43 +257,51 @@ function mapProposalStateToLowercase(state: UtilsProposalState): ProposalOvervie
 // Nouns DAO state takes precedence - Snapshot state is only used for display/metagov badges
 export function determineMetagovState(
   daoState: ProposalState,
-  snapshotProposal?: { state: 'active' | 'closed' | 'pending' }
+  snapshotProposal?: { state: "active" | "closed" | "pending" },
 ): ProposalState {
   // Nouns DAO state always takes precedence for filtering/categorization
   // Only use Snapshot state for metagov badges when DAO state is active/pending
-  
+
   if (!snapshotProposal) {
     // If Nouns DAO proposal is active but no Snapshot proposal found
-    if (daoState === 'active' || daoState === 'pending') {
-      return 'metagov_pending';
+    if (daoState === "active" || daoState === "pending") {
+      return "metagov_pending";
     }
     return daoState;
   }
 
   // Only apply metagov states when DAO proposal is still active/pending
   // If DAO proposal is past (succeeded/failed/etc), use DAO state
-  if (daoState !== 'active' && daoState !== 'pending' && daoState !== 'updatable') {
+  if (
+    daoState !== "active" &&
+    daoState !== "pending" &&
+    daoState !== "updatable"
+  ) {
     return daoState;
   }
 
   switch (snapshotProposal.state) {
-    case 'active':
+    case "active":
       // If Nouns DAO proposal is pending/active AND Snapshot is active
-      if (daoState === 'pending' || daoState === 'active' || daoState === 'updatable') {
-        return 'metagov_active';
+      if (
+        daoState === "pending" ||
+        daoState === "active" ||
+        daoState === "updatable"
+      ) {
+        return "metagov_active";
       }
       break;
 
-    case 'closed':
+    case "closed":
       // If Nouns DAO vote is still active but Snapshot closed
-      if (daoState === 'active' || daoState === 'updatable') {
-        return 'metagov_closed'; // "Awaiting Nouns Vote"
+      if (daoState === "active" || daoState === "updatable") {
+        return "metagov_closed"; // "Awaiting Nouns Vote"
       }
       return daoState;
 
-    case 'pending':
+    case "pending":
       // Snapshot pending, but use DAO state if it's more advanced
-      if (daoState === 'active') {
+      if (daoState === "active") {
         return daoState; // DAO is active, ignore Snapshot pending
       }
       return daoState; // Use DAO state

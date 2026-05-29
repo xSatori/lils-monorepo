@@ -1,4 +1,3 @@
-
 import { graphQLFetch } from "@/data/utils/graphQLFetch";
 import { CHAIN_CONFIG, NOUNS_DAO_GOLDSKY_URL } from "@/config";
 import { Proposal, Vote } from "@/data/generated/goldsky/graphql";
@@ -28,6 +27,12 @@ const query = `
       startBlock
       endBlock
       executionETA
+      canceledBlock
+      canceledTimestamp
+      queuedBlock
+      queuedTimestamp
+      executedBlock
+      executedTimestamp
       createdTimestamp
       updatePeriodEndBlock
       objectionPeriodEndBlock
@@ -66,37 +71,48 @@ interface ProposalResponse {
     votes: Vote[];
     createdTransactionHash?: string;
     lastUpdatedTimestamp?: string;
+    canceledBlock?: string | null;
+    canceledTimestamp?: string | null;
+    queuedBlock?: string | null;
+    queuedTimestamp?: string | null;
+    executedBlock?: string | null;
+    executedTimestamp?: string | null;
   };
 }
 
 // Get the appropriate Goldsky URL based on DAO type (Nouns DAO vs Lil Nouns)
 function getGoldskyUrl(daoType: DaoType): string {
-  if (daoType === 'nouns') {
+  if (daoType === "nouns") {
     return NOUNS_DAO_GOLDSKY_URL;
   }
   return CHAIN_CONFIG.goldskyUrl.primary;
 }
 
-export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Promise<DetailedProposal | null> {
+export async function getProposal(
+  id: string,
+  daoType: DaoType = "lilnouns",
+): Promise<DetailedProposal | null> {
   try {
-    if (daoType === 'lilnouns') {
+    if (daoType === "lilnouns") {
       return getProposalV2(id, daoType);
     }
 
     const blockNumber = Number(await getBlockNumber(CHAIN_CONFIG.publicClient));
     const blockTimestamp = new Date();
     const goldskyUrl = getGoldskyUrl(daoType);
-    
-    console.log(`[getProposal] Fetching proposal ${id} from ${daoType} DAO at ${goldskyUrl}`);
-    
-    const data = await graphQLFetch(
+
+    console.log(
+      `[getProposal] Fetching proposal ${id} from ${daoType} DAO at ${goldskyUrl}`,
+    );
+
+    const data = (await graphQLFetch(
       goldskyUrl,
       query as any,
       { id },
       {
         cache: "no-cache",
       },
-    ) as ProposalResponse;
+    )) as ProposalResponse;
 
     console.log(`[getProposal] Query result:`, data);
 
@@ -117,28 +133,28 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
       updatePeriodEndBlock: proposal.updatePeriodEndBlock,
       objectionPeriodEndBlock: proposal.objectionPeriodEndBlock,
     });
-    
-    const transactions: ProposalTransaction[] = proposal.targets?.map(
-      (target, i) => ({
+
+    const transactions: ProposalTransaction[] =
+      proposal.targets?.map((target, i) => ({
         to: getAddress(target),
         signature: proposal.signatures[i],
         value: BigInt(proposal.values[i]),
         calldata: proposal.calldatas[i] as `0x${string}`,
-      })
-    ) || [];
+      })) || [];
 
-    const votes: ProposalVote[] = proposal.votes?.map((vote) => ({
-      id: vote.id,
-      voterAddress: getAddress(vote.voter.id),
-      supportDetailed: vote.supportDetailed,
-      votes: vote.votes,
-      weight: parseInt(vote.votes), // Alias for backward compatibility
-      reason: vote.reason,
-      transactionHash: vote.transactionHash,
-      blockTimestamp: vote.blockTimestamp,
-      timestamp: vote.blockTimestamp, // Alias for backward compatibility
-      nouns: vote.nouns || [],
-    })) || [];
+    const votes: ProposalVote[] =
+      proposal.votes?.map((vote) => ({
+        id: vote.id,
+        voterAddress: getAddress(vote.voter.id),
+        supportDetailed: vote.supportDetailed,
+        votes: vote.votes,
+        weight: parseInt(vote.votes), // Alias for backward compatibility
+        reason: vote.reason,
+        transactionHash: vote.transactionHash,
+        blockTimestamp: vote.blockTimestamp,
+        timestamp: vote.blockTimestamp, // Alias for backward compatibility
+        nouns: vote.nouns || [],
+      })) || [];
 
     // Calculate timestamps using createdTimestamp (same approach as overview mapping)
     // This ensures consistency between list and detail views
@@ -146,12 +162,13 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
     const createdBlock = parseInt(proposal.createdBlock);
     const startBlock = parseInt(proposal.startBlock);
     const endBlock = parseInt(proposal.endBlock);
-    
+
     const blocksFromCreationToStart = startBlock - createdBlock;
     const blocksFromCreationToEnd = endBlock - createdBlock;
-    
-    const votingStartTimestamp = createdTimestamp + (blocksFromCreationToStart * 12);
-    const votingEndTimestamp = createdTimestamp + (blocksFromCreationToEnd * 12);
+
+    const votingStartTimestamp =
+      createdTimestamp + blocksFromCreationToStart * 12;
+    const votingEndTimestamp = createdTimestamp + blocksFromCreationToEnd * 12;
 
     // Use the common interface to build the base proposal data
     const baseProposal = {
@@ -162,10 +179,14 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
       againstVotes: parseInt(proposal.againstVotes),
       abstainVotes: parseInt(proposal.abstainVotes),
       quorumVotes: parseInt(proposal.quorumVotes),
-      state: state === 'SUCCEEDED' ? 'successful' : 
-             state === 'DEFEATED' ? 'failed' :
-             state === 'UPDATABLE' ? 'updatable' :
-             state.toLowerCase() as any,
+      state:
+        state === "SUCCEEDED"
+          ? "successful"
+          : state === "DEFEATED"
+            ? "failed"
+            : state === "UPDATABLE"
+              ? "updatable"
+              : (state.toLowerCase() as any),
       creationBlock: createdBlock,
       createdTimestamp,
       createdTransactionHash: proposal.createdTransactionHash || undefined,
@@ -173,13 +194,35 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
       votingStartTimestamp: votingStartTimestamp,
       votingEndBlock: endBlock,
       votingEndTimestamp: votingEndTimestamp,
-      executionEtaTimestamp: proposal.executionETA ? parseInt(proposal.executionETA) : undefined,
-      objectionPeriodEndBlock: proposal.objectionPeriodEndBlock ? parseInt(proposal.objectionPeriodEndBlock) : undefined,
+      canceledBlock: proposal.canceledBlock
+        ? parseInt(proposal.canceledBlock)
+        : undefined,
+      canceledTimestamp: proposal.canceledTimestamp
+        ? parseInt(proposal.canceledTimestamp)
+        : undefined,
+      queuedBlock: proposal.queuedBlock
+        ? parseInt(proposal.queuedBlock)
+        : undefined,
+      queuedTimestamp: proposal.queuedTimestamp
+        ? parseInt(proposal.queuedTimestamp)
+        : undefined,
+      executedBlock: proposal.executedBlock
+        ? parseInt(proposal.executedBlock)
+        : undefined,
+      executedTimestamp: proposal.executedTimestamp
+        ? parseInt(proposal.executedTimestamp)
+        : undefined,
+      executionEtaTimestamp: proposal.executionETA
+        ? parseInt(proposal.executionETA)
+        : undefined,
+      objectionPeriodEndBlock: proposal.objectionPeriodEndBlock
+        ? parseInt(proposal.objectionPeriodEndBlock)
+        : undefined,
     };
 
     // Map signers if available (from candidate promotion)
-    const signers = proposal.signers 
-      ? proposal.signers.map(signer => getAddress(signer))
+    const signers = proposal.signers
+      ? proposal.signers.map((signer) => getAddress(signer))
       : undefined;
 
     return {
@@ -188,10 +231,12 @@ export async function getProposal(id: string, daoType: DaoType = 'lilnouns'): Pr
       transactions,
       votes,
       signers,
-      lastUpdatedTimestamp: proposal.lastUpdatedTimestamp ? parseInt(proposal.lastUpdatedTimestamp) : undefined,
+      lastUpdatedTimestamp: proposal.lastUpdatedTimestamp
+        ? parseInt(proposal.lastUpdatedTimestamp)
+        : undefined,
     };
   } catch (error) {
-    console.error('Failed to fetch proposal from Goldsky:', error);
+    console.error("Failed to fetch proposal from Goldsky:", error);
     throw error;
   }
 }

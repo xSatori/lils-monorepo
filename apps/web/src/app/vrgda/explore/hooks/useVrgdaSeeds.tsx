@@ -28,6 +28,7 @@ export function useVrgdaSeeds({
   const { 
     data: poolSeeds, 
     isLoading: isLoadingInitial,
+    error: poolSeedsError,
     refetch: refetchSeeds
   } = useVrgdaPoolSeeds(
     { isUsed: false }, // filters
@@ -46,7 +47,6 @@ export function useVrgdaSeeds({
   const { 
     isActive, 
     connectionStatus, 
-    error,
     refresh 
   } = useVrgdaRealtimePool({
     enabled: !isSepolia, // Disable on Sepolia - not indexed in Ponder yet
@@ -113,7 +113,7 @@ export function useVrgdaSeeds({
     isLoading: isLoadingInitial,
     connectionStatus,
     isConnected: isActive,
-    error,
+    error: poolSeedsError,
     refresh,
     newSeedIds
   };

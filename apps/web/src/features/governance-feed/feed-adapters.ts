@@ -38,6 +38,48 @@ const proposalStateLabels: Partial<Record<ProposalState, string>> = {
   metagov_pending: "Metagov pending",
 };
 
+const votingStartedStates: ProposalState[] = [
+  "active",
+  "successful",
+  "failed",
+  "queued",
+  "executed",
+  "cancelled",
+  "vetoed",
+  "metagov_active",
+  "metagov_closed",
+];
+
+const votingEndedStates: ProposalState[] = [
+  "successful",
+  "failed",
+  "queued",
+  "executed",
+];
+
+const feedItemSortRank: Partial<Record<GovernanceFeedItem["type"], number>> = {
+  "proposal-executed": 90,
+  "proposal-cancelled": 80,
+  "proposal-queued": 70,
+  "proposal-ended": 60,
+  "proposal-vote": 50,
+  "proposal-active": 40,
+  "proposal-created": 30,
+  "candidate-cancelled": 80,
+  "candidate-promoted": 70,
+  "candidate-signature": 60,
+  "candidate-feedback": 50,
+  "candidate-updated": 40,
+  "candidate-created": 30,
+  "topic-closed": 70,
+  "topic-signature": 60,
+  "topic-feedback": 50,
+  "topic-created": 30,
+  "vrgda-purchase": 60,
+  "auction-bid": 50,
+  "auction-live": 30,
+};
+
 function isNonZeroTimestamp(
   value: number | string | undefined | null,
 ): value is number | string {
@@ -63,6 +105,25 @@ function toTimestamp(value: number | string | undefined | null): number {
     : Math.floor(Date.now() / 1000);
 }
 
+function optionalTimestamp(
+  value: number | string | undefined | null,
+): number | undefined {
+  return isNonZeroTimestamp(value) ? Number(value) : undefined;
+}
+
+function getSafeLifecycleTimestamp(
+  proposal: ProposalOverview,
+  value: number | string | undefined | null,
+  fallback?: number | string | undefined | null,
+): number | undefined {
+  const timestamp = optionalTimestamp(value) ?? optionalTimestamp(fallback);
+  if (timestamp === undefined) return undefined;
+  const createdTimestamp = optionalTimestamp(proposal.createdTimestamp);
+  return createdTimestamp === undefined
+    ? timestamp
+    : Math.max(timestamp, createdTimestamp);
+}
+
 function supportLabel(support: number | undefined): string {
   if (support === 1) return "For";
   if (support === 0) return "Against";
@@ -82,6 +143,70 @@ function proposalDisplayTitle(proposalId: number | string, title?: string) {
     : `Proposal ${proposalId}`;
 }
 
+function pushProposalLifecycleItem(
+  items: GovernanceFeedItem[],
+  proposal: ProposalOverview,
+  type: GovernanceFeedItem["type"],
+  idSuffix: string,
+  timestamp: number,
+  statusLabel: string,
+) {
+  items.push({
+    id: `proposal-${proposal.id}-${idSuffix}`,
+    category: "proposal",
+    type,
+    title: proposalDisplayTitle(proposal.id, proposal.title),
+    timestamp,
+    href: `/vote/${proposal.id}`,
+    statusLabel,
+  });
+}
+
+function wasCancelledBeforeVotingStarted(proposal: ProposalOverview) {
+  const cancellationTimestamp = optionalTimestamp(proposal.canceledTimestamp);
+  const votingStartTimestamp = optionalTimestamp(proposal.votingStartTimestamp);
+
+  return (
+    cancellationTimestamp !== undefined &&
+    votingStartTimestamp !== undefined &&
+    cancellationTimestamp < votingStartTimestamp
+  );
+}
+
+function canShowVotingStarted(proposal: ProposalOverview) {
+  if (proposal.state !== "cancelled" && proposal.state !== "vetoed") {
+    return votingStartedStates.includes(proposal.state);
+  }
+
+  return (
+    optionalTimestamp(proposal.canceledTimestamp) !== undefined &&
+    !wasCancelledBeforeVotingStarted(proposal)
+  );
+}
+
+function wasCancelledBeforeVotingEnded(proposal: ProposalOverview) {
+  const cancellationTimestamp = optionalTimestamp(proposal.canceledTimestamp);
+  const votingEndTimestamp = optionalTimestamp(proposal.votingEndTimestamp);
+
+  return (
+    cancellationTimestamp !== undefined &&
+    votingEndTimestamp !== undefined &&
+    cancellationTimestamp < votingEndTimestamp
+  );
+}
+
+function canShowVotingEnded(proposal: ProposalOverview) {
+  if (votingEndedStates.includes(proposal.state)) return true;
+  if (proposal.state !== "cancelled" && proposal.state !== "vetoed") {
+    return false;
+  }
+
+  return (
+    optionalTimestamp(proposal.canceledTimestamp) !== undefined &&
+    !wasCancelledBeforeVotingEnded(proposal)
+  );
+}
+
 function pushProposalItems(
   items: GovernanceFeedItem[],
   proposal: ProposalOverview,
@@ -99,38 +224,98 @@ function pushProposalItems(
     statusLabel: "Created",
   });
 
-  const stateLabel = proposalStateLabels[proposal.state];
-  if (!stateLabel) return;
+  if (canShowVotingStarted(proposal)) {
+    const votingStartTimestamp = getSafeLifecycleTimestamp(
+      proposal,
+      proposal.votingStartTimestamp,
+    );
 
-  const isEndedState = ["successful", "failed", "metagov_closed"].includes(
-    proposal.state,
-  );
-  const type =
-    proposal.state === "active" || proposal.state === "metagov_active"
-      ? "proposal-active"
-      : proposal.state === "queued"
-        ? "proposal-queued"
-        : proposal.state === "executed"
-          ? "proposal-executed"
-          : proposal.state === "cancelled" || proposal.state === "vetoed"
-            ? "proposal-cancelled"
-            : "proposal-ended";
+    if (votingStartTimestamp !== undefined) {
+      pushProposalLifecycleItem(
+        items,
+        proposal,
+        "proposal-active",
+        "voting-started",
+        votingStartTimestamp,
+        "Voting started",
+      );
+    }
+  }
 
-  items.push({
-    id: `proposal-${proposal.id}-${proposal.state}`,
-    category: "proposal",
-    type,
-    title: proposalDisplayTitle(proposal.id, proposal.title),
-    timestamp: toTimestamp(
-      proposal.state === "queued"
-        ? proposal.executionEtaTimestamp
-        : isEndedState
-          ? proposal.votingEndTimestamp
-          : proposal.votingStartTimestamp,
-    ),
-    href: `/vote/${proposal.id}`,
-    statusLabel: stateLabel,
-  });
+  if (canShowVotingEnded(proposal)) {
+    const votingEndTimestamp = getSafeLifecycleTimestamp(
+      proposal,
+      proposal.votingEndTimestamp,
+    );
+
+    if (votingEndTimestamp !== undefined) {
+      pushProposalLifecycleItem(
+        items,
+        proposal,
+        "proposal-ended",
+        "voting-ended",
+        votingEndTimestamp,
+        "Voting ended",
+      );
+    }
+  }
+
+  if (["queued", "executed"].includes(proposal.state)) {
+    const queuedTimestamp = getSafeLifecycleTimestamp(
+      proposal,
+      proposal.queuedTimestamp,
+      proposal.votingEndTimestamp,
+    );
+
+    if (queuedTimestamp !== undefined) {
+      pushProposalLifecycleItem(
+        items,
+        proposal,
+        "proposal-queued",
+        "queued",
+        queuedTimestamp,
+        "Queued",
+      );
+    }
+  }
+
+  if (proposal.state === "executed") {
+    const executedTimestamp = getSafeLifecycleTimestamp(
+      proposal,
+      proposal.executedTimestamp,
+      proposal.queuedTimestamp ?? proposal.executionEtaTimestamp,
+    );
+
+    if (executedTimestamp !== undefined) {
+      pushProposalLifecycleItem(
+        items,
+        proposal,
+        "proposal-executed",
+        "executed",
+        executedTimestamp,
+        "Executed",
+      );
+    }
+  }
+
+  if (proposal.state === "cancelled" || proposal.state === "vetoed") {
+    const cancelledTimestamp = getSafeLifecycleTimestamp(
+      proposal,
+      proposal.canceledTimestamp,
+      proposal.createdTimestamp,
+    );
+
+    if (cancelledTimestamp !== undefined) {
+      pushProposalLifecycleItem(
+        items,
+        proposal,
+        "proposal-cancelled",
+        proposal.state,
+        cancelledTimestamp,
+        proposalStateLabels[proposal.state] || "Cancelled",
+      );
+    }
+  }
 }
 
 function pushVoteItem(
@@ -392,7 +577,15 @@ export function buildGovernanceFeedItems(
 
   return Array.from(
     new Map(items.map((item) => [item.id, item])).values(),
-  ).sort((a, b) => b.timestamp - a.timestamp);
+  ).sort((a, b) => {
+    if (a.timestamp !== b.timestamp) return b.timestamp - a.timestamp;
+
+    const rankDiff =
+      (feedItemSortRank[b.type] || 0) - (feedItemSortRank[a.type] || 0);
+    if (rankDiff !== 0) return rankDiff;
+
+    return b.id.localeCompare(a.id);
+  });
 }
 
 export function filterFeedItems(

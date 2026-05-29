@@ -6,6 +6,7 @@ export interface NavItem {
   icon: IconType;
   href: string;
   new?: boolean;
+  children?: NavItem[];
 }
 
 export interface NavProps {
@@ -14,10 +15,16 @@ export interface NavProps {
 
 const ALL_DESKTOP_NAV_ITEMS: NavItem[] = [
   { name: "Explore", icon: "layers", href: "/explore" },
-  { name: "Vote", icon: "vote", href: "/vote" },
-  // { name: "Stats", icon: "stats", href: "/stats" },
-  { name: "Ideas", icon: "vote", href: "/candidates" },
-  { name: "Topics", icon: "lightning", href: "/topics" },
+  {
+    name: "Play",
+    icon: "vote",
+    href: "/vote",
+    children: [
+      { name: "Vote", icon: "vote", href: "/vote" },
+      { name: "Ideas", icon: "vote", href: "/candidates" },
+      { name: "Topics", icon: "lightning", href: "/topics" },
+    ],
+  },
   { name: "Feed", icon: "clock", href: "/feed" },
   { name: "Learn", icon: "book", href: "/learn" },
 ];
@@ -32,16 +39,23 @@ const ALL_MOBILE_NAV_ITEMS: NavItem[] = [
   // { name: "Stats", icon: "stats", href: "/stats" },
 ];
 
+const hideV5OnlyNavItem = (item: NavItem) =>
+  item.href === "/topics" || item.href === "/candidates";
+
+const filterNavItemsForDaoVersion = (items: NavItem[]) =>
+  items
+    .filter((item) => !hideV5OnlyNavItem(item))
+    .map((item) => ({
+      ...item,
+      children: item.children?.filter((child) => !hideV5OnlyNavItem(child)),
+    }));
+
 // Filter nav items based on DAO version.
 // Hide topics and ideas (candidates) before v5 support exists.
 export const DESKTOP_NAV_ITEMS: NavItem[] = isDaoVersion5()
   ? ALL_DESKTOP_NAV_ITEMS
-  : ALL_DESKTOP_NAV_ITEMS.filter(
-      (item) => item.href !== "/topics" && item.href !== "/candidates"
-    );
+  : filterNavItemsForDaoVersion(ALL_DESKTOP_NAV_ITEMS);
 
 export const MOBILE_NAV_ITEMS: NavItem[] = isDaoVersion5()
   ? ALL_MOBILE_NAV_ITEMS
-  : ALL_MOBILE_NAV_ITEMS.filter(
-      (item) => item.href !== "/topics" && item.href !== "/candidates"
-    );
+  : filterNavItemsForDaoVersion(ALL_MOBILE_NAV_ITEMS);

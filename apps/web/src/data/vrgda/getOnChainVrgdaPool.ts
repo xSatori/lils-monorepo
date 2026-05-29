@@ -3,7 +3,7 @@ import { lilVRGDAConfig } from "@/config/lilVRGDAConfig";
 import type { VrgdaPoolSeed } from "@/data/ponder/vrgda/types";
 import { multicall } from "viem/actions";
 
-const MAX_ONCHAIN_SCAN_COUNT = 256;
+const MAX_ONCHAIN_SCAN_COUNT = 1024;
 const MULTICALL_CHUNK_SIZE = 12;
 
 interface VrgdaSeedTuple {
@@ -33,6 +33,7 @@ interface GetOnChainVrgdaPoolOptions {
   offset?: number;
   includeUsed?: boolean;
   sortDirection?: "asc" | "desc";
+  scanLimit?: number;
 }
 
 function chunkArray<T>(items: T[], size: number) {
@@ -153,21 +154,13 @@ export async function getOnChainVrgdaPoolCandidates({
   offset = 0,
   includeUsed = false,
   sortDirection = "desc",
+  scanLimit = MAX_ONCHAIN_SCAN_COUNT,
 }: GetOnChainVrgdaPoolOptions = {}): Promise<OnChainVrgdaCandidate[]> {
-  const [latestBlockNumber, poolSizeResult] = await Promise.all([
+  const [latestBlockNumber] = await Promise.all([
     CHAIN_CONFIG.publicClient.getBlockNumber(),
-    CHAIN_CONFIG.publicClient.readContract({
-      ...lilVRGDAConfig,
-      functionName: "poolSize",
-    }),
   ]);
 
-  const poolSize = Number(poolSizeResult);
-  const scanCount = Math.min(
-    MAX_ONCHAIN_SCAN_COUNT,
-    poolSize,
-    Number(latestBlockNumber > 1n ? latestBlockNumber - 1n : 0n),
-  );
+  const scanCount = Math.min(scanLimit, MAX_ONCHAIN_SCAN_COUNT);
 
   let anchorBlockNumber: bigint | null = null;
   let anchorCandidate: OnChainVrgdaCandidate | null = null;
@@ -210,6 +203,7 @@ export async function getOnChainVrgdaPoolCandidates({
     ? await fetchUsedBlockNumbers(candidateBlockNumbers)
     : new Set<string>();
 
+  const targetCount = offset + limit;
   const candidates = Array.from(candidatesByBlock.values())
     .map((candidate) => ({
       ...candidate,
@@ -224,5 +218,5 @@ export async function getOnChainVrgdaPoolCandidates({
         : Number(right - left);
     });
 
-  return candidates.slice(offset, offset + limit);
+  return candidates.slice(offset, targetCount);
 }

@@ -15,5 +15,18 @@ export const lilVRGDAConfig = new Proxy({} as ReturnType<typeof getLilVRGDAConfi
   get(_target, prop) {
     const config = getLilVRGDAConfig();
     return config[prop as keyof typeof config];
-  }
+  },
+  ownKeys() {
+    return ["address", "abi"];
+  },
+  getOwnPropertyDescriptor(_target, prop) {
+    if (prop === "address" || prop === "abi") {
+      return {
+        enumerable: true,
+        configurable: true,
+      };
+    }
+
+    return undefined;
+  },
 });

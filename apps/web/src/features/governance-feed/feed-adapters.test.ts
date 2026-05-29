@@ -132,6 +132,170 @@ describe("governance feed adapters", () => {
     expect(items[0].description).toBeUndefined();
   });
 
+  it("orders cancellation after creation and omits voting start when cancelled before voting", () => {
+    const items = buildGovernanceFeedItems({
+      proposals: [
+        {
+          id: 377,
+          title: "Lil GIF Value",
+          proposerAddress: proposer,
+          forVotes: 0,
+          againstVotes: 0,
+          abstainVotes: 0,
+          quorumVotes: 10,
+          state: "cancelled",
+          creationBlock: 25031701,
+          createdTimestamp: 1778018951,
+          votingStartBlock: 25046101,
+          votingStartTimestamp: 1778191751,
+          votingEndBlock: 25074901,
+          votingEndTimestamp: 1778537351,
+          canceledBlock: 25031819,
+          canceledTimestamp: 1778020367,
+        },
+      ],
+    });
+
+    expect(items.map((item) => item.type)).toEqual([
+      "proposal-cancelled",
+      "proposal-created",
+    ]);
+    expect(items[0].timestamp).toBe(1778020367);
+    expect(items[1].timestamp).toBe(1778018951);
+  });
+
+  it("uses logical lifecycle order when proposal event timestamps are tied", () => {
+    const items = buildGovernanceFeedItems({
+      proposals: [
+        {
+          id: 377,
+          title: "Lil GIF Value",
+          proposerAddress: proposer,
+          forVotes: 0,
+          againstVotes: 0,
+          abstainVotes: 0,
+          quorumVotes: 10,
+          state: "cancelled",
+          creationBlock: 25031701,
+          createdTimestamp: 1778018951,
+          votingStartBlock: 25046101,
+          votingStartTimestamp: 1778191751,
+          votingEndBlock: 25074901,
+          votingEndTimestamp: 1778537351,
+        },
+      ],
+    });
+
+    expect(items.map((item) => item.type)).toEqual([
+      "proposal-cancelled",
+      "proposal-created",
+    ]);
+    expect(items[0].timestamp).toBe(items[1].timestamp);
+  });
+
+  it("emits voting start for active proposals after creation", () => {
+    const items = buildGovernanceFeedItems({
+      proposals: [
+        {
+          id: 378,
+          title: "Lil GIF Value",
+          proposerAddress: proposer,
+          forVotes: 0,
+          againstVotes: 0,
+          abstainVotes: 0,
+          quorumVotes: 10,
+          state: "active",
+          creationBlock: 25031822,
+          createdTimestamp: 1778020403,
+          votingStartBlock: 25046222,
+          votingStartTimestamp: 1778193203,
+          votingEndBlock: 25075022,
+          votingEndTimestamp: 1778538803,
+        },
+      ],
+    });
+
+    expect(items.map((item) => item.type)).toEqual([
+      "proposal-active",
+      "proposal-created",
+    ]);
+    expect(items[0].statusLabel).toBe("Voting started");
+    expect(items[0].timestamp).toBe(1778193203);
+  });
+
+  it("emits each logical proposal lifecycle event in timestamp order", () => {
+    const items = buildGovernanceFeedItems({
+      proposals: [
+        {
+          id: 43,
+          title: "Execute the plan",
+          proposerAddress: proposer,
+          forVotes: 20,
+          againstVotes: 1,
+          abstainVotes: 0,
+          quorumVotes: 10,
+          state: "executed",
+          creationBlock: 1,
+          createdTimestamp: 100,
+          votingStartBlock: 2,
+          votingStartTimestamp: 120,
+          votingEndBlock: 3,
+          votingEndTimestamp: 220,
+          queuedBlock: 4,
+          queuedTimestamp: 240,
+          executedBlock: 5,
+          executedTimestamp: 300,
+        },
+      ],
+    });
+
+    expect(items.map((item) => item.type)).toEqual([
+      "proposal-executed",
+      "proposal-queued",
+      "proposal-ended",
+      "proposal-active",
+      "proposal-created",
+    ]);
+    expect(items.map((item) => item.timestamp)).toEqual([
+      300, 240, 220, 120, 100,
+    ]);
+  });
+
+  it("uses logical lifecycle order when successful proposal event timestamps are tied", () => {
+    const items = buildGovernanceFeedItems({
+      proposals: [
+        {
+          id: 44,
+          title: "Same block lifecycle",
+          proposerAddress: proposer,
+          forVotes: 20,
+          againstVotes: 1,
+          abstainVotes: 0,
+          quorumVotes: 10,
+          state: "executed",
+          creationBlock: 1,
+          createdTimestamp: 100,
+          votingStartBlock: 2,
+          votingStartTimestamp: 120,
+          votingEndBlock: 3,
+          votingEndTimestamp: 220,
+          queuedBlock: 3,
+          queuedTimestamp: 220,
+          executedBlock: 3,
+          executedTimestamp: 220,
+        },
+      ],
+    });
+
+    expect(items.map((item) => item.type)).toEqual([
+      "proposal-executed",
+      "proposal-queued",
+      "proposal-ended",
+      "proposal-active",
+      "proposal-created",
+    ]);
+  });
+
   it("deduplicates proposal votes that arrive from both detail and recent vote queries", () => {
     const vote = {
       id: "42-1",
