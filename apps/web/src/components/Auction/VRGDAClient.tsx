@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { VRGDAuctionInterface } from "./VRGDAuctionInterface";
 import { NounImageBase } from "../NounImage";
 import { useVRGDAData } from "@/hooks/useVRGDAData";
-import { useVrgdaRealtimePool } from "@/data/ponder/hooks/useVrgdaRealtimePool";
 import { useQuery } from "@tanstack/react-query";
 import { lilVRGDAConfig } from "@/config/lilVRGDAConfig";
 import { readContract } from "viem/actions";
@@ -27,9 +26,6 @@ export default function VRGDAClient({ initialNounId }: VRGDAClientProps) {
     hostname: typeof window !== 'undefined' ? window.location.hostname : 'SSR'
   });
   
-  // Only use VPS hook on mainnet - on Sepolia, get block directly from chain
-  const { latestBlock } = useVrgdaRealtimePool({ enabled: !isSepolia });
-
   // Get the current VRGDA noun ID from contract
   // Use chainId in query key to ensure proper cache separation
   const chainId = isSepolia ? sepolia.id : mainnet.id;
@@ -70,13 +66,9 @@ export default function VRGDAClient({ initialNounId }: VRGDAClientProps) {
     refetchInterval: 60000, // 1 minute
   });
 
-  // Get block number: use VPS on mainnet, or fetch directly from chain on Sepolia
-  // Always fetch from chain as fallback, but prefer VPS on mainnet
   const { data: chainBlockNumber, isLoading: isLoadingBlock } = useQuery({
-    queryKey: ["current-block-number", isSepolia],
+    queryKey: ["current-block-number", chainId],
     queryFn: async () => {
-      // Ensure we're using the correct chain config
-      const chainId = isSepolia ? sepolia.id : mainnet.id;
       const config = CHAIN_SPECIFIC_CONFIGS[chainId];
       
       const currentBlock = await config.publicClient.getBlockNumber();
@@ -87,10 +79,7 @@ export default function VRGDAClient({ initialNounId }: VRGDAClientProps) {
     refetchInterval: 12000,
   });
 
-  // Use VPS block on mainnet if available, otherwise use chain block (works for both chains)
-  const blockNumber = latestBlock?.blockNumber 
-    ? Number(latestBlock.blockNumber) - 1 
-    : chainBlockNumber;
+  const blockNumber = chainBlockNumber;
 
   // Get the current noun ID to display
   // Prioritize contractNounId (chain-specific) over initialNounId (may be cached from wrong chain)
@@ -151,7 +140,6 @@ export default function VRGDAClient({ initialNounId }: VRGDAClientProps) {
         chainId,
         currentNounId,
         blockNumber,
-        latestBlockNumber: latestBlock?.blockNumber,
         chainBlockNumber,
         contractAddress: config.addresses.lilVRGDAProxy,
         chainName: config.chain.name
@@ -168,10 +156,14 @@ export default function VRGDAClient({ initialNounId }: VRGDAClientProps) {
       const [nounId, seed, svg, price, hash] = result;
       
       // Compare with pool seed if available (mainnet only)
-      if (!isSepolia && blockNumber) {
+      if (false && !isSepolia && blockNumber) {
         try {
           const { getVrgdaSeedByBlock } = await import('@/data/ponder/vrgda/getVrgdaSeedByBlock');
-          const poolSeed = await getVrgdaSeedByBlock(blockNumber.toString());
+          const poolSeed = (await getVrgdaSeedByBlock(String(blockNumber ?? 0)))!;
+
+          if (!poolSeed) {
+            throw new Error(`No pool seed found for block ${blockNumber}`);
+          }
           
           if (poolSeed) {
             const contractSeed = {

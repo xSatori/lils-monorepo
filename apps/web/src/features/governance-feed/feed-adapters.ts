@@ -9,7 +9,10 @@ import type {
 } from "@/data/goldsky/governance/common";
 import type { ProposalIdea } from "@/data/goldsky/governance/ideaTypes";
 import { makeUrlId } from "@/data/goldsky/governance/getProposalIdeas";
-import { makeTopicUrlId, type Topic } from "@/data/goldsky/governance/getTopics";
+import {
+  makeTopicUrlId,
+  type Topic,
+} from "@/data/goldsky/governance/getTopics";
 
 import type { GovernanceFeedCategory, GovernanceFeedItem } from "./types";
 
@@ -35,12 +38,16 @@ const proposalStateLabels: Partial<Record<ProposalState, string>> = {
   metagov_pending: "Metagov pending",
 };
 
-function isNonZeroTimestamp(value: number | string | undefined | null): value is number | string {
+function isNonZeroTimestamp(
+  value: number | string | undefined | null,
+): value is number | string {
   if (value === undefined || value === null) return false;
   return Number(value) > 0;
 }
 
-function normalizeFeedAddress(value: Address | string | undefined | null): Address | undefined {
+function normalizeFeedAddress(
+  value: Address | string | undefined | null,
+): Address | undefined {
   if (!value) return undefined;
 
   try {
@@ -51,7 +58,9 @@ function normalizeFeedAddress(value: Address | string | undefined | null): Addre
 }
 
 function toTimestamp(value: number | string | undefined | null): number {
-  return isNonZeroTimestamp(value) ? Number(value) : Math.floor(Date.now() / 1000);
+  return isNonZeroTimestamp(value)
+    ? Number(value)
+    : Math.floor(Date.now() / 1000);
 }
 
 function supportLabel(support: number | undefined): string {
@@ -68,16 +77,23 @@ function feedbackSupportLabel(support: number | undefined): string {
 
 function proposalDisplayTitle(proposalId: number | string, title?: string) {
   const trimmedTitle = title?.trim();
-  return trimmedTitle ? `Proposal ${proposalId}: ${trimmedTitle}` : `Proposal ${proposalId}`;
+  return trimmedTitle
+    ? `Proposal ${proposalId}: ${trimmedTitle}`
+    : `Proposal ${proposalId}`;
 }
 
-function pushProposalItems(items: GovernanceFeedItem[], proposal: ProposalOverview) {
+function pushProposalItems(
+  items: GovernanceFeedItem[],
+  proposal: ProposalOverview,
+) {
   items.push({
     id: `proposal-${proposal.id}-created`,
     category: "proposal",
     type: "proposal-created",
     title: proposalDisplayTitle(proposal.id, proposal.title),
-    timestamp: toTimestamp(proposal.createdTimestamp ?? proposal.votingStartTimestamp),
+    timestamp: toTimestamp(
+      proposal.createdTimestamp ?? proposal.votingStartTimestamp,
+    ),
     href: `/vote/${proposal.id}`,
     actorAddress: normalizeFeedAddress(proposal.proposerAddress),
     statusLabel: "Created",
@@ -86,7 +102,9 @@ function pushProposalItems(items: GovernanceFeedItem[], proposal: ProposalOvervi
   const stateLabel = proposalStateLabels[proposal.state];
   if (!stateLabel) return;
 
-  const isEndedState = ["successful", "failed", "metagov_closed"].includes(proposal.state);
+  const isEndedState = ["successful", "failed", "metagov_closed"].includes(
+    proposal.state,
+  );
   const type =
     proposal.state === "active" || proposal.state === "metagov_active"
       ? "proposal-active"
@@ -111,7 +129,6 @@ function pushProposalItems(items: GovernanceFeedItem[], proposal: ProposalOvervi
           : proposal.votingStartTimestamp,
     ),
     href: `/vote/${proposal.id}`,
-    actorAddress: normalizeFeedAddress(proposal.proposerAddress),
     statusLabel: stateLabel,
   });
 }
@@ -141,13 +158,19 @@ function pushVoteItem(
   });
 }
 
-function pushVoteItems(items: GovernanceFeedItem[], proposal: DetailedProposal) {
+function pushVoteItems(
+  items: GovernanceFeedItem[],
+  proposal: DetailedProposal,
+) {
   for (const vote of proposal.votes || []) {
     pushVoteItem(items, vote, proposal);
   }
 }
 
-function pushCandidateItems(items: GovernanceFeedItem[], candidate: ProposalIdea) {
+function pushCandidateItems(
+  items: GovernanceFeedItem[],
+  candidate: ProposalIdea,
+) {
   const href = `/candidates/${makeUrlId(candidate.id)}`;
   const title = candidate.latestVersion.content.title;
 
@@ -178,22 +201,22 @@ function pushCandidateItems(items: GovernanceFeedItem[], candidate: ProposalIdea
     items.push({
       id: `candidate-${candidate.id}-cancelled`,
       category: "candidate",
-    type: "candidate-cancelled",
-    title,
-    timestamp: toTimestamp(candidate.canceledTimestamp),
-    href,
-    actorAddress: normalizeFeedAddress(candidate.proposerAddress),
+      type: "candidate-cancelled",
+      title,
+      timestamp: toTimestamp(candidate.canceledTimestamp),
+      href,
+      actorAddress: normalizeFeedAddress(candidate.proposerAddress),
       statusLabel: "Cancelled",
     });
   } else if (candidate.lastUpdatedTimestamp > candidate.createdTimestamp) {
     items.push({
       id: `candidate-${candidate.id}-updated-${candidate.latestVersion.id}`,
-    category: "candidate",
-    type: "candidate-updated",
-    title,
-    description: candidate.latestVersion.updateMessage || undefined,
-    timestamp: toTimestamp(candidate.lastUpdatedTimestamp),
-    href,
+      category: "candidate",
+      type: "candidate-updated",
+      title,
+      description: candidate.latestVersion.updateMessage || undefined,
+      timestamp: toTimestamp(candidate.lastUpdatedTimestamp),
+      href,
       actorAddress: normalizeFeedAddress(candidate.proposerAddress),
       statusLabel: "Updated",
     });
@@ -209,7 +232,9 @@ function pushCandidateItems(items: GovernanceFeedItem[], candidate: ProposalIdea
       timestamp: toTimestamp(feedback.createdTimestamp),
       href,
       actorAddress: normalizeFeedAddress(feedback.voterAddress),
-      valueLabel: feedback.votes ? `${feedback.votes.toLocaleString()} votes` : undefined,
+      valueLabel: feedback.votes
+        ? `${feedback.votes.toLocaleString()} votes`
+        : undefined,
       statusLabel: feedbackSupportLabel(feedback.support),
     });
   }
@@ -221,10 +246,13 @@ function pushCandidateItems(items: GovernanceFeedItem[], candidate: ProposalIdea
       type: "candidate-signature",
       title,
       description: "Candidate sponsorship signature added.",
-      timestamp: toTimestamp(signature.createdTimestamp ?? candidate.lastUpdatedTimestamp),
+      timestamp: toTimestamp(
+        signature.createdTimestamp ?? candidate.lastUpdatedTimestamp,
+      ),
       href,
       actorAddress: normalizeFeedAddress(signature.signer.id),
-      statusLabel: signature.status === "expired" ? "Signature expired" : "Signature",
+      statusLabel:
+        signature.status === "expired" ? "Signature expired" : "Signature",
     });
   }
 }
@@ -282,12 +310,16 @@ function pushTopicItems(items: GovernanceFeedItem[], topic: Topic) {
       timestamp: toTimestamp(signature.createdTimestamp),
       href,
       actorAddress: normalizeFeedAddress(signature.signerAddress),
-      statusLabel: signature.status === "expired" ? "Signature expired" : "Signature",
+      statusLabel:
+        signature.status === "expired" ? "Signature expired" : "Signature",
     });
   }
 }
 
-function pushAuctionItems(items: GovernanceFeedItem[], auction?: Auction | null) {
+function pushAuctionItems(
+  items: GovernanceFeedItem[],
+  auction?: Auction | null,
+) {
   if (!auction) return;
 
   if (!auction.isVRGDAAuction) {
@@ -296,10 +328,15 @@ function pushAuctionItems(items: GovernanceFeedItem[], auction?: Auction | null)
       category: "auction",
       type: "auction-live",
       title: `Lil Noun ${auction.nounId} auction`,
-      description: auction.state === "live" ? "Current auction is live." : "Auction awaiting settlement.",
+      description:
+        auction.state === "live"
+          ? "Current auction is live."
+          : "Auction awaiting settlement.",
       timestamp: toTimestamp(auction.startTime),
       href: "/",
-      valueLabel: auction.nextMinBid ? `${formatEther(BigInt(auction.nextMinBid))} ETH min bid` : undefined,
+      valueLabel: auction.nextMinBid
+        ? `${formatEther(BigInt(auction.nextMinBid))} ETH min bid`
+        : undefined,
       statusLabel: "Auction",
     });
   }
@@ -314,7 +351,9 @@ function pushAuctionItems(items: GovernanceFeedItem[], auction?: Auction | null)
       title: isVrgdaPurchase
         ? `Purchased Lil Noun ${auction.nounId}`
         : `Bid on Lil Noun ${auction.nounId}`,
-      description: isVrgdaPurchase ? "VRGDA purchase completed." : "Auction bid placed.",
+      description: isVrgdaPurchase
+        ? "VRGDA purchase completed."
+        : "Auction bid placed.",
       timestamp: toTimestamp(bid.timestamp),
       href: "/",
       actorAddress: normalizeFeedAddress(bid.bidderAddress),
@@ -324,7 +363,9 @@ function pushAuctionItems(items: GovernanceFeedItem[], auction?: Auction | null)
   }
 }
 
-export function buildGovernanceFeedItems(input: GovernanceFeedInput): GovernanceFeedItem[] {
+export function buildGovernanceFeedItems(
+  input: GovernanceFeedInput,
+): GovernanceFeedItem[] {
   const items: GovernanceFeedItem[] = [];
 
   for (const proposal of input.proposals || []) {
@@ -349,9 +390,9 @@ export function buildGovernanceFeedItems(input: GovernanceFeedInput): Governance
 
   pushAuctionItems(items, input.auction);
 
-  return Array.from(new Map(items.map((item) => [item.id, item])).values()).sort(
-    (a, b) => b.timestamp - a.timestamp,
-  );
+  return Array.from(
+    new Map(items.map((item) => [item.id, item])).values(),
+  ).sort((a, b) => b.timestamp - a.timestamp);
 }
 
 export function filterFeedItems(

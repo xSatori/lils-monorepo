@@ -20,9 +20,19 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/utils/shadcn";
 
-import { getActivityValuePrefix } from "./activity-copy";
+import {
+  getActivityAction,
+  getActivityObject,
+  getActivityValuePrefix,
+  getSystemActivityAction,
+  shouldUseTimelineMarker,
+} from "./activity-copy";
 import { filterFeedItems } from "./feed-adapters";
-import type { FeedDigestItem, GovernanceFeedCategory, GovernanceFeedItem } from "./types";
+import type {
+  FeedDigestItem,
+  GovernanceFeedCategory,
+  GovernanceFeedItem,
+} from "./types";
 
 const filters: Array<{ label: string; value: GovernanceFeedCategory }> = [
   { label: "All", value: "all" },
@@ -65,62 +75,6 @@ function iconForItem(item: GovernanceFeedItem) {
   if (item.category === "topic") return MessageSquare;
   if (item.type.startsWith("vrgda")) return Sparkles;
   return Gavel;
-}
-
-function getActivityAction(item: GovernanceFeedItem) {
-  switch (item.type) {
-    case "proposal-vote":
-      return `voted ${item.statusLabel?.toLowerCase() || "on"}`;
-    case "proposal-created":
-      return "created";
-    case "proposal-active":
-      return "opened voting on";
-    case "proposal-ended":
-      return "closed voting on";
-    case "proposal-queued":
-      return "queued";
-    case "proposal-executed":
-      return "executed";
-    case "proposal-cancelled":
-      return "cancelled";
-    case "candidate-created":
-      return "created candidate";
-    case "candidate-updated":
-      return "updated candidate";
-    case "candidate-promoted":
-      return "promoted candidate";
-    case "candidate-cancelled":
-      return "cancelled candidate";
-    case "candidate-feedback":
-      return item.statusLabel === "Comment"
-        ? "commented on candidate"
-        : `signaled ${item.statusLabel?.toLowerCase() || "on"} candidate`;
-    case "candidate-signature":
-      return "signed candidate";
-    case "topic-created":
-      return "opened topic";
-    case "topic-closed":
-      return "closed topic";
-    case "topic-feedback":
-      return item.statusLabel === "Comment"
-        ? "commented on topic"
-        : `signaled ${item.statusLabel?.toLowerCase() || "on"} topic`;
-    case "topic-signature":
-      return "signed topic";
-    case "auction-bid":
-      return "bid on";
-    case "auction-live":
-      return "started";
-    case "vrgda-purchase":
-      return "purchased";
-    default:
-      return item.statusLabel?.toLowerCase() || "updated";
-  }
-}
-
-function getActivityObject(item: GovernanceFeedItem) {
-  if (item.type === "proposal-vote") return item.title.replace(/^(For|Against|Abstain|Vote) on /, "");
-  return item.title;
 }
 
 function voteActivityColor(item: GovernanceFeedItem) {
@@ -201,7 +155,11 @@ export function DarkFeedLoadingState({ count = 10 }: { count?: number }) {
   );
 }
 
-export function FeedEmptyState({ activeFilter }: { activeFilter: GovernanceFeedCategory }) {
+export function FeedEmptyState({
+  activeFilter,
+}: {
+  activeFilter: GovernanceFeedCategory;
+}) {
   return (
     <div className="flex min-h-[260px] items-center justify-center rounded-[16px] border border-border-secondary bg-white p-8 text-center">
       <div className="flex max-w-[360px] flex-col items-center gap-2">
@@ -222,7 +180,9 @@ export function FeedErrorState({ error }: { error: unknown }) {
     <div className="rounded-[16px] border border-red-100 bg-red-50 p-5">
       <h2 className="heading-6 text-red-700">Feed data failed to load</h2>
       <p className="paragraph-sm mt-1 text-red-700">
-        {error instanceof Error ? error.message : "Refresh the page or try again shortly."}
+        {error instanceof Error
+          ? error.message
+          : "Refresh the page or try again shortly."}
       </p>
     </div>
   );
@@ -233,13 +193,21 @@ export function DarkFeedErrorState({ error }: { error: unknown }) {
     <div className="rounded-[8px] border border-red-100 bg-red-50 p-4">
       <h2 className="label-md text-red-700">Feed data failed to load</h2>
       <p className="paragraph-sm mt-1 text-red-700">
-        {error instanceof Error ? error.message : "Refresh the page or try again shortly."}
+        {error instanceof Error
+          ? error.message
+          : "Refresh the page or try again shortly."}
       </p>
     </div>
   );
 }
 
-export function FeedItemCard({ item, compact = false }: { item: GovernanceFeedItem; compact?: boolean }) {
+export function FeedItemCard({
+  item,
+  compact = false,
+}: {
+  item: GovernanceFeedItem;
+  compact?: boolean;
+}) {
   const Icon = iconForItem(item);
 
   return (
@@ -256,16 +224,29 @@ export function FeedItemCard({ item, compact = false }: { item: GovernanceFeedIt
 
       <div className="min-w-0 flex-1">
         <div className="mb-2 flex flex-wrap items-center gap-2">
-          <span className={cn("rounded-full px-2.5 py-1 text-xs font-bold", categoryStyles[item.category])}>
+          <span
+            className={cn(
+              "rounded-full px-2.5 py-1 text-xs font-bold",
+              categoryStyles[item.category],
+            )}
+          >
             {item.statusLabel || item.category}
           </span>
-          <span className="label-sm text-content-secondary">{formatRelativeTime(item.timestamp)}</span>
-          {item.metaLabel && <span className="label-sm text-content-secondary">{item.metaLabel}</span>}
+          <span className="label-sm text-content-secondary">
+            {formatRelativeTime(item.timestamp)}
+          </span>
+          {item.metaLabel && (
+            <span className="label-sm text-content-secondary">
+              {item.metaLabel}
+            </span>
+          )}
         </div>
 
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className={cn("label-lg break-words", compact && "label-md")}>{item.title}</h3>
+            <h3 className={cn("label-lg break-words", compact && "label-md")}>
+              {item.title}
+            </h3>
             {item.description && (
               <p className="paragraph-sm mt-1 line-clamp-2 break-words text-content-secondary">
                 {item.description}
@@ -277,19 +258,34 @@ export function FeedItemCard({ item, compact = false }: { item: GovernanceFeedIt
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
           {item.actorAddress && (
-            <Identity address={item.actorAddress} avatarSize={22} className="text-sm text-content-primary" />
+            <Identity
+              address={item.actorAddress}
+              avatarSize={22}
+              className="text-sm text-content-primary"
+            />
           )}
-          {item.valueLabel && <span className="label-sm text-content-secondary">{item.valueLabel}</span>}
+          {item.valueLabel && (
+            <span className="label-sm text-content-secondary">
+              {item.valueLabel}
+            </span>
+          )}
         </div>
       </div>
     </Link>
   );
 }
 
-export function ActivityFeedItem({ item, compact = false }: { item: GovernanceFeedItem; compact?: boolean }) {
+export function ActivityFeedItem({
+  item,
+  compact = false,
+}: {
+  item: GovernanceFeedItem;
+  compact?: boolean;
+}) {
   const Icon = iconForItem(item);
-  const isTimelineItem = item.category === "auction" || item.type === "proposal-created";
+  const isTimelineItem = shouldUseTimelineMarker(item);
   const isProposalVote = item.type === "proposal-vote";
+  const systemActivityAction = getSystemActivityAction(item);
 
   return (
     <Link
@@ -316,7 +312,11 @@ export function ActivityFeedItem({ item, compact = false }: { item: GovernanceFe
           {isProposalVote ? (
             <>
               <span className="font-bold text-content-primary">
-                {item.actorAddress ? <EnsName address={item.actorAddress} /> : "Lil Nouns"}
+                {item.actorAddress ? (
+                  <EnsName address={item.actorAddress} />
+                ) : (
+                  "Lil Nouns"
+                )}
               </span>
               <span className={cn("font-bold", voteActivityColor(item))}>
                 voted {item.statusLabel || "Vote"}
@@ -325,16 +325,33 @@ export function ActivityFeedItem({ item, compact = false }: { item: GovernanceFe
             </>
           ) : (
             <>
-              {!isTimelineItem && item.actorAddress ? null : (
-                <span className="font-bold text-content-primary">{isTimelineItem ? "Governance" : "Lil Nouns"}</span>
+              {systemActivityAction ? (
+                <span>{systemActivityAction}</span>
+              ) : (
+                <>
+                  {item.actorAddress ? (
+                    <FeedActor item={item} />
+                  ) : (
+                    <span className="font-bold text-content-primary">
+                      Lil Nouns
+                    </span>
+                  )}
+                  <span>{getActivityAction(item)}</span>
+                </>
               )}
-              {!isTimelineItem && item.actorAddress && <FeedActor item={item} />}
-              <span>{getActivityAction(item)}</span>
             </>
           )}
-          <span className="font-bold text-content-primary">{getActivityObject(item)}</span>
-          {!isProposalVote && item.valueLabel && <span>{getActivityValuePrefix(item)} {item.valueLabel}</span>}
-          <span className="text-content-secondary">- {formatRelativeTime(item.timestamp).replace(" ago", "")}</span>
+          <span className="font-bold text-content-primary">
+            {getActivityObject(item)}
+          </span>
+          {!isProposalVote && item.valueLabel && (
+            <span>
+              {getActivityValuePrefix(item)} {item.valueLabel}
+            </span>
+          )}
+          <span className="text-content-secondary">
+            - {formatRelativeTime(item.timestamp).replace(" ago", "")}
+          </span>
         </div>
         {item.description && (
           <p className="mt-0.5 line-clamp-2 max-w-[760px] text-[13px] leading-5 text-content-secondary">
@@ -363,9 +380,13 @@ export function GovernanceActivityFeed({
   initialCount?: number;
   compact?: boolean;
 }) {
-  const [activeFilter, setActiveFilter] = useState<GovernanceFeedCategory>("all");
+  const [activeFilter, setActiveFilter] =
+    useState<GovernanceFeedCategory>("all");
   const [visibleCount, setVisibleCount] = useState(initialCount);
-  const filteredItems = useMemo(() => filterFeedItems(items, activeFilter), [activeFilter, items]);
+  const filteredItems = useMemo(
+    () => filterFeedItems(items, activeFilter),
+    [activeFilter, items],
+  );
   const visibleItems = filteredItems.slice(0, visibleCount);
   const hasVisibleItems = visibleItems.length > 0;
 
@@ -380,8 +401,12 @@ export function GovernanceActivityFeed({
       />
 
       {error ? <FeedErrorState error={error} /> : null}
-      {isLoading && !hasVisibleItems && <FeedLoadingState count={compact ? 5 : 8} />}
-      {!isLoading && !error && filteredItems.length === 0 && <FeedEmptyState activeFilter={activeFilter} />}
+      {isLoading && !hasVisibleItems && (
+        <FeedLoadingState count={compact ? 5 : 8} />
+      )}
+      {!isLoading && !error && filteredItems.length === 0 && (
+        <FeedEmptyState activeFilter={activeFilter} />
+      )}
 
       {hasVisibleItems && (
         <div className="flex flex-col gap-4">
@@ -417,7 +442,8 @@ export function DarkGovernanceActivityFeed({
   initialCount?: number;
   compact?: boolean;
 }) {
-  const [activeFilter, setActiveFilter] = useState<GovernanceFeedCategory>("all");
+  const [activeFilter, setActiveFilter] =
+    useState<GovernanceFeedCategory>("all");
   const [visibleCount, setVisibleCount] = useState(initialCount);
   const [searchValue, setSearchValue] = useState("");
 
@@ -470,12 +496,16 @@ export function DarkGovernanceActivityFeed({
       </div>
 
       {error ? <DarkFeedErrorState error={error} /> : null}
-      {isLoading && !hasVisibleItems && <DarkFeedLoadingState count={compact ? 8 : 12} />}
+      {isLoading && !hasVisibleItems && (
+        <DarkFeedLoadingState count={compact ? 8 : 12} />
+      )}
       {!isLoading && !error && filteredItems.length === 0 && (
         <div className="rounded-[8px] border border-border-secondary bg-white p-8 text-center">
           <p className="label-md text-content-primary">No activity found</p>
           <p className="paragraph-sm mt-1 text-content-secondary">
-            {searchValue ? "Try a different search or filter." : "Governance activity will appear here once data is available."}
+            {searchValue
+              ? "Try a different search or filter."
+              : "Governance activity will appear here once data is available."}
           </p>
         </div>
       )}
@@ -517,10 +547,16 @@ export function DigestCard({
       ) : (
         <div className="mt-4 flex flex-col divide-y divide-border-secondary">
           {items.map((item) => (
-            <Link key={item.id} to={item.href} className="group flex items-start justify-between gap-3 py-3 first:pt-0 last:pb-0">
+            <Link
+              key={item.id}
+              to={item.href}
+              className="group flex items-start justify-between gap-3 py-3 first:pt-0 last:pb-0"
+            >
               <div className="min-w-0">
                 <p className="label-md line-clamp-2">{item.title}</p>
-                <p className="paragraph-sm text-content-secondary">{item.meta}</p>
+                <p className="paragraph-sm text-content-secondary">
+                  {item.meta}
+                </p>
               </div>
               <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-content-secondary transition-transform group-hover:translate-x-0.5" />
             </Link>

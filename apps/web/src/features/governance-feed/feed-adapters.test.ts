@@ -68,7 +68,15 @@ describe("governance feed adapters", () => {
     expect(items.map((item) => item.type)).toContain("proposal-active");
     expect(items.map((item) => item.type)).toContain("proposal-vote");
     expect(items[0].timestamp).toBe(180);
-    expect(items.find((item) => item.type === "proposal-created")?.description).toBeUndefined();
+    expect(
+      items.find((item) => item.type === "proposal-created")?.description,
+    ).toBeUndefined();
+    expect(
+      items.find((item) => item.type === "proposal-created")?.actorAddress,
+    ).toBe(proposer);
+    expect(
+      items.find((item) => item.type === "proposal-active")?.actorAddress,
+    ).toBeUndefined();
   });
 
   it("normalizes recent proposal votes without requiring proposal details", () => {
@@ -168,9 +176,10 @@ describe("governance feed adapters", () => {
       ],
     });
 
-    expect(items.filter((item) => item.type === "proposal-vote")).toHaveLength(1);
+    expect(items.filter((item) => item.type === "proposal-vote")).toHaveLength(
+      1,
+    );
   });
-
 
   it("normalizes candidate and topic feedback/signature activity", () => {
     const items = buildGovernanceFeedItems({
@@ -305,14 +314,32 @@ describe("governance feed adapters", () => {
       ],
     });
 
-    expect(items.find((item) => item.type === "candidate-created")?.description).toBeUndefined();
-    expect(items.find((item) => item.type === "candidate-updated")?.description).toBeUndefined();
+    expect(
+      items.find((item) => item.type === "candidate-created")?.description,
+    ).toBeUndefined();
+    expect(
+      items.find((item) => item.type === "candidate-updated")?.description,
+    ).toBeUndefined();
   });
 
   it("filters by category without mutating item order", () => {
     const items: GovernanceFeedItem[] = [
-      { id: "p", category: "proposal", type: "proposal-created", title: "P", timestamp: 2, href: "/vote/1" },
-      { id: "t", category: "topic", type: "topic-created", title: "T", timestamp: 1, href: "/topics/t" },
+      {
+        id: "p",
+        category: "proposal",
+        type: "proposal-created",
+        title: "P",
+        timestamp: 2,
+        href: "/vote/1",
+      },
+      {
+        id: "t",
+        category: "topic",
+        type: "topic-created",
+        title: "T",
+        timestamp: 1,
+        href: "/topics/t",
+      },
     ];
 
     expect(filterFeedItems(items, "all")).toEqual(items);
