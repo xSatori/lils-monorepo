@@ -524,14 +524,6 @@ function CandidateSidebarWrapper({ candidateId, proposalThreshold }: { candidate
   // Hide promote button if candidate has been promoted to a proposal
   const hasBeenPromoted = !!candidate.latestVersion.proposalId
 
-  console.log('promotestate: hasBeenPromoted', hasBeenPromoted)
-  console.log('promotestate: promoteState', promoteState)
-  console.log('promotestate: promoteError', promoteError)
-  console.log('promotestate: candidate', candidate)
-  console.log('promotestate: proposerVotingPower', proposerVotingPower)
-  console.log('promotestate: candidate', candidate)
-  console.log('promotestate: candidate', candidate)
-
   return (
     <CandidateSidebar
       candidate={candidate}

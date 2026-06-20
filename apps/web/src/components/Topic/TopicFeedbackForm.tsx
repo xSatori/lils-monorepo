@@ -165,7 +165,7 @@ function FeedbackAs() {
     <div className="flex w-full items-center justify-center gap-1 px-4 text-content-secondary paragraph-sm">
       {address ? (
         <>
-          Feedback as <Name address={address} />
+          Feedback as <EnsName address={address} />
         </>
       ) : (
         "Connect wallet to add feedback"
