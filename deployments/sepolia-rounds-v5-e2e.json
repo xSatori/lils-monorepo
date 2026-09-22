@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 5,
+  "chain": {
+    "name": "Ethereum Sepolia",
+    "chainId": 11155111
+  },
+  "generatedAt": "2026-09-19T14:53:26.792Z",
+  "gitCommitSha": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+  "dirtyState": true,
+  "actors": {
+    "deployer": "0x45803D21b418c8a675c7654597BE1056019C655E",
+    "publicExecutor": "0x7dA8f7c43dE2835dF4C041069EBcf6a8cD62eeA2",
+    "historicalTenVoteSigner": "0xc2ee59ddCB97FE4070fC84543EcC79147Ae863F2"
+  },
+  "contracts": {
+    "deployer": "0x45803D21b418c8a675c7654597BE1056019C655E",
+    "factory": "0xd4cB8549980AdD2feA586FD13a47613118B0B5b4",
+    "votes": "0xddDF394EC7CC88bDCD54bF45326B123885A8eE6a",
+    "adapter": "0xDC13e69c8e335d419205c22680f0B27b3FD79C36",
+    "erc20": "0x7768DbC8c3F81B3b4B80565234aE6Df5C94A5ee5",
+    "erc721": "0x67BACB16fde9Ad896FAFfc3Eb8585c0349B5F6d1",
+    "erc1155": "0xd7E70ae807B16E714027b45056516C98bbD7266f",
+    "round": "0x657ac7E91d122576415dC5C4f4B1dbdAa7fD7159",
+    "prizeVault": "0xEC7016A448feE6765a1A5Ce09B6E91e122e98f1f"
+  },
+  "schedule": {
+    "submissionsOpen": "1789828308",
+    "submissionsClose": "1789828608",
+    "votingStart": "1789828908",
+    "votingEnd": "1789829208",
+    "distributionAvailableAt": "1789829520"
+  },
+  "transactions": {
+    "creation": "0x071a6d56ece15058a4ad6d813df2a69b0a83b89f3f7e5c930bb3e85e2616bba2",
+    "executorFunding": "0x145b915cbc7cf8bdb847398bee8dbfe31418c57ef296198dc609887b267af726",
+    "media": [
+      "0xb18dec471a8894ecc0a6cfa073008bddf5070bf7199033e295d326f86976fde5"
+    ],
+    "voting": [
+      "0xaa54fa4910811799f95cd0897a70f2350cf04331e61dc76d27b9a4c3bd70212d",
+      "0x03f3ba6019f46fe09aea2e1dcae826d06e863215834c1f5f9dc5daba97147834",
+      "0x29b23928481dd409e4c20ab56f4f1a8c6c974a1d05e1d830577b1933ce8d287b"
+    ],
+    "finalization": [
+      "0xd3d383bf85498b65803b6f82a18c6fe87b006eb63eeb6b07f51438a35dd3ff7b"
+    ],
+    "idempotentRefinalization": "0x1e9cadca4ec6fbe98207eda59e3201af8f0bbbb1c769f309edaafbbc620bc75e",
+    "distribution": [
+      "0x69352bb7cbb014250cc5e912365a31389753b831ddcb73f939f6b60abd781eb3",
+      "0x36aaa90ab07ebb0aa80a9ade3a505bcdd3e437b5d4e60927e9b4cdcda7edf4f4",
+      "0x363751a4b8c444205ee63a8969a3b8a73802e35a19891f6112ada80521abed0e",
+      "0x374bdc46f62f7222989fb13ee310153d0b41ec799620d6674c967577a814de25"
+    ],
+    "admin": [
+      "0x071a6d56ece15058a4ad6d813df2a69b0a83b89f3f7e5c930bb3e85e2616bba2",
+      "0xaf20fdce6e6fe103482af6318856774766f7f5942218f9f2b842c58ddcb3459f",
+      "0xfb1ff3683b118151ef907e06e5024ad6ae898918f80afa93c57641032ba967b8",
+      "0xa8f6ac801e905b580bf5b7f85ac2f4d266ded5e8dabcedf9eac8c5579414761e",
+      "0x3ec8149428b28a6eca047a4bd62c20ed62e9dd1f3fb5ea50188cbac93340235c",
+      "0x4734c9b796bbb35145e1dfe12b03e91967a60c68b564bcfd477cf9b4e3b4816b"
+    ],
+    "submissions": [
+      "0x83d5e7a9306a5e7b4bcf521d94b58122110d9cd037da8ee94cef3be6bb57e3e4",
+      "0x8ebeefe64fdc079d9a36db087af077688f18a63b0889f00d7d0951cb8fa830fa"
+    ],
+    "moderation": [],
+    "snapshot": [
+      "0xe6cc31e3a1fc2d299ae321b64f36c5bb4454c32d34795657a4f57b6b22d85b5d"
+    ],
+    "prizeFundingAndSeal": [
+      "0xf3dbff99564205528d7aea926575e13f67f502f44ce9fd3c2f1a7fd501b6fa36",
+      "0x9cee614d0577ffeddebebde52c2515b5b6fca12267447f070cafe8570268d39d",
+      "0x099d979e3e482dc83d7a540dc89dcb715b03e6a1c7f64cc437d2ecb6e7bdeca3",
+      "0x266bd7ce1bd6aa7084ce3d33318a39263acdff3a7427af48451749a3565dd6ed",
+      "0xff8ad7d7ae49157aa12afc2d93191684a007d8c9edb274680c2adb199a8f06be"
+    ]
+  },
+  "rejections": {
+    "selfVote": true,
+    "overAllocation": true,
+    "perEntryCap": true
+  },
+  "ipfs": {
+    "originalImage": "ipfs://bafkreids5j4lobvthy2klxosd2sc4o67uvzejirva47bywitwyi5twpq4e",
+    "adminImage": "ipfs://bafkreicddtwwsfvcuinbk3ryoanp4vn3274is2p3x7cw277athkh6jsuma",
+    "firstMetadata": "ipfs://bafkreiexax4osko3fqbmjuu2opkjvrg2scsblhtx2dyz2qusywaxz6seoq",
+    "secondMetadata": "ipfs://bafkreickhtq4vrzljayy47mx3fr74kyrytbfpncqrxgvnywqhmgzoz2rye",
+    "firstPinResponse": {
+      "submissionId": "0",
+      "metadata": {
+        "id": "01a0ba1a-5318-7869-a0ec-8780441cc6fc",
+        "cid": "bafkreiexax4osko3fqbmjuu2opkjvrg2scsblhtx2dyz2qusywaxz6seoq",
+        "isDuplicate": true
+      },
+      "images": [
+        {
+          "id": "01a0ba1a-5053-7253-823f-fe674e82f2a2",
+          "cid": "bafkreids5j4lobvthy2klxosd2sc4o67uvzejirva47bywitwyi5twpq4e",
+          "isDuplicate": true
+        }
+      ]
+    },
+    "adminPinResponse": {
+      "submissionId": "0",
+      "imageIndex": 0,
+      "image": {
+        "id": "01a0ba1a-b5a8-7470-80a6-e7948a1e619f",
+        "cid": "bafkreicddtwwsfvcuinbk3ryoanp4vn3274is2p3x7cw277athkh6jsuma",
+        "isDuplicate": true
+      }
+    }
+  },
+  "assertions": {
+    "feeForwardedWei": "100000000000000",
+    "factoryRetainedWei": "0",
+    "creatorIsAdmin": true,
+    "additionalAdminsAdded": true,
+    "additionalAdminRemoved": true,
+    "submissionsDefaultApproved": true,
+    "moderationBufferSeconds": 300,
+    "snapshotCaptured": true,
+    "snapshotBlock": "11738293",
+    "usedVotes": "9",
+    "submissionTotals": [
+      "5",
+      "4"
+    ],
+    "additiveVotes": "5",
+    "deterministicWinnerSubmissionId": "0",
+    "winner": "0x14C676D97ac0F3Be0e0D10D190601cc531e327C7",
+    "permissionlessExecutor": "0x7dA8f7c43dE2835dF4C041069EBcf6a8cD62eeA2",
+    "executorIsRoundAdmin": false,
+    "allPrizeTypesReleased": true,
+    "pinata": {
+      "originalCid": "bafkreids5j4lobvthy2klxosd2sc4o67uvzejirva47bywitwyi5twpq4e",
+      "metadataCid": "bafkreiexax4osko3fqbmjuu2opkjvrg2scsblhtx2dyz2qusywaxz6seoq",
+      "adminImageCid": "bafkreicddtwwsfvcuinbk3ryoanp4vn3274is2p3x7cw277athkh6jsuma",
+      "originalRetryDuplicate": true,
+      "metadataRetryDuplicate": true,
+      "adminRetryDuplicate": true,
+      "secondSubmissionPinned": true,
+      "gatewayBytesVerified": true,
+      "concurrentUploadExpectedCid": "bafkreieepzyygxxqf4mpngk7ptdyjasic6oaeqg3csfc5g54trp2q5cse4",
+      "concurrentUploadCount": 3,
+      "concurrentUploadRootsMatch": true,
+      "concurrentUploadProviderRecordCount": 1
+    }
+  }
+}

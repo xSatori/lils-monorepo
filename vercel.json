@@ -22,6 +22,10 @@
       "dest": "https://graphql.lilnouns.wtf/"
     },
     {
+      "src": "/api/rounds/uploads/([^/]+)",
+      "dest": "/api/rounds/uploads/[action]?action=$1"
+    },
+    {
       "handle": "filesystem"
     },
     {

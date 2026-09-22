@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 6,
+  "chain": {
+    "name": "Ethereum Sepolia",
+    "chainId": 11155111
+  },
+  "generatedAt": "2026-09-21T15:37:57Z",
+  "sourceRevision": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+  "dirtyState": true,
+  "compiler": {
+    "version": "0.8.24",
+    "optimizer": true,
+    "optimizerRuns": 200,
+    "evmVersion": "cancun"
+  },
+  "sourceSha256": {
+    "contracts/src/v6/RoundV6.sol": "FE9795FB8A19DA4FFAFB04FEEDDEC61220261503DADD818B5E1B3D15C8E30A51",
+    "contracts/src/v6/RoundPrizeVaultV6.sol": "179A84F54B402A7B37FA71D54B306AF3CB16EBC16FA322EF16800E4285F8FF1E",
+    "contracts/src/v6/RoundFactoryV6.sol": "8A007925791723DC16F2FAA3DECC902F7CDEEF184D193F6340BBE3CA5BD8000E",
+    "contracts/src/RoundValidation.sol": "57087C107D2BABA4FEFC57DE93FAE729720AA3B52FD6EC1A1038F343D2D06F93",
+    "contracts/script/DeployTestRoundsV6.s.sol": "B425834ADA50533DB762470F969237BE3B240B19CE542AA9A71FDE2667F89061"
+  },
+  "deployer": "0x45803D21b418c8a675c7654597BE1056019C655E",
+  "globalAdmins": [
+    "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+    "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184"
+  ],
+  "treasury": "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+  "votingPowerAdapter": "0xDC13e69c8e335d419205c22680f0B27b3FD79C36",
+  "creationFeeWei": "100000000000000",
+  "testMode": true,
+  "activeImplementationVersion": 6,
+  "deployments": {
+    "RoundV6": {
+      "address": "0xD495B26e69De63B6Ba811f8c39C648e44E1BCfE4",
+      "transactionHash": "0xdf5a2c60680be2adce794c5cf71c00ad733c2bfe2b412c96079e06e7f52e3a49",
+      "blockNumber": 11751795,
+      "nonce": 49,
+      "gasUsed": "5021326",
+      "effectiveGasPriceWei": "1059720563",
+      "runtimeBytes": 22687
+    },
+    "RoundPrizeVaultV6": {
+      "address": "0x53acEcC21eAFfe950b29dEcd261b96Fc56e4E873",
+      "transactionHash": "0xbd6a6e3bd8b284dece49bd27c92b0bd788ff9dbe1505071f6eb98e07e6dfc81c",
+      "blockNumber": 11751796,
+      "nonce": 50,
+      "gasUsed": "5231637",
+      "effectiveGasPriceWei": "1038340474",
+      "runtimeBytes": 23657
+    },
+    "RoundFactoryV6": {
+      "address": "0xC7e45B337975f1EC07cac943d0CeC6609E544377",
+      "transactionHash": "0x9e55c25e7172639856ab38891b153cd6391142c0eb595235af41bb367a1eba17",
+      "blockNumber": 11751797,
+      "nonce": 51,
+      "gasUsed": "3121797",
+      "effectiveGasPriceWei": "1028064735",
+      "runtimeBytes": 12901,
+      "constructorArguments": [
+        "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+        "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184",
+        "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+        "100000000000000",
+        "0xD495B26e69De63B6Ba811f8c39C648e44E1BCfE4",
+        "0x53acEcC21eAFfe950b29dEcd261b96Fc56e4E873",
+        "0xDC13e69c8e335d419205c22680f0B27b3FD79C36",
+        true
+      ]
+    }
+  },
+  "verification": {
+    "status": "runtime-and-state-verified",
+    "receiptStatus": "0x1 for all three deployments",
+    "receiptSenderNonceInputValueMatch": true,
+    "creationBytecodeMatchesLocalArtifacts": true,
+    "runtimeBytecodeMatchesOutsideConstructorImmutables": true,
+    "roundImplementationVersion": 6,
+    "vaultImplementationVersion": 6,
+    "factoryImplementationPairMatches": true,
+    "factoryRoundCount": 2,
+    "lastObservedBlock": 11751827,
+    "sourcePublishedToExplorer": true,
+    "sourcePublication": {
+      "explorer": "Sepolia Etherscan",
+      "RoundV6": "Pass - Verified",
+      "RoundPrizeVaultV6": "Pass - Verified",
+      "RoundFactoryV6": "Pass - Verified"
+    }
+  },
+  "testEvidence": {
+    "forgeBuild": "passed",
+    "RoundsV6ScheduleTest": "10 passed, 0 failed",
+    "simulationBlock": 11751789,
+    "simulation": "passed",
+    "networkCostWei": "13962832263631271"
+  },
+  "broadcastRecord": "broadcast/DeployTestRoundsV6.s.sol/11155111/run-latest.json",
+  "frontendFactorySwitched": true,
+  "roundCreated": true,
+  "prizeAssetsMoved": true,
+  "endToEndTest": {
+    "status": "passed",
+    "verifiedAt": "2026-09-21T16:30:34Z",
+    "scope": "Sepolia only; one ETH and one mock ERC-20 prize",
+    "testVoter": "0xf21Ba5cf628d002d6CF9fa8848f48aF1f0F15247",
+    "testVoterUnrecoverableBalanceWei": "2552908588699620",
+    "unfundedScheduleRejected": true,
+    "scheduleRevisionBeforeOpen": true,
+    "metadataAndSubmissionGatewayBytesMatchedCommitments": true,
+    "rounds": [
+      {
+        "title": "V6 Sepolia ETH test",
+        "round": "0x7e9d078137DE21aF64065dF130F7B77b2aaB9468",
+        "prizeVault": "0xAB55A46Ffc694c6A4a46E299F6fa18e3E3863cd2",
+        "roundMetadataCid": "bafkreifiuvwujcdaqhcs44wd3nre2sczqeb7dow2oszomgs5uytst47m5q",
+        "submissionMetadataCid": "bafkreia4ssf2njxsongb7wnejigwxjdo2x2t3vuzcfwdximdzfzylbbicy",
+        "createTransaction": "0x61bf8e9df8129d7ec011543e801268e7cec4ee33cb77016dee30d1522a54d160",
+        "submissionTransaction": "0xfd67916a469c7160b26e88ae486259a3d77cef9bb6d534e2ca8b1d8539d70dc0",
+        "voteTransaction": "0xca7d227bd4bf7c7b890e635ee174ebc5acd32e43088f8137dfc21018bc9baa5d",
+        "finalizeTransaction": "0x524c7e1279788090753d88c8f528ca3625251524dc9c1ce135206229cee2e4f4",
+        "prizeReleaseTransaction": "0x7ced7e006abc686348fe8a106615baea1624d662fe206117363ecc0e4b968693"
+      },
+      {
+        "title": "V6 Sepolia token test",
+        "round": "0xb79A49bd619bfCC5966Fc6f658B5f7312CfB76ff",
+        "prizeVault": "0x8a8F5dB08046e510b2985b89032eEc1B9e81a6Ca",
+        "roundMetadataCid": "bafkreihvs32kdlppmojl47v5atdxa4nshc7eh7qcp4zgqqxe62p6nprz3q",
+        "submissionMetadataCid": "bafkreidkt37g4x35bbvfnscnkqm22ldw7d43smm6lhzj3xumcodtw7i4qm",
+        "createTransaction": "0x6decf95c6decc315c6ca89a6ca2f2de7d68cdf915dc24ed8c49085108f7987ec",
+        "scheduleRevisionTransaction": "0x5cd90c55668d2f940ab2aca8bad5aba0c10ce0d431e8c814e4b87fe42a9caf29",
+        "submissionTransaction": "0x804d8dad573235395eedb729dcab7f30ea79d274487db192a96a537d7973b072",
+        "moderationTransactions": [
+          "0xe6f262f5cca24b4806dc1bb0fc8c16aa2a265cce4920a2152a4dc57f2e457ff4",
+          "0xf6fbc2e36abdac7a2dde694fb1569feee5a42b63e1c339c90ab49f2db60fc766"
+        ],
+        "voteTransaction": "0xeb48d40016319d7d79e453c087b2aa4b4cc3fbc11fced8a89bad67951e8f2b7b",
+        "finalizeTransaction": "0xa32ef3bf4c5872cd70b117eac432239c25a933a023f74991cc7be81baa15f6f2",
+        "prizeReleaseTransaction": "0xd0bf23986e3b21685920ce430d95568714cef3f9c8258b84c360abacae338073"
+      }
+    ]
+  }
+}

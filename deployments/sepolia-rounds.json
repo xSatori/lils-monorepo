@@ -1,0 +1,384 @@
+{
+  "chainName": "Ethereum Sepolia",
+  "chainId": 11155111,
+  "timestampUtc": "2026-09-18T11:45:04.188Z",
+  "gitCommitSha": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+  "dirtyState": true,
+  "dirtyStateNote": "Uncommitted Rounds implementation and evidence only; no commit or push was authorized.",
+  "compiler": "solc 0.8.24",
+  "optimizer": {
+    "enabled": true,
+    "runs": 200
+  },
+  "evmVersion": "cancun",
+  "deployer": "0xC3CE7cE8FFEa3E5BB455A1F597873250cFeb48A7",
+  "deployerBalanceAfterWei": "23976991246754954",
+  "globalAdmins": [
+    "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+    "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184"
+  ],
+  "treasury": "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+  "votingToken": "0x3516e26c3374856bdF6Bd427fbd2D1C9c946135c",
+  "votingPowerAdapter": "0xb4235A898B5DB7581eD4d845e41fCaC8f9d683bF",
+  "implementation": "0x6d750680eCEe14b95e9db8f45C25ed4C8a79C513",
+  "implementationVersion": 1,
+  "factory": "0xE2758DDAe22AfB0DE52E6DBF8C0FDeBa08c10624",
+  "creationFeeWei": "100000000000000",
+  "testMode": true,
+  "testProfile": {
+    "submissionsSeconds": 300,
+    "votingSeconds": 300
+  },
+  "constructorArguments": {
+    "mockVotingToken": ["0xC3CE7cE8FFEa3E5BB455A1F597873250cFeb48A7"],
+    "votingPowerAdapter": ["0x3516e26c3374856bdF6Bd427fbd2D1C9c946135c"],
+    "implementation": [],
+    "factory": [
+      "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+      "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184",
+      "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+      "100000000000000",
+      "0x6d750680eCEe14b95e9db8f45C25ed4C8a79C513",
+      "0xb4235A898B5DB7581eD4d845e41fCaC8f9d683bF",
+      true
+    ]
+  },
+  "deployments": {
+    "mockVotingToken": {
+      "contract": "MockLilNounsVotes",
+      "address": "0x3516e26c3374856bdF6Bd427fbd2D1C9c946135c",
+      "transactionHash": "0x8f342063d252a14bcd2559bff9c3a13e7d50de31354fcdd1a9edcbb137f6ea4f",
+      "blockNumber": 11730385,
+      "gasUsed": "642960",
+      "status": "success"
+    },
+    "votingPowerAdapter": {
+      "contract": "LilNounsVotingPower",
+      "address": "0xb4235A898B5DB7581eD4d845e41fCaC8f9d683bF",
+      "transactionHash": "0x03d9c22f9e9a966557d6a05eedede82b3468be440855aa3d06f56c27d6e22b6b",
+      "blockNumber": 11730386,
+      "gasUsed": "168988",
+      "status": "success"
+    },
+    "implementation": {
+      "contract": "Round",
+      "address": "0x6d750680eCEe14b95e9db8f45C25ed4C8a79C513",
+      "transactionHash": "0xf9231c6d016d6aa6557b9ecbfe123ccc37203c7a3d41947977e84bda9c0b607f",
+      "blockNumber": 11730388,
+      "gasUsed": "3496690",
+      "status": "success"
+    },
+    "factory": {
+      "contract": "RoundFactory",
+      "address": "0xE2758DDAe22AfB0DE52E6DBF8C0FDeBa08c10624",
+      "transactionHash": "0xef84348bc2166efed812b9ceaf3b28cc634adce163207cc4a6c60ed2ff8bd218",
+      "blockNumber": 11730389,
+      "gasUsed": "2431300",
+      "status": "success"
+    }
+  },
+  "bytecodeHashes": {
+    "mockVotingToken": "0x24433bed9bf68308656995fee693ed70f237061e58fecbc04159987266a93e3a",
+    "votingPowerAdapter": "0x267be51862cb4ba42dfa5947f95f88940e0378ac6d9e870abdd5fd6210d50b08",
+    "implementation": "0x05d49d04a852ab0a3a4e5e781e74177ab5a5dfd0b54a1afaa8b18aef4f9e2429",
+    "factory": "0xe8626024e74eecb020a3150b464e15e634cb407fd34ced9d00608b16fe4723c7",
+    "testRoundClone": "0xe2c7cf08e8725c9abc2606e9d3bc25ed60d891556d56607f5d665e420b93a63f"
+  },
+  "verification": {
+    "mockVotingToken": {
+      "status": "exact_match",
+      "provider": "Sourcify",
+      "jobUrl": "https://sourcify.dev/server/v2/verify/57423355-b32b-48fc-a600-34e5279a50f0"
+    },
+    "votingPowerAdapter": {
+      "status": "exact_match",
+      "provider": "Sourcify",
+      "jobUrl": "https://sourcify.dev/server/v2/verify/50ed4763-d37b-4940-8fa7-990d296b5207"
+    },
+    "implementation": {
+      "status": "exact_match",
+      "provider": "Sourcify",
+      "jobUrl": "https://sourcify.dev/server/v2/verify/7a199f9c-8ccc-480e-aaf9-b90512f9de65"
+    },
+    "factory": {
+      "status": "exact_match",
+      "provider": "Sourcify",
+      "jobUrl": "https://sourcify.dev/server/v2/verify/747470b7-e6a6-473b-b9ca-e748fb2335a7"
+    }
+  },
+  "testRound": {
+    "address": "0xb3f6ACF7C41c7dD08168Da7D3CCf20FD5faB39b4",
+    "creator": "0x41c4a97204ceB9b171Ba15bE65f9068Fc63bc00a",
+    "callerSalt": "0x1a05b34fe25af31b2e9d7564731fc0287de12f58e170494eb1488ddb3e9c2994",
+    "configurationHash": "0xdbebf5cb5e3536e113a8e048772cd7f8613212d3700eeb47be2f5b9ff9114da2",
+    "initializerArguments": {
+      "factory": "0xE2758DDAe22AfB0DE52E6DBF8C0FDeBa08c10624",
+      "creator": "0x41c4a97204ceB9b171Ba15bE65f9068Fc63bc00a",
+      "implementationVersion": 1,
+      "configurationHash": "0xdbebf5cb5e3536e113a8e048772cd7f8613212d3700eeb47be2f5b9ff9114da2",
+      "config": {
+        "metadataURI": "ipfs://lil-nouns-rounds-sepolia-e2e",
+        "metadataHash": "0x29c04f0f4d3858092c623f6ffdc6f83eb29ed7a06a93583d1dbd53c54529aad2",
+        "roundStart": "1789731084",
+        "submissionsOpen": "1789731084",
+        "votingStart": "1789731384",
+        "votingEnd": "1789731684",
+        "votingPowerAdapter": "0xb4235A898B5DB7581eD4d845e41fCaC8f9d683bF",
+        "votingStrategy": 1,
+        "snapshotMode": 0,
+        "customSnapshotBlock": "0",
+        "baseOrFixedVotes": "0",
+        "maxVotesPerSubmission": "6",
+        "maxSubmissionsPerWallet": 1,
+        "maxSubmissions": 5,
+        "winnerCount": 1,
+        "minTitleLength": 3,
+        "maxTitleLength": 120,
+        "minDescriptionLength": 10,
+        "maxDescriptionLength": 2000
+      }
+    },
+    "schedule": {
+      "submissionsOpen": "1789731084",
+      "votingStart": "1789731384",
+      "votingEnd": "1789731684"
+    },
+    "snapshotBlock": "11730436",
+    "winnerIds": ["1"]
+  },
+  "evidence": {
+    "treasuryBalanceBefore": "0",
+    "treasuryBalanceAfter": "100000000000000",
+    "treasuryFeeDelta": "100000000000000",
+    "factoryBalanceAfter": "0",
+    "setupTransactions": {
+      "fundCreator": {
+        "transactionHash": "0xba7361769b6c505c45f2c37527ceb31f67e4c040dc7ae1e2637c39c20ef11ac3",
+        "blockNumber": "11730404",
+        "gasUsed": "21000"
+      },
+      "fundSubmitter": {
+        "transactionHash": "0xbf732167e8dd0833e405661ba01f38e5c9754207318dde2ce7cebecdff2f16b9",
+        "blockNumber": "11730405",
+        "gasUsed": "21000"
+      },
+      "mintCreator": {
+        "transactionHash": "0x309adec62d4d7e5813593d4cbca44585966cfa63aabc1227c298f72dd5104bbb",
+        "blockNumber": "11730406",
+        "gasUsed": "50416"
+      },
+      "mintSubmitter": {
+        "transactionHash": "0xa3da75b4f6c74e6cc1e14a14e019b72765f50add83e0d836a17788aa14f97ec8",
+        "blockNumber": "11730407",
+        "gasUsed": "50416"
+      },
+      "delegateCreator": {
+        "transactionHash": "0xa40a62f7d59a76acc956d761d6bb19043720ae3eab7b2484bef5b58a2b3ab96c",
+        "blockNumber": "11730408",
+        "gasUsed": "93495"
+      },
+      "delegateSubmitter": {
+        "transactionHash": "0x76d3c6407411cb6f8ac6c8063cb9fdc8412640222d958d72d1569d0a35a53fdd",
+        "blockNumber": "11730409",
+        "gasUsed": "93495"
+      },
+      "createRound": {
+        "transactionHash": "0xa08db12d34dbd2db3a42a0f69fa451302db0f543fbc7ac8dd8fb33ce4e3c88cc",
+        "blockNumber": "11730410",
+        "gasUsed": "623044"
+      },
+      "adminAdded": {
+        "transactionHash": "0x057d8548a5e22b01d4414c759b4bbad3e90c5281ccb0795f357f5b4f26179085",
+        "blockNumber": "11730411",
+        "gasUsed": "58305"
+      },
+      "adminRemoved": {
+        "transactionHash": "0x8176354c0e6b716afd540cd9ca81fe8d44be15ae55c8a2cf08c3478ff98faebf",
+        "blockNumber": "11730412",
+        "gasUsed": "36495"
+      },
+      "submissions": [
+        {
+          "transactionHash": "0xdb6d3706c48af872e301f9394d9eea3bbe78992eccd2a93663cd1381dc97908b",
+          "blockNumber": "11730413",
+          "gasUsed": "218543"
+        },
+        {
+          "transactionHash": "0xfa8788b9eac217ba078731d5092d5f4be6e4add0a25ca7cbf80596cc593cafe2",
+          "blockNumber": "11730414",
+          "gasUsed": "201539"
+        },
+        {
+          "transactionHash": "0xdd81d6fd8cdc652de93ea7a85d4696351c4332a0cb439eb54b857b75e82ca1c3",
+          "blockNumber": "11730415",
+          "gasUsed": "201481"
+        }
+      ],
+      "approvals": [
+        {
+          "transactionHash": "0xe13f3b9022c2f18ef7647dec5c12fc61155c6d22be69d2228437cf2b6cee8d91",
+          "blockNumber": "11730416",
+          "gasUsed": "38422"
+        },
+        {
+          "transactionHash": "0x86fa47b2e049b689d4fe2965f0981f2120373ba0ec5d6bfb7e6f9065b08b94f9",
+          "blockNumber": "11730417",
+          "gasUsed": "38434"
+        },
+        {
+          "transactionHash": "0x7307af13d09616bf2b96eb327ef2c58fe8377a22eb24212a01836486f9d652de",
+          "blockNumber": "11730419",
+          "gasUsed": "38434"
+        }
+      ]
+    },
+    "votingTransactions": {
+      "snapshot": {
+        "transactionHash": "0x0c29b53a55848e3a7589004a04b0898a60205e5fd26270e37b8abd5f1cfaa838",
+        "blockNumber": "11730437",
+        "gasUsed": "38233"
+      },
+      "partialVote": {
+        "transactionHash": "0x8ff3fdfa41b8016637b92592705adc980360035ba1cebb3fd938ec7dfb57c103",
+        "blockNumber": "11730439",
+        "gasUsed": "144435"
+      },
+      "additiveVote": {
+        "transactionHash": "0x28bd85b9915caaa3f1a00c2ac34f41b6e6499ec44a0c5a88b4f09d59c1a1a28f",
+        "blockNumber": "11730440",
+        "gasUsed": "73235"
+      },
+      "otherVoter": {
+        "transactionHash": "0x402f8a983172828eeae515715568004d41a2ea0c4097fac36a5da407f4082b7b",
+        "blockNumber": "11730441",
+        "gasUsed": "124523"
+      },
+      "finalAllocation": {
+        "transactionHash": "0x695eb086c93343fdc5129557fa889415f7909a9318db15a76f933cc632d055c5",
+        "blockNumber": "11730442",
+        "gasUsed": "107435"
+      }
+    },
+    "finalizationTransactions": {
+      "finalized": {
+        "transactionHash": "0xa0cd73e81a10bf3bb5db1317b049b7026f48a03ab06719e388b183354a9b769d",
+        "blockNumber": "11730460",
+        "gasUsed": "96790"
+      },
+      "refinalized": {
+        "transactionHash": "0x8625fef3e1940efc940cf6fd983fe0cf48c447e54cefde63499a7cabcf0fc31c",
+        "blockNumber": "11730469",
+        "gasUsed": "33099"
+      }
+    },
+    "rejectionChecks": [
+      {
+        "label": "per-wallet submission cap",
+        "reverted": true,
+        "message": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "vote before voting phase",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "unauthorized moderation",
+        "reverted": true,
+        "message": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "unauthorized admin management",
+        "reverted": true,
+        "message": "The contract function \"grantRoundAdmin\" reverted."
+      },
+      {
+        "label": "snapshot recapture",
+        "reverted": true,
+        "message": "The contract function \"captureSnapshot\" reverted."
+      },
+      {
+        "label": "self voting",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "duplicate submission allocation",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "moderation after voting starts",
+        "reverted": true,
+        "message": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "per-entry vote cap",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "remaining vote limit",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      }
+    ],
+    "historicalVotingPower": {
+      "creator": "10",
+      "submitter": "8"
+    },
+    "voteState": {
+      "creatorUsed": "10",
+      "submitterUsed": "4",
+      "creatorEntryOne": "5",
+      "creatorEntryTwo": "5",
+      "submissionTotals": ["4", "5", "5"]
+    },
+    "directRpcFinalState": {
+      "roundCount": "1",
+      "registeredRound": "0xb3f6ACF7C41c7dD08168Da7D3CCf20FD5faB39b4",
+      "submissionCount": "3",
+      "finalized": true,
+      "snapshotBlock": "11730436",
+      "submissionTotals": ["4", "5", "5"]
+    },
+    "eventProjection": {
+      "roundCreatedEvents": 1,
+      "submissionCreatedEvents": 3,
+      "voteEvents": 4,
+      "uniqueVoteEvents": 4,
+      "snapshotEvents": 1,
+      "finalizedEvents": 1,
+      "submissionTotals": ["4", "5", "5"]
+    }
+  },
+  "explorer": {
+    "addresses": {
+      "mockVotingToken": "https://sepolia.etherscan.io/address/0x3516e26c3374856bdF6Bd427fbd2D1C9c946135c",
+      "votingPowerAdapter": "https://sepolia.etherscan.io/address/0xb4235A898B5DB7581eD4d845e41fCaC8f9d683bF",
+      "implementation": "https://sepolia.etherscan.io/address/0x6d750680eCEe14b95e9db8f45C25ed4C8a79C513",
+      "factory": "https://sepolia.etherscan.io/address/0xE2758DDAe22AfB0DE52E6DBF8C0FDeBa08c10624",
+      "testRound": "https://sepolia.etherscan.io/address/0xb3f6ACF7C41c7dD08168Da7D3CCf20FD5faB39b4",
+      "treasury": "https://sepolia.etherscan.io/address/0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5"
+    },
+    "deploymentTransactions": {
+      "mockVotingToken": "https://sepolia.etherscan.io/tx/0x8f342063d252a14bcd2559bff9c3a13e7d50de31354fcdd1a9edcbb137f6ea4f",
+      "votingPowerAdapter": "https://sepolia.etherscan.io/tx/0x03d9c22f9e9a966557d6a05eedede82b3468be440855aa3d06f56c27d6e22b6b",
+      "implementation": "https://sepolia.etherscan.io/tx/0xf9231c6d016d6aa6557b9ecbfe123ccc37203c7a3d41947977e84bda9c0b607f",
+      "factory": "https://sepolia.etherscan.io/tx/0xef84348bc2166efed812b9ceaf3b28cc634adce163207cc4a6c60ed2ff8bd218"
+    },
+    "createRound": "https://sepolia.etherscan.io/tx/0xa08db12d34dbd2db3a42a0f69fa451302db0f543fbc7ac8dd8fb33ce4e3c88cc",
+    "snapshot": "https://sepolia.etherscan.io/tx/0x0c29b53a55848e3a7589004a04b0898a60205e5fd26270e37b8abd5f1cfaa838",
+    "partialVote": "https://sepolia.etherscan.io/tx/0x8ff3fdfa41b8016637b92592705adc980360035ba1cebb3fd938ec7dfb57c103",
+    "additiveVote": "https://sepolia.etherscan.io/tx/0x28bd85b9915caaa3f1a00c2ac34f41b6e6499ec44a0c5a88b4f09d59c1a1a28f",
+    "finalized": "https://sepolia.etherscan.io/tx/0xa0cd73e81a10bf3bb5db1317b049b7026f48a03ab06719e388b183354a9b769d",
+    "refinalized": "https://sepolia.etherscan.io/tx/0x8625fef3e1940efc940cf6fd983fe0cf48c447e54cefde63499a7cabcf0fc31c"
+  },
+  "scope": {
+    "mainnetTransactionOccurred": false,
+    "existingLilNounsContractsModified": false,
+    "productionInfrastructureChanged": false,
+    "committedOrPushed": false,
+    "realWalletOrSecretUsed": false
+  }
+}

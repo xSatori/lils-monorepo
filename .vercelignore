@@ -1,0 +1,9 @@
+api/*.test.js
+/.env*
+**/.env*
+/.rounds-secrets/
+/contracts/
+/deployments/
+/docs/
+/broadcast/
+/cache/

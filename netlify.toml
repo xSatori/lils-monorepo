@@ -27,6 +27,12 @@
   VITE_CHAIN_ID = "11155111"   # Sepolia for branch deploys
   VITE_DAO_VERSION = "5"   # DAO version 5 for branch deploys (default to latest)
 
+[[redirects]]
+  from = "/api/rounds/uploads/*"
+  to = "/.netlify/functions/rounds-uploads?action=:splat"
+  status = 200
+  force = true
+
 # Headers for security and caching
 [[headers]]
   for = "/*"

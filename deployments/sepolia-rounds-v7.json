@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 7,
+  "chain": {
+    "name": "Ethereum Sepolia",
+    "chainId": 11155111
+  },
+  "deployedAt": "2026-09-21T19:38:42Z",
+  "sourceRevision": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+  "dirtyState": true,
+  "deployer": "0x45803D21b418c8a675c7654597BE1056019C655E",
+  "globalAdmins": [
+    "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+    "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184"
+  ],
+  "treasury": "0xd5f279ff9EB21c6D40C8f345a66f2751C4eeA1fB",
+  "votingPowerAdapter": "0xDC13e69c8e335d419205c22680f0B27b3FD79C36",
+  "creationFeeWei": "10000000000000000",
+  "testMode": true,
+  "activeImplementationVersion": 7,
+  "deployments": {
+    "RoundV7": {
+      "address": "0xFEA43226ff98A18909BcCCcc41E378934A3Cc19F",
+      "transactionHash": "0x9f7729f06e774167e9cf27b5b6b87c9405a059d6f57e0c565adb2cce8596f0cf",
+      "blockNumber": 11752987,
+      "nonce": 75,
+      "gasUsed": "5021542",
+      "runtimeBytes": 22688
+    },
+    "RoundPrizeVaultV7": {
+      "address": "0x3113Df523f08F01aaDa592B9e1C4224C39521D18",
+      "transactionHash": "0x70cd6422720021886c37f09c0b55657023fa259276738636dfa434453248e8c4",
+      "blockNumber": 11752988,
+      "nonce": 76,
+      "gasUsed": "5231637",
+      "runtimeBytes": 23657
+    },
+    "RoundFactoryV7": {
+      "address": "0x4c05EF874bA1AF1D97C0708075CD531a38283454",
+      "transactionHash": "0x37013838af3fc39501c78419e46ffd31e6fc6255f248fe520363dbefbc3959f5",
+      "blockNumber": 11752990,
+      "nonce": 77,
+      "gasUsed": "3054501",
+      "runtimeBytes": 12699
+    }
+  },
+  "verification": {
+    "receiptStatus": "0x1 for all three deployments",
+    "runtimeCodePresent": true,
+    "factoryStateReadDirectlyFromSepolia": true,
+    "factoryRoundCountAtVerification": 0,
+    "sourcePublishedToExplorer": false,
+    "sourcePublicationNote": "Not submitted; external source publication requires separate approval."
+  },
+  "broadcastRecord": "broadcast/DeployTestRoundsV7.s.sol/11155111/run-latest.json",
+  "frontendFactorySwitched": true,
+  "sponsoredUpload": "Sepolia V7 factory allowed alongside the configured legacy factory; local configuration targets V7."
+}

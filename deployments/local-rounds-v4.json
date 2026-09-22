@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 4,
+  "chain": {
+    "name": "anvil",
+    "chainId": 31337
+  },
+  "gitCommitSha": "UNKNOWN",
+  "generatedAt": "2026-09-18T22:46:12.068Z",
+  "creationFee": "100000000000000",
+  "actors": {
+    "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "admin1": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "admin2": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+    "creator": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+    "treasury": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+    "submitter": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+    "voter": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+    "executor": "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955"
+  },
+  "contracts": {
+    "votes": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    "adapter": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+    "roundImplementation": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+    "vaultImplementation": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+    "factory": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"
+  },
+  "round": "0x9Dd8f8F0cFd44C0629d51A132Bc8ED8D3C873364",
+  "vault": "0xCf4341357eA7848D5B486307f9266EC953414B96",
+  "transactions": {
+    "create": "0xbf2254afe8bc03953ce49ba97e986584a575689a23cefa64032ea792b996c2f6",
+    "actorSetup": [
+      "0x96c37b62634af3526bfd61127b4401e5264ad2ca535c76396c10a5961044c94b",
+      "0x29a524a58ca8e5db0a4caebfcc2066afb2e6ddf7e454a80af23f3acea0e8c580"
+    ],
+    "lifecycle": [
+      "0xbb84258f0197c121ab279ab3b04e9625fbf4a61ed75f4fd3df1446c5076fe51a",
+      "0xd8d625b5a4be285b38802c7e8f6708b7207accb80abb8e4e796c8003d5bf39c3",
+      "0xd43183cb178e18b513a8510532e762cee81f7c3182b890c15a411bd77d1d2a02",
+      "0x54f3e475b8b5921058b7889917e0f849fbdb79aa878ba4599aee705a9b432759",
+      "0x8c4621fd1f83774e6cac7160b5cf97e76d553f750c89e89cdc40156c7520e0a5",
+      "0xc659e246b2b3973476b199054d92a9f34a6c0955ec4d072c0956da53c25326df",
+      "0xf9bade3422fee24ecaaa9d83887da45b4101d46329cf1b95f927315b6f51cc00",
+      "0xd2423c47d285e4920fff1a848946b3387c35ea38517c76b011702d0657acb398"
+    ]
+  },
+  "assertions": {
+    "feeForwarded": true,
+    "factoryRetainedWei": "0",
+    "submissionDefaultApproved": true,
+    "additiveVotes": "5",
+    "publicExecutor": "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955",
+    "deterministicWinner": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+    "prizeReleasedWei": "10000000000000000"
+  }
+}

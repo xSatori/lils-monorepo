@@ -36,6 +36,7 @@ import ProfilesPage from './pages/ProfilesPage'
 import VoterProfilePage from './pages/VoterProfilePage'
 import TraitsPage from './pages/TraitsPage'
 import BrandPage from './pages/BrandPage'
+import RoundsPage from './pages/RoundsPage'
 
 function NounsDaoRedirect() {
   const { id } = useParams<{ id: string }>()
@@ -129,6 +130,8 @@ function App() {
               <Route path="vrgda/explore" element={<VRGDAExplorePage />} />
               <Route path="traits" element={<TraitsPage />} />
               <Route path="brand" element={<BrandPage />} />
+              <Route path="rounds" element={<RoundsPage />} />
+              <Route path="rounds/:roundAddress" element={<RoundsPage />} />
              
              {/* Proposal Editor */}
               <Route path="new" element={<ProposalEditorScreen />} />

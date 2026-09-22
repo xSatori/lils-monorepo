@@ -7,6 +7,10 @@ interface ImportMetaEnv {
   readonly VITE_INDEXER_URL: string
   readonly VITE_LIL_CAMP_API_URL?: string
   readonly VITE_CHAIN_ID: string
+  /** Optional Rounds-only chain. Production uses Sepolia until mainnet is approved. */
+  readonly VITE_ROUNDS_CHAIN_ID?: string
+  /** Activate a verified V7 Sepolia rounds factory; older factories remain readable. */
+  readonly VITE_SEPOLIA_ROUNDS_FACTORY_V7?: string
   readonly VITE_URL: string
   readonly VITE_CMS_URL?: string
   readonly VITE_WALLETCONNECT_PROJECT_ID: string

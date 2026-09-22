@@ -2,20 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { resolve, dirname } from 'node:path'
+import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import { discordApiPlugin } from './vite-plugin-discord-api.js'
 import { ogImagesPlugin } from './vite-plugin-og-images.js'
 import { rpcApiPlugin } from './vite-plugin-rpc-api.js'
 import { lilCampApiPlugin } from './vite-plugin-lil-camp-api.js'
+import { roundsUploadApiPlugin } from './vite-plugin-rounds-upload-api.js'
+import { ponderGraphqlApiPlugin } from './vite-plugin-ponder-graphql-api.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const ponderGraphqlProxy = {
-  target: 'https://graphql.lilnouns.wtf',
-  changeOrigin: true,
-  rewrite: () => '/',
-}
-
+const processBrowserPath = createRequire(import.meta.url).resolve('process/browser')
 export default defineConfig({
   plugins: [
     react(),
@@ -26,6 +24,8 @@ export default defineConfig({
     ogImagesPlugin(), // Handle OG image API routes in dev
     rpcApiPlugin(), // Handle /api/rpc (Goldsky proxy) in dev
     lilCampApiPlugin(), // Handle Lil Camp candidate/topic API routes in dev
+    roundsUploadApiPlugin(), // Handle wallet-authorized Rounds uploads in dev
+    ponderGraphqlApiPlugin(), // Fail closed and back off when the indexer TLS endpoint is unavailable
     // Inject process polyfill
     {
       name: 'inject-process-polyfill',
@@ -100,9 +100,6 @@ export default defineConfig({
     port: 3000,
     host: '0.0.0.0', // Allow access via subdomain (sepolia.localhost)
     open: true,
-    proxy: {
-      '/api/ponder/graphql': ponderGraphqlProxy,
-    },
     hmr: {
       port: 3000, // Use same port for HMR to avoid connection issues
       host: 'localhost', // HMR should connect via localhost
@@ -113,12 +110,6 @@ export default defineConfig({
     },
   },
 
-  preview: {
-    proxy: {
-      '/api/ponder/graphql': ponderGraphqlProxy,
-    },
-  },
-  
   // Build configuration
   build: {
     outDir: 'dist',
@@ -166,7 +157,7 @@ export default defineConfig({
       '@/assets': resolve(__dirname, '../../packages/assets/src'),
       // Node.js polyfills for browser compatibility
       buffer: 'buffer',
-      process: 'process/browser',
+      process: processBrowserPath,
       util: 'util',
     },
     dedupe: ['react', 'react-dom'], // Prevent duplicate React instances
@@ -190,7 +181,6 @@ export default defineConfig({
       'lucide-react', 
       'class-variance-authority',
       'buffer',
-      'process/browser',
       'util',
     ],
     exclude: [
@@ -220,7 +210,6 @@ export default defineConfig({
         },
       ],
     },
-    force: true, // Force optimization on workspace changes
   },
   
   // Workspace-specific configuration

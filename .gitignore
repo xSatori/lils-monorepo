@@ -17,6 +17,9 @@ out/
 .env.production.local
 .env*
 
+# Local encrypted disposable deployment wallets and their password files.
+.rounds-secrets/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
@@ -83,6 +86,9 @@ public
 
 # Temporary folders
 tmp/
+/broadcast/
+/cache/
+/contracts/cache/
 temp/
 
 # Editor directories and files
@@ -130,8 +136,15 @@ packages/subgraph-v3/
 packages/contracts/
 docs/
 
+# Onchain Rounds protocol source and design artifacts are intentionally tracked.
+!docs/
+!docs/rounds-onchain/
+!docs/rounds-onchain/**
+
 # Security & audit/todo documentation – never commit to production!
 SECURITY-AUDIT-HARDCODED-SECRETS.md
 TODO-REPORT.md
 
 /apps/web/src/data/ponder/nouns/README.md 
+.vercel
+.env*

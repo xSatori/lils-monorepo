@@ -1,0 +1,738 @@
+{
+  "schemaVersion": 3,
+  "chainName": "Ethereum Sepolia",
+  "chainId": 11155111,
+  "timestampUtc": "2026-09-18T20:42:22.533Z",
+  "gitCommitSha": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+  "dirtyState": true,
+  "dirtyStateNote": "Uncommitted Rounds v3 prize-vault implementation and evidence only; no commit or push was authorized.",
+  "compiler": "solc 0.8.24",
+  "optimizer": {
+    "enabled": true,
+    "runs": 200
+  },
+  "evmVersion": "cancun",
+  "deployer": "0x97309d0652c1d5d07FFC699ccb1C42404cbd0b1e",
+  "globalAdmins": [
+    "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+    "0x66cd193d0c0fb3b9b44dd371107617a7e9f38184"
+  ],
+  "treasury": "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+  "creationFeeWei": "100000000000000",
+  "testMode": true,
+  "testProfile": {
+    "submissionsSeconds": 300,
+    "moderationReviewSeconds": 300,
+    "votingSeconds": 300,
+    "claimSeconds": 300,
+    "recoveryDelaySeconds": 300
+  },
+  "votingToken": "0xf965870ce35473d8a1e059c14ddc1c3def3fbf0a",
+  "votingPowerAdapter": "0xaee5648150ee98cefd9b3bb88c6c4e11a0c0994d",
+  "roundImplementation": "0xd36156d12fff656b52a755087e1b0cde18fb1526",
+  "vaultImplementation": "0x7d0240a99b4ea2c8f062b37ad0d1e7d8c6acb1d4",
+  "implementationVersion": 3,
+  "factory": "0xa0dcca7e11012642298c6ed0bf92bd1561d38237",
+  "testRound": "0x6eCD7eAc705d238126F27f595032fa65d2e6B2d4",
+  "testVault": "0x50030cE356A34183ba51670727214e160c744756",
+  "constructorArguments": {
+    "mockVotingToken": [
+      "0x97309d0652c1d5d07FFC699ccb1C42404cbd0b1e"
+    ],
+    "votingPowerAdapter": [
+      "0xf965870ce35473d8a1e059c14ddc1c3def3fbf0a"
+    ],
+    "factory": [
+      "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "0x66cd193d0c0fb3b9b44dd371107617a7e9f38184",
+      "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+      "100000000000000",
+      "0xd36156d12fff656b52a755087e1b0cde18fb1526",
+      "0x7d0240a99b4ea2c8f062b37ad0d1e7d8c6acb1d4",
+      "0xaee5648150ee98cefd9b3bb88c6c4e11a0c0994d",
+      true
+    ]
+  },
+  "initializerArguments": {
+    "config": {
+      "metadataURI": "ipfs://lil-nouns-rounds-v3-sepolia-e2e",
+      "metadataHash": "0x1cd26b861c616be46dcc2eebec5dfa8c375c46ae71e0b894931ad1d063723e90",
+      "roundStart": "1789761960",
+      "submissionsOpen": "1789762380",
+      "submissionsClose": "1789762680",
+      "votingStart": "1789762980",
+      "votingEnd": "1789763280",
+      "votingPowerAdapter": "0xaee5648150ee98cefd9b3bb88c6c4e11a0c0994d",
+      "votingStrategy": 1,
+      "snapshotMode": 0,
+      "customSnapshotBlock": "0",
+      "baseOrFixedVotes": "0",
+      "maxVotesPerSubmission": "6",
+      "maxSubmissionsPerWallet": 1,
+      "maxSubmissions": 8,
+      "winnerCount": 1,
+      "minTitleLength": 3,
+      "maxTitleLength": 120,
+      "minDescriptionLength": 10,
+      "maxDescriptionLength": 2000
+    },
+    "vaultConfig": {
+      "recoveryRecipient": "0x97309d0652c1d5d07FFC699ccb1C42404cbd0b1e",
+      "claimPeriod": 300,
+      "recoveryDelay": 300,
+      "allocations": [
+        {
+          "winnerRank": 0,
+          "assetType": 0,
+          "token": "0x0000000000000000000000000000000000000000",
+          "tokenId": "0",
+          "amount": "500000000000000"
+        },
+        {
+          "winnerRank": 0,
+          "assetType": 1,
+          "token": "0xe0229461c6d9cfbacc6becdfc2457f58682d17d2",
+          "tokenId": "0",
+          "amount": "100000000000000000000"
+        },
+        {
+          "winnerRank": 0,
+          "assetType": 2,
+          "token": "0x2e14abb81bbc50e344be129b582525f7bb009115",
+          "tokenId": "1",
+          "amount": "1"
+        },
+        {
+          "winnerRank": 0,
+          "assetType": 3,
+          "token": "0x7aa83c3cdc4f7f8620cfcdf0dacd6f2d4fed6851",
+          "tokenId": "42",
+          "amount": "5"
+        },
+        {
+          "winnerRank": 0,
+          "assetType": 3,
+          "token": "0x7aa83c3cdc4f7f8620cfcdf0dacd6f2d4fed6851",
+          "tokenId": "43",
+          "amount": "7"
+        }
+      ]
+    },
+    "callerSalt": "0xf44cad7615b60aef89f1522846bd24904037ce6ab592f34b44b83849e814c5d0"
+  },
+  "prizePlanHash": "0xe3ef7e9e6a6e1400d08a05a99117e5931f1c397303845c703cfa96e2f6c979ef",
+  "bytecodeHashes": {
+    "mockVotingToken": "0x24433bed9bf68308656995fee693ed70f237061e58fecbc04159987266a93e3a",
+    "votingPowerAdapter": "0x3d32207b82a064777606e9bfa0a2387569e1e4b02f306f63326f94eb967d2d99",
+    "roundImplementation": "0x90ab7e03460e0fb895c370ece75c99e90f60152363ab98b897ad61acad765199",
+    "vaultImplementation": "0xaacf33884731f86a286eff5de208fd916ad4c4593934645ef6c1b77d0699ba04",
+    "factory": "0x0700b97ecae546fa4bfecb968dcdd2956a5e7eb02c509d0b6b7d111bcfee2e9b",
+    "round": "0x43cc79c80391d4ba766d0bbbd9404b77ad6d0670be5652fcf6a4d6f1ddbab7d3",
+    "vault": "0x458cada805f442ab133fc8736bc4e1d29f211109e9b99ceb33d0626098f0fab1"
+  },
+  "deploymentTransactions": {
+    "MockLilNounsVotes": {
+      "transactionHash": "0xa51cdd47d80903d509644c4ce26c869af42b56a2c99c3eef0357f100b53f3c81",
+      "blockNumber": 11732873,
+      "gasUsed": "642960"
+    },
+    "LilNounsVotingPower": {
+      "transactionHash": "0x327e2cefddc8a775e0de6f1871a157641d11ad054954f783954c1b639f37ab15",
+      "blockNumber": 11732874,
+      "gasUsed": "168988"
+    },
+    "MockPrizeERC20": {
+      "transactionHash": "0x5ece88ff139a892fc7e1c09b8d5d3c1941be5b688524943e0646ab5279493d83",
+      "blockNumber": 11732875,
+      "gasUsed": "512922"
+    },
+    "MockPrizeERC721": {
+      "transactionHash": "0xad4c3385640836ff3965c4400feef73f8b22fd2c5f35175e95b6d93f19e54262",
+      "blockNumber": 11732876,
+      "gasUsed": "957277"
+    },
+    "MockPrizeERC1155": {
+      "transactionHash": "0x3ffc020dc89c9b7b0608cb6df5220b4a877032cd477bf1854da7652014e714f6",
+      "blockNumber": 11732877,
+      "gasUsed": "1073100"
+    },
+    "RoundV3": {
+      "transactionHash": "0x28234dd8f06e8113ebe87bd2ae7a0d40075c3556e80ac37ab16a259a4dab347a",
+      "blockNumber": 11732878,
+      "gasUsed": "3733156"
+    },
+    "RoundPrizeVault": {
+      "transactionHash": "0xe77f1cdbd6091f608e93831494b80c3748f1f50d95d317f8534ba00484718050",
+      "blockNumber": 11732879,
+      "gasUsed": "5330384"
+    },
+    "RoundFactoryV3": {
+      "transactionHash": "0x0014abeff7a74d0c336b32178a929db03146484e82765b619f5be21185db1438",
+      "blockNumber": 11732880,
+      "gasUsed": "3060545"
+    }
+  },
+  "lifecycleTransactions": {
+    "setup": {
+      "fundActorA": {
+        "transactionHash": "0xcbd1202ce242cc3382ef7c5db4d7a6c84fd177aa1036a994c112cf9f27efbb91",
+        "blockNumber": "11732905",
+        "gasUsed": "21000"
+      },
+      "fundActorB": {
+        "transactionHash": "0x196bb068ccc5384f9b0e48228b183cae15b0c7aeec2d770cac32426590bfc71e",
+        "blockNumber": "11732906",
+        "gasUsed": "21000"
+      },
+      "mintVotesDeployer": {
+        "transactionHash": "0x39201316eed403813f0005fe69db2412bc241d39ed398c25e8f85f71a1f3caba",
+        "blockNumber": "11732907",
+        "gasUsed": "50416"
+      },
+      "mintVotesActorA": {
+        "transactionHash": "0x6cdd8fd14c64f874d9298b5160bb169296d48b0eb6b66a2542e28d99a7fb4a41",
+        "blockNumber": "11732908",
+        "gasUsed": "50416"
+      },
+      "mintVotesActorB": {
+        "transactionHash": "0x3f426117d3b08cead4c228ea95ff2bac98cb144a9e41a12e9b718a29ce824ace",
+        "blockNumber": "11732909",
+        "gasUsed": "50416"
+      },
+      "delegateDeployer": {
+        "transactionHash": "0xb323c0996630fab591698ee5b8d8932af5a05fb84baead5cd3d664da2f562d48",
+        "blockNumber": "11732911",
+        "gasUsed": "93495"
+      },
+      "delegateActorA": {
+        "transactionHash": "0x60a0577513fbb578e10a103256a487697da3b7b98e495925c0f3db879d36b12f",
+        "blockNumber": "11732912",
+        "gasUsed": "93495"
+      },
+      "delegateActorB": {
+        "transactionHash": "0x05c7c8b2bfce65156ab49990e5f57a6d93486a4e6a087cdfdc87489060f8dbf3",
+        "blockNumber": "11732913",
+        "gasUsed": "93495"
+      },
+      "createRound": {
+        "transactionHash": "0xc0b06a8f697944e321c578f50f79ff39d452060c1125aefb1ae4c41783e888ec",
+        "blockNumber": "11732914",
+        "gasUsed": "1433462"
+      },
+      "adminAAdded": {
+        "transactionHash": "0xb50559f22aa7b25849eab0594258255021f84400842934645ad0ab64a8dc928c",
+        "blockNumber": "11732915",
+        "gasUsed": "80502"
+      },
+      "adminBAdded": {
+        "transactionHash": "0x23c7a910077c99034e450f9a12222d56ef7855eeccb80ecf1f53810129d6b660",
+        "blockNumber": "11732916",
+        "gasUsed": "80502"
+      },
+      "adminBRemoved": {
+        "transactionHash": "0x0491f70ad5c571f4652f0b5b4c11ccde7c07931a6e762896f4b032e30046b9b1",
+        "blockNumber": "11732917",
+        "gasUsed": "36517"
+      },
+      "mintPrizeERC20": {
+        "transactionHash": "0x1633a6eacfa7fee93fce991830f00fecb6ee2ab383139e8bdf3f01610142d947",
+        "blockNumber": "11732918",
+        "gasUsed": "68428"
+      },
+      "mintPrizeERC721": {
+        "transactionHash": "0x54e3f474b6c041a76e7249197952f3ec19b6dc53188301ee59efa59faf8370b0",
+        "blockNumber": "11732920",
+        "gasUsed": "90805"
+      },
+      "mintPrizeERC1155A": {
+        "transactionHash": "0x742d578739d15a59508b43cd60a7dd00b6944f5df24b41867fa1bcea4a0a2b71",
+        "blockNumber": "11732921",
+        "gasUsed": "47968"
+      },
+      "mintPrizeERC1155B": {
+        "transactionHash": "0xde2045f76fe7397514e02bf67978edad76b10f215d0db22467e1d22decb6db4e",
+        "blockNumber": "11732922",
+        "gasUsed": "47968"
+      },
+      "approvePrizeERC20": {
+        "transactionHash": "0x0a45aa2c691becd0c35a3807855f9417972261d2cf471540927004890de852cf",
+        "blockNumber": "11732923",
+        "gasUsed": "46379"
+      },
+      "approvePrizeERC721": {
+        "transactionHash": "0x260bffe9610899aa0fb6e58e9d87d1c25382df47e80b6c7b1da6f12b59632b92",
+        "blockNumber": "11732924",
+        "gasUsed": "48619"
+      },
+      "approvePrizeERC1155": {
+        "transactionHash": "0x66cf6abcea6849e0cd04751d290729f05d20a4a84c664df23e790871ed67573b",
+        "blockNumber": "11732926",
+        "gasUsed": "46172"
+      },
+      "fundNative": {
+        "transactionHash": "0xed60ff1630d3cc67874923e2b0f4e8f49bc99f65ad3008fff75cfcf9fb7a6c6b",
+        "blockNumber": "11732927",
+        "gasUsed": "109664"
+      },
+      "fundERC20": {
+        "transactionHash": "0x6a5f53314efbb945f2add255805c1d0f4714483924ed7069056164a51303bebb",
+        "blockNumber": "11732928",
+        "gasUsed": "126536"
+      },
+      "fundERC721": {
+        "transactionHash": "0x5cd9ac6a468b568844a00bb6098210c79b8f9775a9904c1260ca989aea435b72",
+        "blockNumber": "11732929",
+        "gasUsed": "132452"
+      },
+      "fundERC1155Batch": {
+        "transactionHash": "0x2f2985790777ee1c42b354f8a792a7a208c323b8e60f9fcd4808e59595666d41",
+        "blockNumber": "11732931",
+        "gasUsed": "211044"
+      },
+      "seal": {
+        "transactionHash": "0x02937d0b61765728ad9974174c9cb49df5ff002375bc198c56e096c33c50bd04",
+        "blockNumber": "11732932",
+        "gasUsed": "112059"
+      },
+      "directExcessERC20": {
+        "transactionHash": "0x37afd0990dc0512328d859e1d0d7ddea261876d594854215d45d83164d6eb527",
+        "blockNumber": "11732933",
+        "gasUsed": "29714"
+      }
+    },
+    "submissions": {
+      "actorA": {
+        "transactionHash": "0x634715474373d53e2493c18ccf47c41ada992826f475369c950fdb9ab4be3e71",
+        "blockNumber": "11732951",
+        "gasUsed": "228699"
+      },
+      "actorB": {
+        "transactionHash": "0xac153ed72498426bb7815120ff949d3814c1b04fb95463b083c1acf2df1ab304",
+        "blockNumber": "11732952",
+        "gasUsed": "211589"
+      }
+    },
+    "review": {
+      "approveActorA": {
+        "transactionHash": "0x1de889cc459e5dad48f3ad139294e64680afb811db191f2cf211b2600c835f56",
+        "blockNumber": "11732973",
+        "gasUsed": "38422"
+      },
+      "approveActorB": {
+        "transactionHash": "0xf8269d51b1d3f10e7db5352e03fb4922bad3495bda681203d3908493c8df3128",
+        "blockNumber": "11732974",
+        "gasUsed": "38434"
+      },
+      "queueExcess": {
+        "transactionHash": "0x55a26f73ab2dba9ca8805770721b7f7aa4a0d8a025163fd8fc5ac193c3152861",
+        "blockNumber": "11732975",
+        "gasUsed": "259032"
+      },
+      "queueThenCancel": {
+        "transactionHash": "0x328ffc5e15debb2d5f143ec88456f3b38dd0ce59217131a6689be85356e105df",
+        "blockNumber": "11732976",
+        "gasUsed": "261844"
+      },
+      "cancelRecovery": {
+        "transactionHash": "0x8f3c6308f944fe232b7b6e69d3d41e06f9ca3f1123cd8b25eb104ca6659534a5",
+        "blockNumber": "11732978",
+        "gasUsed": "109740"
+      }
+    },
+    "voting": {
+      "executeExcessRecovery": {
+        "transactionHash": "0x9d917712791a872245d2ddc67a69c0e9639604052046874b329c7de4722c7fa7",
+        "blockNumber": "11733005",
+        "gasUsed": "128772"
+      },
+      "snapshot": {
+        "transactionHash": "0xcb8d06a142b40551511c5b8f9a9e985265b33da4ea6071fd60eeaa6747e4d697",
+        "blockNumber": "11732999",
+        "gasUsed": "38233"
+      },
+      "partialVote": {
+        "transactionHash": "0xb35ba47bc9711e8ada544e8a99a06bfbc952c9df8304660cc9129b255a4c2bb5",
+        "blockNumber": "11733000",
+        "gasUsed": "144457"
+      },
+      "additiveVote": {
+        "transactionHash": "0xc846183b2eac13051d0819574dd9fa73660ee662dc668e86bde14975ba7271a8",
+        "blockNumber": "11733001",
+        "gasUsed": "73257"
+      },
+      "actorBVote": {
+        "transactionHash": "0xe19a19a501b3dea078b51d4ab4cbf0c4edcd156dfb238758ae183c6e28e520a1",
+        "blockNumber": "11733003",
+        "gasUsed": "124545"
+      },
+      "deployerVote": {
+        "transactionHash": "0x78e1b3c7d84da8d66dfa2e410f878a15cea2727c4ac6c7e10b87bac3f44c1202",
+        "blockNumber": "11733004",
+        "gasUsed": "141607"
+      }
+    },
+    "finalization": {
+      "finalize": {
+        "transactionHash": "0x627dc7dd7bd7d3cdf7a7039019f11ca592434a100fac86494a9865508221f83c",
+        "blockNumber": "11733025",
+        "gasUsed": "76611"
+      },
+      "refinalize": {
+        "transactionHash": "0x5eb86bb4897d91afbe223538f9126e205f772df9638dd11ae3f01ba3163ebc8e",
+        "blockNumber": "11733026",
+        "gasUsed": "33055"
+      },
+      "releases": [
+        {
+          "transactionHash": "0x62ae39f154f549fd851deced5ff61bf6a33ca0ce7154955b25864dfde3004bc7",
+          "blockNumber": "11733028",
+          "gasUsed": "92223"
+        },
+        {
+          "transactionHash": "0x691264e0b07f8d30e3c130cea6cbe516f04d1f0976442501ae3bcf5ba4b327d7",
+          "blockNumber": "11733029",
+          "gasUsed": "149534"
+        },
+        {
+          "transactionHash": "0x4c6cdef2de65ec8b15d8cf7f295061a5d75220bb223bd5534ca79c8b177b5ca4",
+          "blockNumber": "11733030",
+          "gasUsed": "122904"
+        },
+        {
+          "transactionHash": "0xb60697f97f0d62355dc41c868f3448192c86b6ec146aaa40d1a637fc232e2334",
+          "blockNumber": "11733032",
+          "gasUsed": "118678"
+        },
+        {
+          "transactionHash": "0xbd9d31378f725b1d79f2d97efc082dae6249bc96fcca953c4c4caa9cfbfd812c",
+          "blockNumber": "11733033",
+          "gasUsed": "118678"
+        }
+      ]
+    },
+    "recovery": {}
+  },
+  "cancellationFlow": {
+    "round": "0x6F66812C7dC81E2d720540F6d410a56dC8d84347",
+    "vault": "0x93672015a302510505bcEe2C29f326679ca897ad",
+    "prizePlanHash": "0x0b4220acbecb16fb8337dad0ae3c71d8ace134e0f68a74960ca716799364e2b2",
+    "schedule": {
+      "submissionsOpen": "1789763400",
+      "submissionsClose": "1789763700",
+      "votingStart": "1789764000",
+      "votingEnd": "1789764300"
+    },
+    "amounts": {
+      "liability": "50000000000000000000",
+      "contribution": "20000000000000000000",
+      "excess": "1000000000000000000"
+    },
+    "transactions": {
+      "createRound": {
+        "transactionHash": "0x8edbacb5cea829c195412fafecd968656cb2d4d7ae4bb51068cec4d56a7512ba",
+        "blockNumber": "11733011",
+        "gasUsed": "1044571"
+      },
+      "adminAAdded": {
+        "transactionHash": "0xbbf7858bd0f059676cfd36098d0955b5260468aa77f4ffbe2b852ccbbe7b36ad",
+        "blockNumber": "11733012",
+        "gasUsed": "80502"
+      },
+      "mintContributor": {
+        "transactionHash": "0x8ab2f3bb0b0d1a973db432c07354178b9aa8f0e4a08a07f5b6d4e5ee8a091f06",
+        "blockNumber": "11733013",
+        "gasUsed": "51328"
+      },
+      "approveContribution": {
+        "transactionHash": "0x1c3a527bd89d897c95ae8e4ebede7b9205a77a256b4eaff4d6348d72f0ae634c",
+        "blockNumber": "11733015",
+        "gasUsed": "46379"
+      },
+      "partialFunding": {
+        "transactionHash": "0xb659162709b235da888ecc18dcc2ba9b43df5dd935f5b803e3bd3e83eddd87e0",
+        "blockNumber": "11733016",
+        "gasUsed": "146436"
+      },
+      "directExcess": {
+        "transactionHash": "0x2a1a1f9fdfcce3bc226a1741d8e9d434b9b2fed979344a619c2681e9cdfc3a1f",
+        "blockNumber": "11733017",
+        "gasUsed": "29714"
+      },
+      "topUpActorB": {
+        "transactionHash": "0x77b02c5a3e5d7f8416d5042cc86b8730b9e58a62698aa9e349bc7f920a3b6459",
+        "blockNumber": "11733058",
+        "gasUsed": "21000"
+      },
+      "cancelUnfunded": {
+        "transactionHash": "0x9533059d19966fdd0ed6c179a9656d1c796a7b6461c42bcf41ba379c1a7fa356",
+        "blockNumber": "11733046",
+        "gasUsed": "40488"
+      },
+      "refundContributor": {
+        "transactionHash": "0x44743efb51db04cd804d13605322abb82b213f09600d1986356407ec710052eb",
+        "blockNumber": "11733059",
+        "gasUsed": "52538"
+      },
+      "queueExcessRecovery": {
+        "transactionHash": "0xad60db1b15c36958a396b959a353de56bd59e330024252495342d79d1ebc444b",
+        "blockNumber": "11733060",
+        "gasUsed": "259032"
+      },
+      "executeExcessRecovery": {
+        "transactionHash": "0xb5f910c8846da5d0a7040d33071d4938f2a5b688dacadf1dc8d9a201cd37c25a",
+        "blockNumber": "11733091",
+        "gasUsed": "106904"
+      }
+    },
+    "recovery": {
+      "actionId": "0xb57451d76f90bb354fc71f27295d6c62319ab44582c805f2f8d072ffd595de16",
+      "deadline": 1789764660,
+      "queuedAt": "1789763772"
+    },
+    "evidence": {
+      "refundDelta": "20000000000000000000",
+      "recoverableExcess": "1000000000000000000",
+      "recoveredExcess": "1000000000000000000",
+      "finalVaultBalance": "0"
+    }
+  },
+  "evidence": {
+    "treasuryBalanceBefore": "200000000000000",
+    "treasuryBalanceAfter": "300000000000000",
+    "treasuryFeeDelta": "100000000000000",
+    "factoryBalanceAfter": "0",
+    "rejections": [
+      {
+        "label": "accidental direct ETH rejected",
+        "reverted": true,
+        "message": "Execution reverted for an unknown reason."
+      },
+      {
+        "label": "per-wallet submission cap",
+        "reverted": true,
+        "message": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "vote before voting phase",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "unauthorized moderation",
+        "reverted": true,
+        "message": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "unauthorized admin management",
+        "reverted": true,
+        "message": "The contract function \"grantRoundAdmin\" reverted."
+      },
+      {
+        "label": "submission during moderation review",
+        "reverted": true,
+        "message": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "snapshot recapture",
+        "reverted": true,
+        "message": "The contract function \"captureSnapshot\" reverted."
+      },
+      {
+        "label": "moderation after voting starts",
+        "reverted": true,
+        "message": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "self voting",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "duplicate submission allocation",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "per-entry vote cap",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "remaining vote limit",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      }
+    ],
+    "funding": {
+      "nativePrize": "500000000000000",
+      "erc20Prize": "100000000000000000000",
+      "erc721TokenId": "1",
+      "erc1155": {
+        "ids": [
+          "42",
+          "43"
+        ],
+        "amounts": [
+          "5",
+          "7"
+        ]
+      }
+    },
+    "submissionCount": "2",
+    "snapshotBlock": "11732998",
+    "voteState": {
+      "deployerUsed": "10",
+      "actorAUsed": "5",
+      "actorBUsed": "6",
+      "submissionTotals": [
+        "12",
+        "9"
+      ]
+    },
+    "finalState": {
+      "finalized": true,
+      "winner": "0x939bf584CeDddBABB881D5011bf446DA6106e424",
+      "directTotals": [
+        "12",
+        "9"
+      ],
+      "eventProjection": {
+        "submissionEvents": 2,
+        "voteEvents": 5,
+        "snapshotEvents": 1,
+        "finalizedEvents": 1,
+        "releaseEvents": 5,
+        "totals": [
+          "12",
+          "9"
+        ]
+      },
+      "nativeVaultBalance": "0",
+      "redirectedERC20Recipient": "0xc9B66a09649454f641DAE835C7b0d1A7A2a7F053",
+      "redirectedERC20Balance": "100000000000000000000",
+      "allAllocationsClaimed": true
+    }
+  },
+  "verification": {
+    "status": "exact_match",
+    "provider": "Sourcify",
+    "contracts": {
+      "mockVotingToken": {
+        "status": "exact_match",
+        "note": "Already verified."
+      },
+      "votingPowerAdapter": {
+        "status": "exact_match",
+        "note": "Already verified."
+      },
+      "prizeERC20": {
+        "status": "exact_match",
+        "jobUrl": "https://sourcify.dev/server/v2/verify/40c84c8e-5fea-4a45-945a-7011787a93fa"
+      },
+      "prizeERC721": {
+        "status": "exact_match",
+        "jobUrl": "https://sourcify.dev/server/v2/verify/c4a197ec-efcb-484d-bb1b-1dccdacfcc28"
+      },
+      "prizeERC1155": {
+        "status": "exact_match",
+        "jobUrl": "https://sourcify.dev/server/v2/verify/4001e03e-04b9-4803-8e9d-6e1e00c6d399"
+      },
+      "roundImplementation": {
+        "status": "exact_match",
+        "jobUrl": "https://sourcify.dev/server/v2/verify/3fdf073f-9f17-40bc-ad68-f9713d68a836"
+      },
+      "vaultImplementation": {
+        "status": "exact_match",
+        "jobUrl": "https://sourcify.dev/server/v2/verify/8e98fb4a-5a44-47ef-94a0-424ed2dc6832"
+      },
+      "factory": {
+        "status": "exact_match",
+        "jobUrl": "https://sourcify.dev/server/v2/verify/69d90156-8a2b-4a3c-8ff7-7917f3d3ec40"
+      }
+    }
+  },
+  "explorer": {
+    "addresses": {
+      "deployer": "https://sepolia.etherscan.io/address/0x97309d0652c1d5d07FFC699ccb1C42404cbd0b1e",
+      "actorA": "https://sepolia.etherscan.io/address/0x939bf584CeDddBABB881D5011bf446DA6106e424",
+      "actorB": "https://sepolia.etherscan.io/address/0xc9B66a09649454f641DAE835C7b0d1A7A2a7F053",
+      "globalAdmin1": "https://sepolia.etherscan.io/address/0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "globalAdmin2": "https://sepolia.etherscan.io/address/0x66cd193d0c0fb3b9b44dd371107617a7e9f38184",
+      "treasury": "https://sepolia.etherscan.io/address/0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+      "mockVotingToken": "https://sepolia.etherscan.io/address/0xf965870ce35473d8a1e059c14ddc1c3def3fbf0a",
+      "votingPowerAdapter": "https://sepolia.etherscan.io/address/0xaee5648150ee98cefd9b3bb88c6c4e11a0c0994d",
+      "prizeERC20": "https://sepolia.etherscan.io/address/0xe0229461c6d9cfbacc6becdfc2457f58682d17d2",
+      "prizeERC721": "https://sepolia.etherscan.io/address/0x2e14abb81bbc50e344be129b582525f7bb009115",
+      "prizeERC1155": "https://sepolia.etherscan.io/address/0x7aa83c3cdc4f7f8620cfcdf0dacd6f2d4fed6851",
+      "roundImplementation": "https://sepolia.etherscan.io/address/0xd36156d12fff656b52a755087e1b0cde18fb1526",
+      "vaultImplementation": "https://sepolia.etherscan.io/address/0x7d0240a99b4ea2c8f062b37ad0d1e7d8c6acb1d4",
+      "factory": "https://sepolia.etherscan.io/address/0xa0dcca7e11012642298c6ed0bf92bd1561d38237",
+      "round": "https://sepolia.etherscan.io/address/0x6eCD7eAc705d238126F27f595032fa65d2e6B2d4",
+      "vault": "https://sepolia.etherscan.io/address/0x50030cE356A34183ba51670727214e160c744756"
+    },
+    "deploymentTransactions": {
+      "MockLilNounsVotes": "https://sepolia.etherscan.io/tx/0xa51cdd47d80903d509644c4ce26c869af42b56a2c99c3eef0357f100b53f3c81",
+      "LilNounsVotingPower": "https://sepolia.etherscan.io/tx/0x327e2cefddc8a775e0de6f1871a157641d11ad054954f783954c1b639f37ab15",
+      "MockPrizeERC20": "https://sepolia.etherscan.io/tx/0x5ece88ff139a892fc7e1c09b8d5d3c1941be5b688524943e0646ab5279493d83",
+      "MockPrizeERC721": "https://sepolia.etherscan.io/tx/0xad4c3385640836ff3965c4400feef73f8b22fd2c5f35175e95b6d93f19e54262",
+      "MockPrizeERC1155": "https://sepolia.etherscan.io/tx/0x3ffc020dc89c9b7b0608cb6df5220b4a877032cd477bf1854da7652014e714f6",
+      "RoundV3": "https://sepolia.etherscan.io/tx/0x28234dd8f06e8113ebe87bd2ae7a0d40075c3556e80ac37ab16a259a4dab347a",
+      "RoundPrizeVault": "https://sepolia.etherscan.io/tx/0xe77f1cdbd6091f608e93831494b80c3748f1f50d95d317f8534ba00484718050",
+      "RoundFactoryV3": "https://sepolia.etherscan.io/tx/0x0014abeff7a74d0c336b32178a929db03146484e82765b619f5be21185db1438"
+    },
+    "lifecycleTransactions": {
+      "setup.fundActorA": "https://sepolia.etherscan.io/tx/0xcbd1202ce242cc3382ef7c5db4d7a6c84fd177aa1036a994c112cf9f27efbb91",
+      "setup.fundActorB": "https://sepolia.etherscan.io/tx/0x196bb068ccc5384f9b0e48228b183cae15b0c7aeec2d770cac32426590bfc71e",
+      "setup.mintVotesDeployer": "https://sepolia.etherscan.io/tx/0x39201316eed403813f0005fe69db2412bc241d39ed398c25e8f85f71a1f3caba",
+      "setup.mintVotesActorA": "https://sepolia.etherscan.io/tx/0x6cdd8fd14c64f874d9298b5160bb169296d48b0eb6b66a2542e28d99a7fb4a41",
+      "setup.mintVotesActorB": "https://sepolia.etherscan.io/tx/0x3f426117d3b08cead4c228ea95ff2bac98cb144a9e41a12e9b718a29ce824ace",
+      "setup.delegateDeployer": "https://sepolia.etherscan.io/tx/0xb323c0996630fab591698ee5b8d8932af5a05fb84baead5cd3d664da2f562d48",
+      "setup.delegateActorA": "https://sepolia.etherscan.io/tx/0x60a0577513fbb578e10a103256a487697da3b7b98e495925c0f3db879d36b12f",
+      "setup.delegateActorB": "https://sepolia.etherscan.io/tx/0x05c7c8b2bfce65156ab49990e5f57a6d93486a4e6a087cdfdc87489060f8dbf3",
+      "setup.createRound": "https://sepolia.etherscan.io/tx/0xc0b06a8f697944e321c578f50f79ff39d452060c1125aefb1ae4c41783e888ec",
+      "setup.adminAAdded": "https://sepolia.etherscan.io/tx/0xb50559f22aa7b25849eab0594258255021f84400842934645ad0ab64a8dc928c",
+      "setup.adminBAdded": "https://sepolia.etherscan.io/tx/0x23c7a910077c99034e450f9a12222d56ef7855eeccb80ecf1f53810129d6b660",
+      "setup.adminBRemoved": "https://sepolia.etherscan.io/tx/0x0491f70ad5c571f4652f0b5b4c11ccde7c07931a6e762896f4b032e30046b9b1",
+      "setup.mintPrizeERC20": "https://sepolia.etherscan.io/tx/0x1633a6eacfa7fee93fce991830f00fecb6ee2ab383139e8bdf3f01610142d947",
+      "setup.mintPrizeERC721": "https://sepolia.etherscan.io/tx/0x54e3f474b6c041a76e7249197952f3ec19b6dc53188301ee59efa59faf8370b0",
+      "setup.mintPrizeERC1155A": "https://sepolia.etherscan.io/tx/0x742d578739d15a59508b43cd60a7dd00b6944f5df24b41867fa1bcea4a0a2b71",
+      "setup.mintPrizeERC1155B": "https://sepolia.etherscan.io/tx/0xde2045f76fe7397514e02bf67978edad76b10f215d0db22467e1d22decb6db4e",
+      "setup.approvePrizeERC20": "https://sepolia.etherscan.io/tx/0x0a45aa2c691becd0c35a3807855f9417972261d2cf471540927004890de852cf",
+      "setup.approvePrizeERC721": "https://sepolia.etherscan.io/tx/0x260bffe9610899aa0fb6e58e9d87d1c25382df47e80b6c7b1da6f12b59632b92",
+      "setup.approvePrizeERC1155": "https://sepolia.etherscan.io/tx/0x66cf6abcea6849e0cd04751d290729f05d20a4a84c664df23e790871ed67573b",
+      "setup.fundNative": "https://sepolia.etherscan.io/tx/0xed60ff1630d3cc67874923e2b0f4e8f49bc99f65ad3008fff75cfcf9fb7a6c6b",
+      "setup.fundERC20": "https://sepolia.etherscan.io/tx/0x6a5f53314efbb945f2add255805c1d0f4714483924ed7069056164a51303bebb",
+      "setup.fundERC721": "https://sepolia.etherscan.io/tx/0x5cd9ac6a468b568844a00bb6098210c79b8f9775a9904c1260ca989aea435b72",
+      "setup.fundERC1155Batch": "https://sepolia.etherscan.io/tx/0x2f2985790777ee1c42b354f8a792a7a208c323b8e60f9fcd4808e59595666d41",
+      "setup.seal": "https://sepolia.etherscan.io/tx/0x02937d0b61765728ad9974174c9cb49df5ff002375bc198c56e096c33c50bd04",
+      "setup.directExcessERC20": "https://sepolia.etherscan.io/tx/0x37afd0990dc0512328d859e1d0d7ddea261876d594854215d45d83164d6eb527",
+      "submissions.actorA": "https://sepolia.etherscan.io/tx/0x634715474373d53e2493c18ccf47c41ada992826f475369c950fdb9ab4be3e71",
+      "submissions.actorB": "https://sepolia.etherscan.io/tx/0xac153ed72498426bb7815120ff949d3814c1b04fb95463b083c1acf2df1ab304",
+      "review.approveActorA": "https://sepolia.etherscan.io/tx/0x1de889cc459e5dad48f3ad139294e64680afb811db191f2cf211b2600c835f56",
+      "review.approveActorB": "https://sepolia.etherscan.io/tx/0xf8269d51b1d3f10e7db5352e03fb4922bad3495bda681203d3908493c8df3128",
+      "review.queueExcess": "https://sepolia.etherscan.io/tx/0x55a26f73ab2dba9ca8805770721b7f7aa4a0d8a025163fd8fc5ac193c3152861",
+      "review.queueThenCancel": "https://sepolia.etherscan.io/tx/0x328ffc5e15debb2d5f143ec88456f3b38dd0ce59217131a6689be85356e105df",
+      "review.cancelRecovery": "https://sepolia.etherscan.io/tx/0x8f3c6308f944fe232b7b6e69d3d41e06f9ca3f1123cd8b25eb104ca6659534a5",
+      "voting.executeExcessRecovery": "https://sepolia.etherscan.io/tx/0x9d917712791a872245d2ddc67a69c0e9639604052046874b329c7de4722c7fa7",
+      "voting.snapshot": "https://sepolia.etherscan.io/tx/0xcb8d06a142b40551511c5b8f9a9e985265b33da4ea6071fd60eeaa6747e4d697",
+      "voting.partialVote": "https://sepolia.etherscan.io/tx/0xb35ba47bc9711e8ada544e8a99a06bfbc952c9df8304660cc9129b255a4c2bb5",
+      "voting.additiveVote": "https://sepolia.etherscan.io/tx/0xc846183b2eac13051d0819574dd9fa73660ee662dc668e86bde14975ba7271a8",
+      "voting.actorBVote": "https://sepolia.etherscan.io/tx/0xe19a19a501b3dea078b51d4ab4cbf0c4edcd156dfb238758ae183c6e28e520a1",
+      "voting.deployerVote": "https://sepolia.etherscan.io/tx/0x78e1b3c7d84da8d66dfa2e410f878a15cea2727c4ac6c7e10b87bac3f44c1202",
+      "finalization.finalize": "https://sepolia.etherscan.io/tx/0x627dc7dd7bd7d3cdf7a7039019f11ca592434a100fac86494a9865508221f83c",
+      "finalization.refinalize": "https://sepolia.etherscan.io/tx/0x5eb86bb4897d91afbe223538f9126e205f772df9638dd11ae3f01ba3163ebc8e",
+      "finalization.releases.0": "https://sepolia.etherscan.io/tx/0x62ae39f154f549fd851deced5ff61bf6a33ca0ce7154955b25864dfde3004bc7",
+      "finalization.releases.1": "https://sepolia.etherscan.io/tx/0x691264e0b07f8d30e3c130cea6cbe516f04d1f0976442501ae3bcf5ba4b327d7",
+      "finalization.releases.2": "https://sepolia.etherscan.io/tx/0x4c6cdef2de65ec8b15d8cf7f295061a5d75220bb223bd5534ca79c8b177b5ca4",
+      "finalization.releases.3": "https://sepolia.etherscan.io/tx/0xb60697f97f0d62355dc41c868f3448192c86b6ec146aaa40d1a637fc232e2334",
+      "finalization.releases.4": "https://sepolia.etherscan.io/tx/0xbd9d31378f725b1d79f2d97efc082dae6249bc96fcca953c4c4caa9cfbfd812c"
+    }
+  },
+  "scope": {
+    "mainnetTransactionOccurred": false,
+    "existingLilNounsContractsModified": false,
+    "productionInfrastructureChanged": false,
+    "committedOrPushed": false,
+    "realWalletOrSecretUsed": false
+  }
+}
