@@ -38,6 +38,7 @@ import {
   type VaultConfigInput,
 } from "@/features/rounds/contracts";
 import { useRounds, useVoterView } from "@/features/rounds/hooks";
+import { getRoundsReadAvailability } from "@/features/rounds/availability";
 import { RoundCard } from "@/features/rounds/RoundCard";
 import { RoundDetail } from "@/features/rounds/RoundDetail";
 import { RoundsInfoDialog } from "@/features/rounds/RoundsInfoDialog";
@@ -132,6 +133,11 @@ export default function RoundsPage() {
     contracts.factoryGeneration,
     contracts.legacyFactories,
   );
+  const readAvailability = getRoundsReadAvailability({
+    chainId: roundsChainId,
+    hasClient: Boolean(client),
+    hasFactory: Boolean(contracts.factory),
+  });
   const round = query.data?.rounds.find(
     (item) => item.round.toLowerCase() === roundAddress?.toLowerCase(),
   );
@@ -369,7 +375,15 @@ export default function RoundsPage() {
         />
       </Helmet>
       <div id="main-content" className="min-h-screen bg-background-primary">
-        {!contracts.factory ? (
+        {readAvailability.state === "rpc-unavailable" ? (
+          <div className="mx-auto flex max-w-[900px] flex-col gap-4 px-4 py-12">
+            <h1 className="heading-3">Onchain Rounds</h1>
+            <RoundsStatus kind="error">
+              {readAvailability.message} Rounds data has not been read, so no
+              empty-factory conclusion has been inferred.
+            </RoundsStatus>
+          </div>
+        ) : readAvailability.state === "factory-unavailable" ? (
           <div className="mx-auto flex max-w-[900px] flex-col gap-5 px-4 py-12 md:px-8">
             <h1 className="heading-3">Onchain Rounds</h1>
             <RoundsStatus kind="info">

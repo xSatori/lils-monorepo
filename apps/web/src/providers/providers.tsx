@@ -3,9 +3,9 @@ import { ToastProvider } from "./toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TransactionListenerProvider } from "./TransactionListener";
 import TanstackQueryProvider from "./TanstackQueryProvider";
-import { Address, fallback } from "viem";
+import { Address, Chain, fallback } from "viem";
 import { http, WagmiProvider } from "wagmi";
-import { CHAIN_CONFIG } from "@/config";
+import { CHAIN_CONFIG, CHAIN_SPECIFIC_CONFIGS } from "@/config";
 import {
   getDefaultConfig,
   AvatarComponent,
@@ -37,19 +37,42 @@ const rpcTransports = rpcUrls.map((url) => http(url));
 const transports =
   rpcTransports.length === 1 ? rpcTransports[0] : fallback(rpcTransports);
 
+const sepoliaConfig = CHAIN_SPECIFIC_CONFIGS[11_155_111]!;
+const sepoliaRpcUrls = [
+  sepoliaConfig.rpcUrl.primary,
+  ...sepoliaConfig.rpcUrl.fallbacks,
+  // Production does not expose an Alchemy or Infura Sepolia key. Keep a
+  // keyless transport available for the Rounds-only testnet surface.
+  "https://ethereum-sepolia-rpc.publicnode.com",
+].filter((url) => Boolean(url) && !url.includes("undefined"));
+const sepoliaRpcTransports = sepoliaRpcUrls.map((url) => http(url));
+const sepoliaTransport =
+  sepoliaRpcTransports.length === 1
+    ? sepoliaRpcTransports[0]!
+    : fallback(
+        sepoliaRpcTransports as [
+          (typeof sepoliaRpcTransports)[number],
+          ...(typeof sepoliaRpcTransports)[number][],
+        ],
+      );
+const chains: readonly [Chain, ...Chain[]] =
+  CHAIN_CONFIG.chain.id === sepoliaConfig.chain.id
+    ? [CHAIN_CONFIG.chain]
+    : [CHAIN_CONFIG.chain, sepoliaConfig.chain];
+const configuredTransports = {
+  [CHAIN_CONFIG.chain.id]: transports,
+  [sepoliaConfig.chain.id]: sepoliaTransport,
+};
+
 const config = typeof window === 'undefined' 
   ? createConfig({
-      chains: [CHAIN_CONFIG.chain],
-      transports: {
-        [CHAIN_CONFIG.publicClient.chain!.id]: transports,
-      },
+      chains,
+      transports: configuredTransports,
       ssr: true,
     })
   : getDefaultConfig({
-      chains: [CHAIN_CONFIG.chain],
-      transports: {
-        [CHAIN_CONFIG.publicClient.chain!.id]: transports,
-      },
+      chains,
+      transports: configuredTransports,
       // WalletConnect v2 requires a valid project ID
       // If missing, WalletConnect won't be available but other connectors will work
       projectId: PROJECT_ID || '00000000000000000000000000000000000000000000',
