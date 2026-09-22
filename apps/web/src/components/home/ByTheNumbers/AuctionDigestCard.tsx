@@ -6,13 +6,14 @@ import { getRecentNouns } from "@/data/noun/getAllNouns";
 import { Noun } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { readContract } from "viem/actions";
-import { CHAIN_SPECIFIC_CONFIGS, CHAIN_CONFIG } from "@/config";
+import { CHAIN_SPECIFIC_CONFIGS } from "@/config";
 import { lilVRGDAConfig } from "@/config/lilVRGDAConfig";
 import { graphQLFetch } from "@/data/utils/graphQLFetch";
 import { formatEther } from "viem";
 import { isSepoliaNetwork } from "@/utils/networkDetection";
 import { mainnet, sepolia } from "viem/chains";
 import { transformVpsNounToNoun } from "@/data/noun/helpers";
+import { getGoldskyNounsByIds } from "@/data/goldsky/nouns";
 
 type AuctionDigestCardProps = {
   className?: string;
@@ -72,28 +73,8 @@ const AuctionDigestCard: React.FC<AuctionDigestCardProps> = ({
 
   const current = currentVRGDANoun ?? (nouns && nouns.length > 0 ? nouns[0] : null);
 
-  // Featured historical Lil Nouns from VPS with sale prices from Goldsky
+  // Featured historical Lil Nouns from the public Goldsky subgraph.
   const FEATURED_IDS = ["2", "69", "424", "45", "999", "2317", "2332", "4398", "2198"] as const;
-
-  // GraphQL query to fetch nouns by specific IDs from VPS (same as ExplorePage)
-  const GetNounsByIdsDocument = `
-    query GetNounsByIds($ids: [String!]!) {
-      nouns(where: { id_in: $ids }, limit: 10000) {
-        items {
-          id
-          owner
-          delegate
-          background
-          body
-          accessory
-          head
-          glasses
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  `;
 
   const { data: featured } = useQuery({
     queryKey: ["featured-lilnouns", FEATURED_IDS.join(","), chainId],
@@ -106,27 +87,7 @@ const AuctionDigestCard: React.FC<AuctionDigestCardProps> = ({
         return [];
       }
 
-      // Fetch nouns from VPS
-      const nounsResponse = await fetch(CHAIN_CONFIG.indexerUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: GetNounsByIdsDocument,
-          variables: { ids: FEATURED_IDS },
-        }),
-      });
-
-      if (!nounsResponse.ok) {
-        throw new Error(`HTTP error! status: ${nounsResponse.status}`);
-      }
-
-      const nounsResult = await nounsResponse.json();
-      if (nounsResult.errors) {
-        console.error('❌ GraphQL errors fetching nouns:', nounsResult.errors);
-        throw new Error(`GraphQL errors: ${nounsResult.errors.map((e: any) => e.message).join(', ')}`);
-      }
-
-      const vpsNouns = nounsResult.data?.nouns?.items ?? [];
+      const goldskyNouns = await getGoldskyNounsByIds(FEATURED_IDS);
       
       // Fetch auctions from Goldsky
       const auctionsQuery = /* GraphQL */ `
@@ -155,9 +116,9 @@ const AuctionDigestCard: React.FC<AuctionDigestCardProps> = ({
         }
       }
 
-      // Transform VPS nouns to app Noun format and combine with auction data
-      const items: { noun: Noun; soldForEth?: number }[] = vpsNouns.map((vpsNoun: any) => {
-        const noun = transformVpsNounToNoun(vpsNoun);
+      // Transform canonical nested Goldsky nouns to the existing app shape.
+      const items: { noun: Noun; soldForEth?: number }[] = goldskyNouns.map((goldskyNoun) => {
+        const noun = transformVpsNounToNoun(goldskyNoun);
         const amt = amountByNounId.get(noun.id);
         return { 
           noun: { ...noun, secondaryListing: null }, 

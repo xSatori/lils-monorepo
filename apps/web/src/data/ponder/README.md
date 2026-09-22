@@ -1,6 +1,9 @@
 # Ponder Integration - Clean GraphQL API
 
-This module provides TypeScript functions and React hooks to interact with the new clean Ponder GraphQL API that includes only Noun and VRGDA data.
+This module provides TypeScript functions and React hooks for custom Ponder-only
+data, chiefly VRGDA pool state and financial snapshots. Canonical Lil Noun,
+owner, seed, and delegate reads now use the public Goldsky subgraph through
+`@/data/goldsky/nouns`.
 
 ## 🚀 Quick Start
 
@@ -8,13 +11,11 @@ This module provides TypeScript functions and React hooks to interact with the n
 
 ```typescript
 import { 
-  getNounById, 
   getLatestVrgdaSeeds, 
   useVrgdaPoolMonitor 
 } from '@/data/ponder';
 
 // Server-side functions
-const noun = await getNounById('123');
 const latestSeeds = await getLatestVrgdaSeeds(10);
 
 // Client-side hooks
@@ -22,7 +23,12 @@ const { data: poolStatus } = useVrgdaPoolStatus();
 const { data: availableSeeds } = useAvailableVrgdaSeeds(20);
 ```
 
-## 📊 Noun Functions
+## 📊 Canonical noun reads
+
+Use `@/data/goldsky/nouns` for canonical noun data. It maps the public
+Goldsky nested `owner` and `seed` entities and preserves Goldsky pagination.
+The legacy compatibility wrappers in this folder forward noun reads there;
+new code should not add Ponder noun queries.
 
 ### Server Functions
 

@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { NounFilterEngine, FilterCounts, FilterResult, CompactIndexData } from '@/utils/NounFilterEngine';
 import { useNounFilters } from '@/hooks/useNounFilters';
-import { CHAIN_CONFIG } from '@/config';
-import { GetNounsPaginatedDocument, OrderDirection } from '@/data/generated/ponder/clean-graphql';
+import { getGoldskyNounsPaginated } from '@/data/goldsky/nouns';
 
 interface FilterEngineContextType {
   filterEngine: NounFilterEngine | null;
@@ -75,45 +74,13 @@ export function FilterEngineProvider({ children }: { children: ReactNode }) {
                 break;
               }
 
-              const response = await fetch(CHAIN_CONFIG.indexerUrl, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  query: GetNounsPaginatedDocument,
-                  variables: {
-                    limit: batchSize,
-                    offset,
-                    orderBy: 'id',
-                    orderDirection: OrderDirection.Asc,
-                  },
-                }),
-              });
-
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-
-              const result = await response.json();
-
-              if (result.errors) {
-                throw new Error(
-                  `GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}`,
-                );
-              }
-
-              const vpsResponse = result.data;
-
-              const pageInfo = vpsResponse?.nouns?.pageInfo;
-              const batchItems = vpsResponse?.nouns?.items;
-
-              if (!batchItems || batchItems.length === 0) {
+              const page = await getGoldskyNounsPaginated({}, 'id', 'asc', batchSize, offset);
+              if (!page.nouns.length) {
                 hasMore = false;
                 break;
               }
 
-              const batchNouns = batchItems.map((noun: any) => ({
+              const batchNouns = page.nouns.map((noun) => ({
                 id: noun.id,
                 background: noun.background,
                 body: noun.body,
@@ -135,14 +102,7 @@ export function FilterEngineProvider({ children }: { children: ReactNode }) {
 
               allNouns.push(...batchNouns);
 
-              // Use pageInfo if available (preferred stopping condition)
-              if (pageInfo && pageInfo.hasNextPage === false) {
-                hasMore = false;
-                break;
-              }
-
-              // Check if we got fewer nouns than requested (end of data)
-              if (batchNouns.length < batchSize) {
+              if (!page.hasMore) {
                 hasMore = false;
               } else {
                 offset += batchSize;

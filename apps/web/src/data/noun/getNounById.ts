@@ -2,13 +2,11 @@ import { Noun } from "./types";
 import { checkForAllNounRevalidation } from "./getAllNouns";
 import { CHAIN_CONFIG } from "@/config";
 import { transformVpsNounToNoun } from "./helpers";
+import { getGoldskyNounById } from "@/data/goldsky/nouns";
 import { unstable_cache } from "@/utils/viteCache";
 import { SECONDS_PER_HOUR } from "@/utils/constants";
 import { nounsTokenAbi } from "@/abis/nounsToken";
 import { getAddress } from "viem";
-
-// Import VPS-specific GraphQL query
-import { GetNounByIdDocument } from "../generated/ponder/clean-graphql";
 
 type ContractSeedValue = bigint | number;
 
@@ -74,29 +72,11 @@ async function getNounByIdFromChain(id: string): Promise<Noun | undefined> {
 }
 
 export async function getNounByIdUncached(id: string): Promise<Noun | undefined> {
-  console.log("getNounByIdUncached - using VPS indexer for ID:", id);
-  console.log("VPS Indexer URL:", CHAIN_CONFIG.indexerUrl);
+  console.log("getNounByIdUncached - using public Goldsky noun data for ID:", id);
   
   try {
-    // Direct VPS GraphQL fetch
-    const response = await fetch(CHAIN_CONFIG.indexerUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: GetNounByIdDocument,
-        variables: { id }
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    const vpsResponse = result.data;
-    const noun = vpsResponse?.noun ? transformVpsNounToNoun(vpsResponse.noun as any) : undefined;
+    const goldskyNoun = await getGoldskyNounById(id);
+    const noun = goldskyNoun ? transformVpsNounToNoun(goldskyNoun) : undefined;
 
     if (noun) {
       checkForAllNounRevalidation(id);
@@ -104,7 +84,7 @@ export async function getNounByIdUncached(id: string): Promise<Noun | undefined>
       return fullNoun;
     }
   } catch (error) {
-    console.error("getNounByIdUncached - VPS indexer failed, falling back to contract:", error);
+    console.error("getNounByIdUncached - Goldsky failed, falling back to contract:", error);
   }
 
   return getNounByIdFromChain(id);

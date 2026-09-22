@@ -4,30 +4,9 @@
 import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { useFilterEngine } from '@/contexts/FilterEngineContext';
 import { Noun } from '@/data/noun/types';
-import { CHAIN_CONFIG } from '@/config';
-import { GetNounsPaginatedDocument, OrderDirection } from '@/data/generated/ponder/clean-graphql';
+import { getGoldskyNounsByIds } from '@/data/goldsky/nouns';
 import { transformVpsNounToNoun } from '@/data/noun/helpers';
 import { useNounFilters } from '@/hooks/useNounFilters';
-
-// GraphQL query to fetch nouns by specific IDs
-const GetNounsByIdsDocument = `
-  query GetNounsByIds($ids: [String!]!, $orderBy: String, $orderDirection: OrderDirection) {
-    nouns(where: { id_in: $ids }, orderBy: $orderBy, orderDirection: $orderDirection, limit: 10000) {
-      items {
-        id
-        owner
-        delegate
-        background
-        body
-        accessory
-        head
-        glasses
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
 
 const SMALL_RESULT_THRESHOLD = 200; // If filtered results < 200, fetch all at once
 const MEDIUM_RESULT_THRESHOLD = 1000; // If < 1000, use larger page size
@@ -57,7 +36,7 @@ export function useSmartNounRendering(
   const BATCH_SIZE = 100;
   const matchingNounIdsRef = useRef<string[]>(matchingNounIds);
 
-  const orderDirection = sortOrder === 'newest' ? OrderDirection.Desc : OrderDirection.Asc;
+  const orderDirection = sortOrder === 'newest' ? 'desc' : 'asc';
   const hasMore = currentOffset + BATCH_SIZE < matchingNounIds.length;
   
   // Derive nouns array from normalized state (for backwards compatibility)
@@ -186,39 +165,8 @@ export function useSmartNounRendering(
 
         console.log('📊 Fetching first', idsToFetch.length, 'nouns');
 
-        const response = await fetch(CHAIN_CONFIG.indexerUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: GetNounsByIdsDocument,
-            variables: {
-              ids: idsToFetch,
-              orderBy: "id",
-              orderDirection: orderDirection,
-            }
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        
-        if (result.errors) {
-          console.error('❌ GraphQL errors:', result.errors);
-          throw new Error(`GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}`);
-        }
-
-        const vpsResponse = result.data;
-
-        if (!vpsResponse) {
-          console.error('❌ No data in GraphQL response:', result);
-          throw new Error('No data returned from GraphQL query');
-        }
-
-        if (vpsResponse?.nouns?.items) {
-          const fetchedNouns = vpsResponse.nouns.items.map((noun: any) => transformVpsNounToNoun(noun));
+        const fetchedNouns = (await getGoldskyNounsByIds(idsToFetch, orderDirection)).map((noun) => ({ ...transformVpsNounToNoun(noun), secondaryListing: null }));
+        if (fetchedNouns.length) {
           console.log('✅ Loaded', fetchedNouns.length, 'initial nouns');
           
           // Initialize normalized state with stable entities
@@ -234,7 +182,7 @@ export function useSmartNounRendering(
           setNounIds(ids);
           setCurrentOffset(BATCH_SIZE);
         } else {
-          console.warn('⚠️ No nouns.items in response:', vpsResponse);
+          console.warn('⚠️ No nouns in Goldsky response');
           setNounEntities(new Map());
           setNounIds([]);
         }
@@ -263,39 +211,8 @@ export function useSmartNounRendering(
 
       console.log('📊 Fetching next', idsToFetch.length, 'nouns');
 
-      const response = await fetch(CHAIN_CONFIG.indexerUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: GetNounsByIdsDocument,
-          variables: {
-            ids: idsToFetch,
-            orderBy: "id",
-            orderDirection: orderDirection,
-          }
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      
-      if (result.errors) {
-        console.error('❌ GraphQL errors:', result.errors);
-        throw new Error(`GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}`);
-      }
-
-      const vpsResponse = result.data;
-
-      if (!vpsResponse) {
-        console.error('❌ No data in GraphQL response:', result);
-        throw new Error('No data returned from GraphQL query');
-      }
-
-      if (vpsResponse?.nouns?.items) {
-        const fetchedNouns = vpsResponse.nouns.items.map((noun: any) => transformVpsNounToNoun(noun));
+      const fetchedNouns = (await getGoldskyNounsByIds(idsToFetch, orderDirection)).map((noun) => ({ ...transformVpsNounToNoun(noun), secondaryListing: null }));
+      if (fetchedNouns.length) {
         console.log('✅ Loaded', fetchedNouns.length, 'more nouns, appending...');
         
         // APPEND to normalized state without touching existing entities
@@ -325,7 +242,7 @@ export function useSmartNounRendering(
         
         setCurrentOffset(prev => prev + BATCH_SIZE);
       } else {
-        console.warn('⚠️ No nouns.items in response:', vpsResponse);
+        console.warn('⚠️ No nouns in Goldsky response');
       }
     } catch (error) {
       console.error('❌ Error loading more nouns:', error);

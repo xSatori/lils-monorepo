@@ -7,7 +7,7 @@ import { transformPonderNounToNoun } from "./helpers";
 export async function getNounsForAddress(address: Address): Promise<Noun[]> {
   try {
     // Use efficient Ponder query instead of loading all 7000+ nouns
-    const ponderNouns = await getPonderNounsForAddress(address);
+    const { nouns: ponderNouns } = await getPonderNounsForAddress(address);
 
     if (!ponderNouns.length) {
       return [];

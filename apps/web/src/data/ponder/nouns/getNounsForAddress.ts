@@ -1,7 +1,6 @@
 
 import { PonderNoun } from "./types";
-import { cleanGraphQLFetch } from "../utils/cleanGraphQLFetch";
-import { GetNounsPaginatedDocument, OrderDirection } from "@/data/generated/ponder/clean-graphql";
+import { getGoldskyNounsForAddress } from "@/data/goldsky/nouns";
 
 export async function getNounsForAddress(
   address: string,
@@ -9,35 +8,9 @@ export async function getNounsForAddress(
   offset: number = 0
 ): Promise<{ nouns: PonderNoun[]; hasMore: boolean }> {
   try {
-    const result = await cleanGraphQLFetch(GetNounsPaginatedDocument, {
-      where: {
-        owner: address.toLowerCase()
-      },
-      orderBy: 'id',
-      orderDirection: OrderDirection.Desc,
-      limit,
-      offset
-    });
-
-    const nouns: PonderNoun[] = result.nouns.items.map(noun => ({
-      id: noun.id,
-      owner: noun.owner,
-      delegate: noun.delegate || undefined,
-      background: noun.background,
-      body: noun.body,
-      accessory: noun.accessory,
-      head: noun.head,
-      glasses: noun.glasses,
-      createdAt: noun.createdAt,
-      updatedAt: noun.updatedAt,
-    }));
-
-    return {
-      nouns,
-      hasMore: result.nouns.pageInfo.hasNextPage
-    };
+    return await getGoldskyNounsForAddress(address, limit, offset);
   } catch (error) {
-    console.error('Failed to fetch nouns for address from Ponder:', error);
+    console.error('Failed to fetch nouns for address from Goldsky:', error);
     return { nouns: [], hasMore: false };
   }
 }
