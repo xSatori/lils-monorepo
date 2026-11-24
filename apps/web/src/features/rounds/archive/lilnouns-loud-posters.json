@@ -1,0 +1,766 @@
+{
+  "proposals": [
+    {
+      "id": 2,
+      "roundId": 1,
+      "roundHandle": "lilnouns-loud-posters",
+      "author": "0xe71db7a05bc2dc33877736da551d55cad6f30d9e",
+      "authorName": "waltnuts",
+      "authorImage": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+      "title": "GAAAAAAAAAAAAAA",
+      "tldr": "",
+      "content": "![](https://db.lilnouns.wtf/api/funding/images/QmWMPaVuL9pMbwohUeXFnrXMyc9YUj6RtWh2HZmbyBuSAP)",
+      "voteCount": "118",
+      "voterCount": 24,
+      "rank": 1,
+      "place": 1,
+      "createdAt": "2025-04-12T07:15:04.741Z",
+      "updatedAt": "2026-11-08T18:44:36.848Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 1,
+      "roundId": 1,
+      "roundHandle": "lilnouns-loud-posters",
+      "author": "nouns.gg:pub_caf82da618924143067a3aee",
+      "authorName": "lamofeta",
+      "authorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreihphmxgren4asnhzjdinwjf2nbmodpuadduhyygxrdz7bya7cdwvy",
+      "title": "Where is PPD???",
+      "tldr": "Team owner meetup",
+      "content": "Team owner meetup\n\n![](https://db.lilnouns.wtf/api/funding/images/QmNPmFGvu45XMrNn1kiggaW7iMz8YBkTFWCbXJc7Sox2PZ)",
+      "voteCount": "109",
+      "voterCount": 24,
+      "rank": 2,
+      "place": 2,
+      "createdAt": "2025-04-12T04:35:19.860Z",
+      "updatedAt": "2026-11-08T18:44:36.848Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 4,
+      "roundId": 1,
+      "roundHandle": "lilnouns-loud-posters",
+      "author": "nouns.gg:pub_33387fcef82bd63b25ff1609",
+      "authorName": "zk_cockatrice",
+      "authorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibnccw7scpbrwospvzij4wrqawtjdtyls4efy7jxqwcrr5kskl36u",
+      "title": "More NA Dota!!!",
+      "tldr": "Need more NA Dota!!!!",
+      "content": "Need more NA Dota!!!!\n\n![](https://db.lilnouns.wtf/api/funding/images/QmZnvyopyYVpZmH59Y3ZgxBPoWXGTtpvBiBYhWpwycAS2o)",
+      "voteCount": "99",
+      "voterCount": 22,
+      "rank": 3,
+      "place": null,
+      "createdAt": "2025-04-14T00:43:02.495Z",
+      "updatedAt": "2026-11-08T18:44:36.848Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 3,
+      "roundId": 1,
+      "roundHandle": "lilnouns-loud-posters",
+      "author": "0x8e25910a07559f7db680871ef564c58fde3ec793",
+      "authorName": "Malibu",
+      "authorImage": "https://pbs.twimg.com/profile_images/1718796942229315584/Ar7Xo6jm_normal.jpg",
+      "title": "ORT ORT ORT FEELIN NOUNISH",
+      "tldr": "NOUNS PLEASE COME BACK WE NEED YOUUYU",
+      "content": "NOUNS PLEASE COME BACK WE NEED YOUUYU\n\n![](https://db.lilnouns.wtf/api/funding/images/QmSUpVNJML8zsdghJ3wGnYQUPGx5orNp1jc961Hf4WXLDi)",
+      "voteCount": "49",
+      "voterCount": 15,
+      "rank": 4,
+      "place": null,
+      "createdAt": "2025-04-13T20:39:57.985Z",
+      "updatedAt": "2026-11-08T18:44:36.848Z",
+      "source": "nouns.gg"
+    }
+  ],
+  "votes": {
+    "2": [
+      {
+        "id": 85,
+        "timestamp": "2025-04-18T09:58:35.906Z",
+        "voter": "0x24cff936a95505b3df3e8ec16138fd64174e2143",
+        "voterName": "Floofys🏳️‍🌈",
+        "voterImage": "https://pbs.twimg.com/profile_images/1789429945506160642/P2_q9378_normal.png",
+        "weight": "10"
+      },
+      {
+        "id": 83,
+        "timestamp": "2025-04-18T06:28:54.646Z",
+        "voter": "0xa4d1f6f9ef0ec2e2a6c6cebe5bf728b8cdbf2141",
+        "voterName": "ToonSlim ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1497406090958581760/xUkZCkWg_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 78,
+        "timestamp": "2025-04-18T05:40:26.384Z",
+        "voter": "0xa90760f43f651232dcd25d977306e31f024be731",
+        "voterName": "IVG | frames",
+        "voterImage": "https://pbs.twimg.com/profile_images/1740290907604217856/ajjOmRLM_normal.png",
+        "weight": "5"
+      },
+      {
+        "id": 72,
+        "timestamp": "2025-04-17T20:39:49.042Z",
+        "voter": "0xe10ae3bc0b5e8d9f787625fa033d9d5f1ea14c8e",
+        "voterName": "TXH | Amy ❤️",
+        "voterImage": "https://pbs.twimg.com/profile_images/1780373193267527682/MXHzaomX_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 71,
+        "timestamp": "2025-04-17T20:38:22.868Z",
+        "voter": "nouns.gg:pub_121d24e58c9ec3036fe27dad",
+        "voterName": "Saigo",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmV34i3ydxorPorhpQsm8WmKxMEZtuuPtaokerEsru633m",
+        "weight": "2"
+      },
+      {
+        "id": 67,
+        "timestamp": "2025-04-17T04:43:44.937Z",
+        "voter": "0x75640b1eb20e9473ad40fcb600b016eefcae2a7f",
+        "voterName": "Mach",
+        "voterImage": "https://pbs.twimg.com/profile_images/1870993899889799168/NMyzFH8v_normal.jpg",
+        "weight": "6"
+      },
+      {
+        "id": 65,
+        "timestamp": "2025-04-17T04:17:31.206Z",
+        "voter": "nouns.gg:pub_af24840e77cfc92dc28a1c74",
+        "voterName": "derek_poops",
+        "voterImage": null,
+        "weight": "1"
+      },
+      {
+        "id": 57,
+        "timestamp": "2025-04-17T01:17:05.839Z",
+        "voter": "nouns.gg:pub_fa8060b66a2778b0ee9e7d9e",
+        "voterName": "Martin B.",
+        "voterImage": "https://pbs.twimg.com/profile_images/704231695206248448/TUTOdlX1_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 53,
+        "timestamp": "2025-04-17T01:11:35.604Z",
+        "voter": "0x651e2dacbf1ff16ac4fadd67aa23a2e1612924a1",
+        "voterName": "пooп",
+        "voterImage": "https://pbs.twimg.com/profile_images/1874760570995400704/ReSl3kr__normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 52,
+        "timestamp": "2025-04-17T01:10:09.234Z",
+        "voter": "0x93acc2faab3009901e52c7ecd10a7fc82f378705",
+        "voterName": "Bruv ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1546151605652824064/lm9yIdYK_normal.png",
+        "weight": "3"
+      },
+      {
+        "id": 49,
+        "timestamp": "2025-04-17T01:05:07.397Z",
+        "voter": "nouns.gg:pub_d3bb601a43e95186ee5fe333",
+        "voterName": "umbr",
+        "voterImage": "https://pbs.twimg.com/profile_images/1670712907087192064/mRpoGw0G_normal.jpg",
+        "weight": "7"
+      },
+      {
+        "id": 46,
+        "timestamp": "2025-04-17T01:02:53.268Z",
+        "voter": "0x3eeea5ce2082519c63229c733f2a457ff638eff5",
+        "voterName": "Zoë Gumby",
+        "voterImage": "https://pbs.twimg.com/profile_images/1795721358686478336/yR7y20qc_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 42,
+        "timestamp": "2025-04-17T01:01:58.968Z",
+        "voter": "0x73e5d73c8f3ef0c485b623d02fb820875442c3c9",
+        "voterName": "TemporaryPlan",
+        "voterImage": "https://pbs.twimg.com/profile_images/1717249895655264257/0K18xnxs_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 40,
+        "timestamp": "2025-04-16T23:49:57.693Z",
+        "voter": "nouns.gg:pub_d0034c6882755050e20ec618",
+        "voterName": "melee stats danny",
+        "voterImage": "https://pbs.twimg.com/profile_images/1858701861068697600/cjaYh-Nw_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 36,
+        "timestamp": "2025-04-16T22:19:08.564Z",
+        "voter": "0x1d2f6943059a42da929d6a8057d1e010095cd801",
+        "voterName": "Chompix ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1623563856063635457/Q2Q6KAwu_normal.png",
+        "weight": "3"
+      },
+      {
+        "id": 31,
+        "timestamp": "2025-04-16T21:23:33.501Z",
+        "voter": "nouns.gg:pub_a2b5c7d4de816703a35d95dd",
+        "voterName": "Junglesnipes",
+        "voterImage": "https://pbs.twimg.com/profile_images/1854766642598662144/ncRcHHBe_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 28,
+        "timestamp": "2025-04-16T17:09:01.382Z",
+        "voter": "0x1aaf58298d3f555a91911e593bc3f5c7ad533116",
+        "voterName": "Toppy1399",
+        "voterImage": "https://pbs.twimg.com/profile_images/1822687928583131136/bD0koSxg_normal.jpg",
+        "weight": "7"
+      },
+      {
+        "id": 27,
+        "timestamp": "2025-04-16T11:34:33.497Z",
+        "voter": "0xd78210a7da75b1638679c750b4123395f0e46543",
+        "voterName": "Nøx",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmSSEFbWNhBZWa3JzAicnDxLTVeyR6zU79oJ6MJZqJxUdJ",
+        "weight": "7"
+      },
+      {
+        "id": 22,
+        "timestamp": "2025-04-16T03:13:21.472Z",
+        "voter": "0xdd58ff4f71b385e6be41236fa01c639de2ffa6fe",
+        "voterName": "Chuwaca",
+        "voterImage": "https://pbs.twimg.com/profile_images/998751440569909249/c2Njeuib_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 20,
+        "timestamp": "2025-04-16T02:10:41.450Z",
+        "voter": "0xe3f27deff96fe178e87559f36cbf868b9e75967d",
+        "voterName": "Sasquatch ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1751641467099983873/54ZOMH2M_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 12,
+        "timestamp": "2025-04-15T23:05:11.253Z",
+        "voter": "nouns.gg:pub_720fd276dc488bebe29c4ed2",
+        "voterName": "josh",
+        "voterImage": "https://pbs.twimg.com/profile_images/1590798167808872449/jCWH8z6W_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 11,
+        "timestamp": "2025-04-15T21:17:14.460Z",
+        "voter": "0x159e27b07352d2b577ed07e0f51d1a019b7c0c11",
+        "voterName": "PracticalFAS",
+        "voterImage": "https://pbs.twimg.com/profile_images/1824508424383549440/tiF0Zn7i_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 4,
+        "timestamp": "2025-04-15T10:56:40.586Z",
+        "voter": "0x66b0f4d8b4f24b1a2277643276cb9db3db458279",
+        "voterName": "melihcansunay",
+        "voterImage": "https://pbs.twimg.com/profile_images/1667392877272367105/kxR7CAGP_normal.jpg",
+        "weight": "4"
+      },
+      {
+        "id": 1,
+        "timestamp": "2025-04-15T10:19:24.253Z",
+        "voter": "0x809b9d3f303de73aa4a89e073a43f4de699c496e",
+        "voterName": "Jevty",
+        "voterImage": "https://pbs.twimg.com/profile_images/1865406770816204800/ronrLifr_normal.jpg",
+        "weight": "5"
+      }
+    ],
+    "1": [
+      {
+        "id": 81,
+        "timestamp": "2025-04-18T06:28:54.646Z",
+        "voter": "0xa4d1f6f9ef0ec2e2a6c6cebe5bf728b8cdbf2141",
+        "voterName": "ToonSlim ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1497406090958581760/xUkZCkWg_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 79,
+        "timestamp": "2025-04-18T05:40:26.384Z",
+        "voter": "0xa90760f43f651232dcd25d977306e31f024be731",
+        "voterName": "IVG | frames",
+        "voterImage": "https://pbs.twimg.com/profile_images/1740290907604217856/ajjOmRLM_normal.png",
+        "weight": "5"
+      },
+      {
+        "id": 77,
+        "timestamp": "2025-04-18T02:47:48.269Z",
+        "voter": "nouns.gg:pub_2396b8d3ba304e51729fb02a",
+        "voterName": "invalid",
+        "voterImage": "https://pbs.twimg.com/profile_images/1798814227454398464/PuWbe4ZA_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 73,
+        "timestamp": "2025-04-17T22:18:53.512Z",
+        "voter": "0x1aaf58298d3f555a91911e593bc3f5c7ad533116",
+        "voterName": "Toppy1399",
+        "voterImage": "https://pbs.twimg.com/profile_images/1822687928583131136/bD0koSxg_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 70,
+        "timestamp": "2025-04-17T20:38:22.868Z",
+        "voter": "nouns.gg:pub_121d24e58c9ec3036fe27dad",
+        "voterName": "Saigo",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmV34i3ydxorPorhpQsm8WmKxMEZtuuPtaokerEsru633m",
+        "weight": "1"
+      },
+      {
+        "id": 68,
+        "timestamp": "2025-04-17T06:14:09.796Z",
+        "voter": "0x073f0dc58e9989c827ba5b7b35570b7315652e63",
+        "voterName": "iambixbite",
+        "voterImage": null,
+        "weight": "3"
+      },
+      {
+        "id": 64,
+        "timestamp": "2025-04-17T04:17:31.206Z",
+        "voter": "nouns.gg:pub_af24840e77cfc92dc28a1c74",
+        "voterName": "derek_poops",
+        "voterImage": null,
+        "weight": "2"
+      },
+      {
+        "id": 60,
+        "timestamp": "2025-04-17T02:18:27.645Z",
+        "voter": "0x94f88b353674b2acc82a2fec99c00764ae631f00",
+        "voterName": "MattTaylorLoL",
+        "voterImage": "https://pbs.twimg.com/profile_images/1866591595602083840/NkLhIDif_normal.jpg",
+        "weight": "6"
+      },
+      {
+        "id": 58,
+        "timestamp": "2025-04-17T01:44:05.218Z",
+        "voter": "0x4c0945203f080fe7f3c3b2f060f5c51be9db3156",
+        "voterName": "Nikita Bair",
+        "voterImage": "https://pbs.twimg.com/profile_images/1769742015296675840/DMkP8ydT_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 54,
+        "timestamp": "2025-04-17T01:17:05.839Z",
+        "voter": "nouns.gg:pub_fa8060b66a2778b0ee9e7d9e",
+        "voterName": "Martin B.",
+        "voterImage": "https://pbs.twimg.com/profile_images/704231695206248448/TUTOdlX1_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 50,
+        "timestamp": "2025-04-17T01:10:09.234Z",
+        "voter": "0x93acc2faab3009901e52c7ecd10a7fc82f378705",
+        "voterName": "Bruv ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1546151605652824064/lm9yIdYK_normal.png",
+        "weight": "5"
+      },
+      {
+        "id": 48,
+        "timestamp": "2025-04-17T01:05:07.397Z",
+        "voter": "nouns.gg:pub_d3bb601a43e95186ee5fe333",
+        "voterName": "umbr",
+        "voterImage": "https://pbs.twimg.com/profile_images/1670712907087192064/mRpoGw0G_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 47,
+        "timestamp": "2025-04-17T01:03:52.425Z",
+        "voter": "nouns.gg:pub_6653d325724e20673ecc3184",
+        "voterName": "its_ARR0W",
+        "voterImage": "https://pbs.twimg.com/profile_images/1834255326612168704/kf1kCLGX_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 44,
+        "timestamp": "2025-04-17T01:02:53.268Z",
+        "voter": "0x3eeea5ce2082519c63229c733f2a457ff638eff5",
+        "voterName": "Zoë Gumby",
+        "voterImage": "https://pbs.twimg.com/profile_images/1795721358686478336/yR7y20qc_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 41,
+        "timestamp": "2025-04-16T23:49:57.693Z",
+        "voter": "nouns.gg:pub_d0034c6882755050e20ec618",
+        "voterName": "melee stats danny",
+        "voterImage": "https://pbs.twimg.com/profile_images/1858701861068697600/cjaYh-Nw_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 33,
+        "timestamp": "2025-04-16T21:23:33.501Z",
+        "voter": "nouns.gg:pub_a2b5c7d4de816703a35d95dd",
+        "voterName": "Junglesnipes",
+        "voterImage": "https://pbs.twimg.com/profile_images/1854766642598662144/ncRcHHBe_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 30,
+        "timestamp": "2025-04-16T19:31:42.001Z",
+        "voter": "0x6fb5d14b61e595e6f34baf952c5d3e60e45883b0",
+        "voterName": "Peterpandam ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1779880930498285568/AZ2Y62rn_normal.jpg",
+        "weight": "8"
+      },
+      {
+        "id": 24,
+        "timestamp": "2025-04-16T03:13:21.472Z",
+        "voter": "0xdd58ff4f71b385e6be41236fa01c639de2ffa6fe",
+        "voterName": "Chuwaca",
+        "voterImage": "https://pbs.twimg.com/profile_images/998751440569909249/c2Njeuib_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 19,
+        "timestamp": "2025-04-16T02:10:41.450Z",
+        "voter": "0xe3f27deff96fe178e87559f36cbf868b9e75967d",
+        "voterName": "Sasquatch ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1751641467099983873/54ZOMH2M_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 17,
+        "timestamp": "2025-04-16T01:44:31.611Z",
+        "voter": "0x66b0f4d8b4f24b1a2277643276cb9db3db458279",
+        "voterName": "melihcansunay",
+        "voterImage": "https://pbs.twimg.com/profile_images/1667392877272367105/kxR7CAGP_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 9,
+        "timestamp": "2025-04-15T20:32:48.830Z",
+        "voter": "0xb19b3b7bfbfe91d1257582d656b2ecfdc0a501ec",
+        "voterName": "Unity Clash ~ Pokemon UNITE",
+        "voterImage": "https://pbs.twimg.com/profile_images/1796776558268477441/fT15GLW__normal.jpg",
+        "weight": "6"
+      },
+      {
+        "id": 8,
+        "timestamp": "2025-04-15T20:28:41.913Z",
+        "voter": "0x39245ba5a44284c25a36b5227b5384567d887303",
+        "voterName": "Sameowtha",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmVP1zQMzJtojsTLD8X4rnWyb4ErnumYqV4J2Ke8XTLCk8",
+        "weight": "10"
+      },
+      {
+        "id": 5,
+        "timestamp": "2025-04-15T10:57:29.842Z",
+        "voter": "0x4e8ddab8e468c212a92da06dd57255f5baab1e8d",
+        "voterName": "Hatlord",
+        "voterImage": "https://pbs.twimg.com/profile_images/1675696139662680064/xzc2Xpd-_normal.png",
+        "weight": "10"
+      },
+      {
+        "id": 2,
+        "timestamp": "2025-04-15T10:19:46.174Z",
+        "voter": "0x809b9d3f303de73aa4a89e073a43f4de699c496e",
+        "voterName": "Jevty",
+        "voterImage": "https://pbs.twimg.com/profile_images/1865406770816204800/ronrLifr_normal.jpg",
+        "weight": "1"
+      }
+    ],
+    "4": [
+      {
+        "id": 84,
+        "timestamp": "2025-04-18T09:22:13.249Z",
+        "voter": "0xe71db7a05bc2dc33877736da551d55cad6f30d9e",
+        "voterName": "waltnuts",
+        "voterImage": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+        "weight": "10"
+      },
+      {
+        "id": 82,
+        "timestamp": "2025-04-18T06:28:54.646Z",
+        "voter": "0xa4d1f6f9ef0ec2e2a6c6cebe5bf728b8cdbf2141",
+        "voterName": "ToonSlim ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1497406090958581760/xUkZCkWg_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 76,
+        "timestamp": "2025-04-18T00:07:06.890Z",
+        "voter": "0x861d321862a2b5b88e47da337cee543f4437f089",
+        "voterName": "Budster",
+        "voterImage": "https://pbs.twimg.com/profile_images/1026653098486321152/3Auwqao1_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 75,
+        "timestamp": "2025-04-17T23:33:44.901Z",
+        "voter": "0x792ff7d210807d005af8b9497ade1d7342d86375",
+        "voterName": "TFT | MOF",
+        "voterImage": "https://pbs.twimg.com/profile_images/1873170217569771521/QcxPywMs_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 74,
+        "timestamp": "2025-04-17T22:19:16.416Z",
+        "voter": "0x1aaf58298d3f555a91911e593bc3f5c7ad533116",
+        "voterName": "Toppy1399",
+        "voterImage": "https://pbs.twimg.com/profile_images/1822687928583131136/bD0koSxg_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 66,
+        "timestamp": "2025-04-17T04:43:44.937Z",
+        "voter": "0x75640b1eb20e9473ad40fcb600b016eefcae2a7f",
+        "voterName": "Mach",
+        "voterImage": "https://pbs.twimg.com/profile_images/1870993899889799168/NMyzFH8v_normal.jpg",
+        "weight": "4"
+      },
+      {
+        "id": 62,
+        "timestamp": "2025-04-17T04:17:31.206Z",
+        "voter": "nouns.gg:pub_af24840e77cfc92dc28a1c74",
+        "voterName": "derek_poops",
+        "voterImage": null,
+        "weight": "1"
+      },
+      {
+        "id": 61,
+        "timestamp": "2025-04-17T02:41:19.834Z",
+        "voter": "nouns.gg:pub_6035c8a3c03a870dd359b0ce",
+        "voterName": "ecs1312",
+        "voterImage": null,
+        "weight": "1"
+      },
+      {
+        "id": 59,
+        "timestamp": "2025-04-17T02:18:27.645Z",
+        "voter": "0x94f88b353674b2acc82a2fec99c00764ae631f00",
+        "voterName": "MattTaylorLoL",
+        "voterImage": "https://pbs.twimg.com/profile_images/1866591595602083840/NkLhIDif_normal.jpg",
+        "weight": "4"
+      },
+      {
+        "id": 56,
+        "timestamp": "2025-04-17T01:17:05.839Z",
+        "voter": "nouns.gg:pub_fa8060b66a2778b0ee9e7d9e",
+        "voterName": "Martin B.",
+        "voterImage": "https://pbs.twimg.com/profile_images/704231695206248448/TUTOdlX1_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 43,
+        "timestamp": "2025-04-17T01:02:53.268Z",
+        "voter": "0x3eeea5ce2082519c63229c733f2a457ff638eff5",
+        "voterName": "Zoë Gumby",
+        "voterImage": "https://pbs.twimg.com/profile_images/1795721358686478336/yR7y20qc_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 39,
+        "timestamp": "2025-04-16T23:49:57.693Z",
+        "voter": "nouns.gg:pub_d0034c6882755050e20ec618",
+        "voterName": "melee stats danny",
+        "voterImage": "https://pbs.twimg.com/profile_images/1858701861068697600/cjaYh-Nw_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 37,
+        "timestamp": "2025-04-16T23:19:26.909Z",
+        "voter": "nouns.gg:pub_bf4eb523b5cbbe378dd11bef",
+        "voterName": "sky mason",
+        "voterImage": "https://pbs.twimg.com/profile_images/1593685734963175433/-l-ExB8F_normal.jpg",
+        "weight": "5"
+      },
+      {
+        "id": 35,
+        "timestamp": "2025-04-16T22:19:08.564Z",
+        "voter": "0x1d2f6943059a42da929d6a8057d1e010095cd801",
+        "voterName": "Chompix ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1623563856063635457/Q2Q6KAwu_normal.png",
+        "weight": "7"
+      },
+      {
+        "id": 32,
+        "timestamp": "2025-04-16T21:23:33.501Z",
+        "voter": "nouns.gg:pub_a2b5c7d4de816703a35d95dd",
+        "voterName": "Junglesnipes",
+        "voterImage": "https://pbs.twimg.com/profile_images/1854766642598662144/ncRcHHBe_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 25,
+        "timestamp": "2025-04-16T03:13:21.472Z",
+        "voter": "0xdd58ff4f71b385e6be41236fa01c639de2ffa6fe",
+        "voterName": "Chuwaca",
+        "voterImage": "https://pbs.twimg.com/profile_images/998751440569909249/c2Njeuib_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 21,
+        "timestamp": "2025-04-16T02:10:41.450Z",
+        "voter": "0xe3f27deff96fe178e87559f36cbf868b9e75967d",
+        "voterName": "Sasquatch ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1751641467099983873/54ZOMH2M_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 16,
+        "timestamp": "2025-04-16T01:44:31.611Z",
+        "voter": "0x66b0f4d8b4f24b1a2277643276cb9db3db458279",
+        "voterName": "melihcansunay",
+        "voterImage": "https://pbs.twimg.com/profile_images/1667392877272367105/kxR7CAGP_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 14,
+        "timestamp": "2025-04-16T00:28:34.311Z",
+        "voter": "0x4b16a1d917eb241471dcb1c18f943811a53f714d",
+        "voterName": "Leeum",
+        "voterImage": "https://pbs.twimg.com/profile_images/992230090477113345/p6RTBMKm_normal.jpg",
+        "weight": "8"
+      },
+      {
+        "id": 10,
+        "timestamp": "2025-04-15T20:33:23.845Z",
+        "voter": "0xb19b3b7bfbfe91d1257582d656b2ecfdc0a501ec",
+        "voterName": "Unity Clash ~ Pokemon UNITE",
+        "voterImage": "https://pbs.twimg.com/profile_images/1796776558268477441/fT15GLW__normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 7,
+        "timestamp": "2025-04-15T20:02:58.339Z",
+        "voter": "nouns.gg:pub_a6887f07a5de41dc5d86a0dc",
+        "voterName": "._x3",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreihepqcuutc5skqtmdcpfqx4q6h5l6xqzrdifef53jprmz6wznbzm4",
+        "weight": "10"
+      },
+      {
+        "id": 6,
+        "timestamp": "2025-04-15T19:58:14.454Z",
+        "voter": "nouns.gg:pub_339d82a0f08b04b95524b35a",
+        "voterName": "._bari",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmP6AukRz1BJ8TenLFoaiEgprfQ5v9TADF4eNXhgSMpV2w",
+        "weight": "10"
+      }
+    ],
+    "3": [
+      {
+        "id": 80,
+        "timestamp": "2025-04-18T06:28:54.646Z",
+        "voter": "0xa4d1f6f9ef0ec2e2a6c6cebe5bf728b8cdbf2141",
+        "voterName": "ToonSlim ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1497406090958581760/xUkZCkWg_normal.jpg",
+        "weight": "4"
+      },
+      {
+        "id": 69,
+        "timestamp": "2025-04-17T06:17:42.216Z",
+        "voter": "0x073f0dc58e9989c827ba5b7b35570b7315652e63",
+        "voterName": "iambixbite",
+        "voterImage": null,
+        "weight": "2"
+      },
+      {
+        "id": 63,
+        "timestamp": "2025-04-17T04:17:31.206Z",
+        "voter": "nouns.gg:pub_af24840e77cfc92dc28a1c74",
+        "voterName": "derek_poops",
+        "voterImage": null,
+        "weight": "1"
+      },
+      {
+        "id": 55,
+        "timestamp": "2025-04-17T01:17:05.839Z",
+        "voter": "nouns.gg:pub_fa8060b66a2778b0ee9e7d9e",
+        "voterName": "Martin B.",
+        "voterImage": "https://pbs.twimg.com/profile_images/704231695206248448/TUTOdlX1_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 51,
+        "timestamp": "2025-04-17T01:10:09.234Z",
+        "voter": "0x93acc2faab3009901e52c7ecd10a7fc82f378705",
+        "voterName": "Bruv ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1546151605652824064/lm9yIdYK_normal.png",
+        "weight": "2"
+      },
+      {
+        "id": 45,
+        "timestamp": "2025-04-17T01:02:53.268Z",
+        "voter": "0x3eeea5ce2082519c63229c733f2a457ff638eff5",
+        "voterName": "Zoë Gumby",
+        "voterImage": "https://pbs.twimg.com/profile_images/1795721358686478336/yR7y20qc_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 38,
+        "timestamp": "2025-04-16T23:49:57.693Z",
+        "voter": "nouns.gg:pub_d0034c6882755050e20ec618",
+        "voterName": "melee stats danny",
+        "voterImage": "https://pbs.twimg.com/profile_images/1858701861068697600/cjaYh-Nw_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 34,
+        "timestamp": "2025-04-16T21:23:33.501Z",
+        "voter": "nouns.gg:pub_a2b5c7d4de816703a35d95dd",
+        "voterName": "Junglesnipes",
+        "voterImage": "https://pbs.twimg.com/profile_images/1854766642598662144/ncRcHHBe_normal.jpg",
+        "weight": "4"
+      },
+      {
+        "id": 29,
+        "timestamp": "2025-04-16T19:31:42.001Z",
+        "voter": "0x6fb5d14b61e595e6f34baf952c5d3e60e45883b0",
+        "voterName": "Peterpandam ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1779880930498285568/AZ2Y62rn_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 26,
+        "timestamp": "2025-04-16T05:27:45.846Z",
+        "voter": "0xe3ff24a97bfb65cadef30f6ad19a6ea7e6f6149d",
+        "voterName": "Sam",
+        "voterImage": "https://pbs.twimg.com/profile_images/1882121896885432320/uFxU0Jub_normal.jpg",
+        "weight": "10"
+      },
+      {
+        "id": 23,
+        "timestamp": "2025-04-16T03:13:21.472Z",
+        "voter": "0xdd58ff4f71b385e6be41236fa01c639de2ffa6fe",
+        "voterName": "Chuwaca",
+        "voterImage": "https://pbs.twimg.com/profile_images/998751440569909249/c2Njeuib_normal.jpg",
+        "weight": "4"
+      },
+      {
+        "id": 18,
+        "timestamp": "2025-04-16T02:10:41.450Z",
+        "voter": "0xe3f27deff96fe178e87559f36cbf868b9e75967d",
+        "voterName": "Sasquatch ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1751641467099983873/54ZOMH2M_normal.jpg",
+        "weight": "7"
+      },
+      {
+        "id": 15,
+        "timestamp": "2025-04-16T01:44:31.611Z",
+        "voter": "0x66b0f4d8b4f24b1a2277643276cb9db3db458279",
+        "voterName": "melihcansunay",
+        "voterImage": "https://pbs.twimg.com/profile_images/1667392877272367105/kxR7CAGP_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 13,
+        "timestamp": "2025-04-15T23:05:11.253Z",
+        "voter": "nouns.gg:pub_720fd276dc488bebe29c4ed2",
+        "voterName": "josh",
+        "voterImage": "https://pbs.twimg.com/profile_images/1590798167808872449/jCWH8z6W_normal.jpg",
+        "weight": "3"
+      },
+      {
+        "id": 3,
+        "timestamp": "2025-04-15T10:19:49.661Z",
+        "voter": "0x809b9d3f303de73aa4a89e073a43f4de699c496e",
+        "voterName": "Jevty",
+        "voterImage": "https://pbs.twimg.com/profile_images/1865406770816204800/ronrLifr_normal.jpg",
+        "weight": "1"
+      }
+    ]
+  }
+}

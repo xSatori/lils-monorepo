@@ -1,0 +1,24 @@
+{
+  "1": {
+    "roundsFactory": "0x0000000000000000000000000000000000000000",
+    "roundsFactoryGeneration": 0
+  },
+  "11155111": {
+    "roundsFactory": "0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6",
+    "roundsFactoryGeneration": 8,
+    "roundsLegacyFactories": [
+      {
+        "address": "0x4c05EF874bA1AF1D97C0708075CD531a38283454",
+        "generation": 7
+      },
+      {
+        "address": "0xC7e45B337975f1EC07cac943d0CeC6609E544377",
+        "generation": 6
+      },
+      {
+        "address": "0xd4cB8549980AdD2feA586FD13a47613118B0B5b4",
+        "generation": 5
+      }
+    ]
+  }
+}

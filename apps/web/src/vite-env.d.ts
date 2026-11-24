@@ -9,7 +9,11 @@ interface ImportMetaEnv {
   readonly VITE_DECENTRALIZED_SUBGRAPH_API_KEY: string
   readonly VITE_INDEXER_URL: string
   readonly VITE_DIGEST_API_URL?: string
-  /** Rounds service (services/rounds-api); rounds are hidden when unset. */
+  readonly VITE_ROUNDS_CHAIN_ID?: string
+  readonly VITE_SEPOLIA_ROUNDS_FACTORY_V7?: string
+  /** Base path or HTTPS URL of a compatible rounds media service, e.g. /api/rounds/uploads. */
+  readonly VITE_ROUNDS_UPLOAD_API_URL?: string
+  /** Upstream offchain rounds API. */
   readonly VITE_ROUNDS_API_URL?: string
   /** Goldsky URL for the Sepolia carbon-copy rehearsal subgraph. Empty = read contracts. */
   readonly VITE_SEPOLIA_SUBGRAPH_URL?: string

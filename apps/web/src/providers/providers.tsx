@@ -3,9 +3,9 @@ import { ToastProvider } from "./toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TransactionListenerProvider } from "./TransactionListener";
 import TanstackQueryProvider from "./TanstackQueryProvider";
-import { Address, fallback } from "viem";
+import { Address, type Chain, fallback } from "viem";
 import { http, WagmiProvider } from "wagmi";
-import { CHAIN_CONFIG } from "@/config";
+import { CHAIN_CONFIG, CHAIN_SPECIFIC_CONFIGS } from "@/config";
 import {
   getDefaultConfig,
   AvatarComponent,
@@ -41,19 +41,25 @@ const transports =
         http(CHAIN_CONFIG.rpcUrl.fallback),
       ]);
 
+// Keep the app's primary chain first. Rounds also need Sepolia on mainnet hosts.
+const sepolia = CHAIN_SPECIFIC_CONFIGS[11_155_111]!;
+const chains: readonly [Chain, ...Chain[]] = CHAIN_CONFIG.chain.id === sepolia.chain.id
+  ? [CHAIN_CONFIG.chain]
+  : [CHAIN_CONFIG.chain, sepolia.chain];
+const configuredTransports = {
+  [sepolia.chain.id]: fallback([http(sepolia.rpcUrl.primary), http(sepolia.rpcUrl.fallback)]),
+  [CHAIN_CONFIG.chain.id]: transports,
+};
+
 const config = typeof window === 'undefined' 
   ? createConfig({
-      chains: [CHAIN_CONFIG.chain],
-      transports: {
-        [CHAIN_CONFIG.publicClient.chain!.id]: transports,
-      },
+      chains,
+      transports: configuredTransports,
       ssr: true,
     })
   : getDefaultConfig({
-      chains: [CHAIN_CONFIG.chain],
-      transports: {
-        [CHAIN_CONFIG.publicClient.chain!.id]: transports,
-      },
+      chains,
+      transports: configuredTransports,
       // WalletConnect v2 requires a valid project ID
       // If missing, WalletConnect won't be available but other connectors will work
       projectId: PROJECT_ID || '00000000000000000000000000000000000000000000',

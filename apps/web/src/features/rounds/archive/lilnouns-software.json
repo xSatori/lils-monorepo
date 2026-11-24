@@ -1,0 +1,486 @@
+{
+  "proposals": [
+    {
+      "id": 154,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "0x2ece215d730368a3f98b8afaff7d6734c42b792f",
+      "authorName": "thepaleotter",
+      "authorImage": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+      "title": "Project Flippi ",
+      "tldr": "I began building Project Flippi in late 2024 after seeing Junebug rocking a nouns.gg esports jersey and doing big things with Donkey Kong. Inspired, I picked up a GameCube controller and set out to make a system that could auto upload the…",
+      "content": "I began building Project Flippi in late 2024 after seeing Junebug rocking a nouns.gg esports jersey and doing big things with Donkey Kong. Inspired, I picked up a GameCube controller and set out to make a system that could auto-upload the community's Melee highlights to YouTube, so we could just play and let the content handle itself.\n\nThanks to prior work from Project Slippi, Project Clippi, and the Dolphin Emulator, this became possible. Slippi made replay saving and netplay seamless. Clippi enabled instant replay recordings when combos occurred. Dolphin Emulator brought the Wii to the masses. Flippi is a nod to these projects.\n\nI added a new Clippi action: write combo data to a text file. With this data in hand, I created a pipeline that now:\n\n- Converts data into readable text (“1” → “Donkey Kong”)\n- Uses OpenAI to generate titles, descriptions, thumbnails\n- Uploads daily shorts and weekly compilations\n- Handles multi-event inputs\n- Uses a custom barrel-shaped recording setup\n\n[ProjectFlippi](https://www.youtube.com/@ProjectFlippi) has posted over 150 videos and hit ~150k views and 300 watch hours.\n\nProject Flippi is your Melee autopilot, capturing hype moments and flipping them to YouTube so players can focus on playing. But it goes further: using Web3, Flippi will reward players with USDC earned from YouTube for sick clips.\n\nFor this round, the functionality of automatically sending USDC to players landing clips will be developed and consist of the following:\n\n### Planned Dev (July - August)\n\n- **Weeks 1-2:** Web3 site w/ wallet connect + tag registration\n- **Week 3:** Script to parse logs and auto-send USDC\n- **Week 4:** Test payouts at my local weekly meetup\n- **Post:** Distribute funds until depleted (~$2/clip)\n\nEach clip will include Lil Nouns branding and a message like “Combo detected! Lil Nouns just sent FOX4 $2 USDC!\" (Until funding depletes). It’s a novel and unique way to onboard gamers to Web3 while connecting Lil Nouns to grassroots Melee. After all the first step to having a Lil is having a wallet!\n\n![](https://db.lilnouns.wtf/api/funding/images/QmZPwHhfG6wnLSF45KsS5k31v3C51FMhes4Xq2ebyxoeMJ)",
+      "voteCount": "140",
+      "voterCount": 12,
+      "rank": 1,
+      "place": 1,
+      "createdAt": "2025-06-29T18:55:47.558Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 160,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "0x073f0dc58e9989c827ba5b7b35570b7315652e63",
+      "authorName": "iambixbite",
+      "authorImage": null,
+      "title": "Lil Nouns Proposal Template Library ",
+      "tldr": "TL;DR: I want to create a Lil Nouns Proposal Template Library everyone can use to help them write better proposals. ⌐◨ ◨ The Problem Writing proposals is intimidating for newcomers, and many submissions lack key information that DAO…",
+      "content": "# TL;DR: I want to create a Lil Nouns Proposal Template Library everyone can use to help them write better proposals.  ⌐◨-◨\n\n![](https://db.lilnouns.wtf/api/funding/images/QmTXLy3cvBkQizP6VH3R1VwyvB934XoDrJoL9GuoKdi7hb)\n\n**The Problem** - Writing proposals is intimidating for newcomers, and many submissions lack key information that DAO members need to make informed decisions.\n\n**The Solution **- A simple web-based template library with 8 proposal categories, each containing:\n\n- **Essential categories** to guide proposal writing\n- **Key considerations** (CC0 status, licensing, payment options)\n- **Real examples** from successful Lil Nouns proposals\n\n### Template Categories\n\n1. Public Goods\n2. Development/Software\n3. Arts/Creative\n4. IRL Events/Sponsorship\n5. Physical Goods\n6. Charity/Donations\n7. Marketing/Media\n8. DeFi/Treasury\n\n###  MVP Features\n\n- **Guided fill-in-the-blank templates** for each category\n- **Educational prompts** covering licensing, CC0, and payment structures\n- **Copy/paste functionality** for easy use\n- **Mobile-friendly** simple interface\n\n### 30-Day Timeline\n\n- **Week 1-2:** Create templates for each category\n- **Week 3:** Build simple web interface\n- **Week 4:** Test with community, launch\n\n### Deliverables\n\n- Live website with 8 proposal templates\n- Educational content on key proposal elements\n- Open-source code for community use\n\n**Why This Matters** - More people proposing = more innovation. Better templates = better proposals. Simple as that.\n\n![](https://db.lilnouns.wtf/api/funding/images/QmTXLy3cvBkQizP6VH3R1VwyvB934XoDrJoL9GuoKdi7hb)",
+      "voteCount": "126",
+      "voterCount": 11,
+      "rank": 2,
+      "place": 2,
+      "createdAt": "2025-07-04T09:54:34.191Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 158,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "0x9e0e9d25a5ed9bc773f91691f0b45599255257b1",
+      "authorName": "nekofar",
+      "authorImage": "https://db.lilnouns.wtf/api/funding/images/QmXVRQv51raUA5p4pjitS3EyYgTrrx1u3WZ2yKhwr9pynF",
+      "title": "Lil Nouns AI Agent MVP on Farcaster",
+      "tldr": "TLDR Building a Lil Nouns AI agent on Farcaster to answer questions, explain proposals, and keep the onchain community in the loop, without leaving the app. What It Does (MVP) A friendly agent with red Nounish noggles that: Answers basic…",
+      "content": "**TLDR**\nBuilding a Lil Nouns AI agent on Farcaster to answer questions, explain proposals, and keep the onchain community in the loop, without leaving the app.\n\n**What It Does (MVP)**\nA friendly agent with red Nounish noggles that:\n\n- Answers basic governance and auction questions\n- Summarizes proposals in plain English\n- Tracks events in real time\n- Uses existing bots and public data\n\n**Why It Matters**\nGovernance shouldn't feel like a gated research project. This makes it ambient, part of daily conversation where the community already hangs out.\n\n**Who’s Behind It**\nBuilt solo by Lulu (me), with live feedback from fellow Lils. Fast, iterative, no nonsense. Unless nonsense is requested.\n\n**Timeline**\nMVP in 1 to 2 weeks. Will iterate based on usage.\n\n**Post-MVP Ideas**\nAfter the MVP, features like sentiment analysis, delegate recommendations, multilingual support, digest recaps, and timely proposal or auction reminders can make the agent even more useful. The goal is to shift governance from passive to proactive.\n\n**Open Source**\nFully open and forkable. Contributions welcome. Let’s build something useful, or at least something fun to break.\n\n**Ping me if you want early access or want to toss in ideas.**\n\n![](https://db.lilnouns.wtf/api/funding/images/QmSaNew1nCaCtrhVVGA9vNz9tjWmiccZSLyeSRGzoUwsop)",
+      "voteCount": "118",
+      "voterCount": 7,
+      "rank": 3,
+      "place": 3,
+      "createdAt": "2025-07-03T07:02:10.647Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 156,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "0xe11018c82d4405bdbc7414ec988fd08351666666",
+      "authorName": "x",
+      "authorImage": "https://pbs.twimg.com/profile_images/1522192075491807232/HrIbz3Mj_normal.jpg",
+      "title": "Lil Board Miniapp",
+      "tldr": "Introducing Lil Board, your go to dashboard for everything happening in the Lil Nouns community. From voting on proposals and tracking the treasury to hopping into Discord calls and completing quests, Lil Board keeps things simple and all…",
+      "content": "Introducing Lil Board, your go-to dashboard for everything happening in the Lil Nouns community. From voting on proposals and tracking the treasury to hopping into Discord calls and completing quests, Lil Board keeps things simple and all in one place. Stay up to date with real-time updates, get notified through Farcaster, and earn points for getting involved.\n\n**Features:**\n\n- Proposal Voting Interface: Read, Vote and Comment (For / Against / Abstain) on Lil Nouns proposals using on-chain & off chain interaction.\n\n- Treasury Overview: View the current state of the Lil Nouns treasury.\n\n- Digest Feed: Track recent voting activity, and Lil Nouns transfers to understand ecosystem dynamics.\n\n- Event Tracker: Stay up-to-date with upcoming Lil Nouns community events, pulled from reliable sources.\n\n- Social Tasks & Gamification: Complete simple actions like joining Discord, following X (Twitter) accounts, or collecting POAPs by attending Lil Nouns Call to earn points.\n\n- Point System: Users gain points through proposal participation and social actions, incentivizing deeper engagement.\n\n- Farcaster Notifications: Get notified when new proposals are posted, Discord calls start, or voting windows open—integrated seamlessly with Farcaster.\n\n**Timeline:**\n\n**Week 1 (July 15–21)**\n- Add social tasks (Join Discord, Follow X, Collect POAP)\n\n- Integrate and display treasury data\n\n**Week 2 (July 22–28)**\n\n- Build Digest (recent votes, recent prop, Lil Nouns transfers)\n\n- Add Farcaster notifications (new proposal, voting window, Discord call, event feed)\n\n**Week 3 (July 29–August 4)**\n\n- Implement on-chain proposal voting (For / Against / Abstain)\n\n- Implement point system based on user activity\n\n**Week 4 (August 5–11)**\n\n- Implement on-chain & off-chain feedback\n\n- Polish UI and fix bugs\n\n**Final Days (August 12–15)**\n\n- Final testing\n\n- Deploy MVP\n\n- Submit final version\n\n![](https://db.lilnouns.wtf/api/funding/images/QmXbfSSowTWJhhDVpqTaTLPf7pjCE2ouBs9LhYkv3ou9JF)",
+      "voteCount": "106",
+      "voterCount": 5,
+      "rank": 4,
+      "place": null,
+      "createdAt": "2025-07-01T22:15:02.360Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 157,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "0x0f65f0f9653c93c7aaa7851749a6370ef5b620c7",
+      "authorName": "Orion 🦝🪐",
+      "authorImage": "https://pbs.twimg.com/profile_images/1872278047111462912/XVvxijVb_normal.jpg",
+      "title": "Lil Nouns Quest App",
+      "tldr": "A Storytelling Adventure for Onboarding Lil Nouns Quest is an immersive, mobile friendly web app that welcomes newbies and seasoned Nouners alike into the Lil Nouns ecosystem through a gamified, adventure storytelling experience. Guided by…",
+      "content": "**A Storytelling Adventure for Onboarding**\n\nLil Nouns Quest is an immersive, mobile-friendly web app that welcomes newbies and seasoned Nouners alike into the Lil Nouns ecosystem through a gamified, adventure storytelling experience. Guided by a quirky Lil Nouns character, “Questor,” users embark on interactive mini-quests to learn about Lil Nouns auctions, DAO governance, and community creativity. With vibrant Nouns-inspired visuals, collectible badges, and a community story gallery, Lil Nouns Quest makes onboarding fun, educational, and uniquely Nounish. \n\n![](https://db.lilnouns.wtf/api/funding/images/QmRiQDSYrKdemAZY8Bi72MaWeHyT7wMwpt4wG6Sdv9HVXS)\n\n- Story-Driven Engagement: Users shape their journey through Nounsville. \n- Playful Education: Through 3-5 interactive quests (e.g., “Help Questor mint a Lil Noun” or “Vote in a DAO proposal”), users learn complex Nouns concepts in a beginner-friendly, playful way.\n- Community Creativity: Users can submit short “Nounish tales” to a community gallery.\n- Distinct from Existing Tools: Lil Nouns Quest targets new users, prioritizing fun and accessibility over utility.\n\nTimeline:\n\n- Week 1: Design UI mockups and story assets; set up front-end framework.\n- Week 2: Build quest mechanics and badge system.\n- Week 3: Add community gallery and polish animations.\n- Week 4: Test with Nouners, refine, and deploy.\n\nLil Nouns Quest will lower the barrier to entry for new Nouners, making the ecosystem accessible and fun through storytelling.\n\n![](https://db.lilnouns.wtf/api/funding/images/Qmd86U8EjpwD3rGbRcTMnHA2RK67xnSpSkKwvPH5sx6WqR)",
+      "voteCount": "7",
+      "voterCount": 2,
+      "rank": 5,
+      "place": null,
+      "createdAt": "2025-07-02T16:12:52.053Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 159,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "nouns.gg:pub_bd5fc17b58a842916b04ec92",
+      "authorName": "Jhinn Bay 🏖️🥥 空灵地平线",
+      "authorImage": "https://pbs.twimg.com/profile_images/1943149560186163200/-kunUtzx_normal.jpg",
+      "title": "Nounish Game Booth",
+      "tldr": "We're a creative education company focusing on making social experiments . We would like to make Nounish games and bite sized activities, while also developing our own potential. After each game and test we would distribute rewards for…",
+      "content": "We're a **creative education** company focusing on making **social** **experiments**. \n\nWe would like to make Nounish games and bite-sized activities, while also developing our own potential. \nAfter each game and test we would distribute rewards for participation, winners, sometimes surveys.\n\n**Our core values** are; \n- Empathy\n\n- Wealth Equality \n\n- Evolution: Towards Social Justice\n\nOur goals **aligned with Lil Nouns**:\n\n- We value decentralization & community.\n- We value creative freedom and being innovative.\n- We wish to improve aspects of governance long-term.\n\nBackground:\n- Psychology Grad. From Temple University.\n- Prev. owned restaurant and led teams.\n- Currently run a design agency and creative education company.\n\nGame will be made.\n\nThis is a project I've already designed that we have in the vault.\nWe already have the MVP.\n\nlive example: [https://love.omakasea.com/](https://love.omakasea.com/)\npost of the process: [https://x.com/etrlhrzn/status/1677626920282779648](https://x.com/etrlhrzn/status/1677626920282779648)\nour company: [https://azuraos.vercel.app/](https://azuraos.vercel.app/)\nour research and background: [https://mentalwealthacademy.net](https://mentalwealthacademy.net) \n\n![](https://db.lilnouns.wtf/api/funding/images/QmdGk7fgyDp44DXvRL6G6MTXRfPjfEZMexpmaKDWmaJAeK)\n\n![](https://db.lilnouns.wtf/api/funding/images/QmewmHtSSMpJTwuVaZ59XuCi3RDS1dd1DdEt2KRVqN4ZvW)",
+      "voteCount": "3",
+      "voterCount": 1,
+      "rank": 6,
+      "place": null,
+      "createdAt": "2025-07-03T08:10:20.859Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 155,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "nouns.gg:pub_55d19e20bd224ff78ce5895e",
+      "authorName": "itsmejazy",
+      "authorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreifhrah2qixpi2o74giuneqv5h5j7d2nxs4yitny374ck2qp6w6qhe",
+      "title": "Vibe - A Social Hub for All",
+      "tldr": "Hey Lil Nouns crew, I’m thrilled to pitch Vibe, a social app open to all: crypto fans, NFT collectors, and folks from Instagram or X. Post thoughts, memes, or videos with Nounish style. DMs keep chats flowing. Vibe unites the crypto world,…",
+      "content": "Hey Lil Nouns crew, I’m thrilled to pitch Vibe, a social app open to all: crypto fans, NFT collectors, and folks from Instagram or X. Post thoughts, memes, or videos with Nounish style. DMs keep chats flowing. Vibe unites the crypto world, with Lil Nouns holders guiding it. My MVP is a fun, inclusive social app set to grow big.\n\n## Why Vibe Rocks\n\n- **Open to All:** Join with a wallet or X/Instagram login. Lil Nouns holders get badges and perks, but it’s for everyone.\n- **Community-Run:** Lil Nouns holders vote on features and rules (one Lil Noun, one vote) in-app. Anyone can moderate, flagging spam or picking top posts.\n- **Fun for All:** Earn VibePoints for posts, likes, DMs. Lil Nouns holders get 2x points, but all join the fun.\n- **Badges:** Verify with any NFT (Lil Nouns, Punks) or program (DAO, Web3). Your badge shows your vibe.\n\n## How It Fits\n\n- **Creative:** Vibe blends Nounish style with crypto culture, welcoming X and Instagram users for memes and ideas.\n- **Inclusive:** Pixelated fonts and emojis feel Nounish but invite all. Lil Nouns holders shape the future.\n- **Impactful:** Vibe grows our ecosystem, connecting us with the crypto world.\n\n## Future Vision\n\nVibe will be a top social hub for crypto and beyond:\n\n- **NFT Swaps:** Trade NFTs (any collection) in Vibe. Propose trades in the feed; community votes on ETH bounties.\n- **More Features:**\n- \n  - **Governance:** Vote on features in-app, Lil Nouns leading, open to all.\n  - **Timed Posts:** Posts vanish after 24 hours for fresh updates.\n  - **Giveaways:** Share NFTs or tokens, with community-voted winners.\n  - **Challenges:** Contests for memes or art with rewards.\n  - **Gamification:** VibePoint leaderboards and badges.\n  - **Cross-Platform:** Badges for any NFT, ties to X/Instagram.\n  - **Earnings:** Earn via sponsored contests, premium content, or future tipping.\n\n## Why It’s Great\n\nVibe’s playful and open, letting anyone post or moderate while Lil Nouns holders vote on its path. It’s a step to a big Nouns DAO proposal.\n\n## Funding Ask\n\nPrize is 0.33 ETH, but I’m requesting 1 ETH for a polished MVP if possible since this is big project.\n\n![](https://db.lilnouns.wtf/api/funding/images/QmceWfqT8U4YscF9TiiXPddvwD8nN7tNCqziUYZrjGaosM)",
+      "voteCount": "2",
+      "voterCount": 1,
+      "rank": 7,
+      "place": null,
+      "createdAt": "2025-07-01T02:51:19.067Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    },
+    {
+      "id": 153,
+      "roundId": 8,
+      "roundHandle": "lilnouns-software",
+      "author": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+      "authorName": "pipe",
+      "authorImage": "https://pbs.twimg.com/profile_images/1804674353692356608/wGm03Ld8_normal.jpg",
+      "title": "this is a test proposal",
+      "tldr": "testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out…",
+      "content": "testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out testing it out\n\n![](https://db.lilnouns.wtf/api/funding/images/QmVcxr5iWzr29PXucbTmFMJhK8G4eiBAwsWpR4iKRXFv4F)",
+      "voteCount": "1",
+      "voterCount": 1,
+      "rank": 8,
+      "place": null,
+      "createdAt": "2025-06-24T04:53:38.265Z",
+      "updatedAt": "2026-11-08T18:44:38.766Z",
+      "source": "nouns.gg"
+    }
+  ],
+  "votes": {
+    "154": [
+      {
+        "id": 1596,
+        "timestamp": "2025-07-12T09:52:30.090Z",
+        "voter": "0x1d2f6943059a42da929d6a8057d1e010095cd801",
+        "voterName": "Chompix ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1623563856063635457/Q2Q6KAwu_normal.png",
+        "weight": "24"
+      },
+      {
+        "id": 1593,
+        "timestamp": "2025-07-11T17:42:56.227Z",
+        "voter": "0xf6343d7d517635b4562211f87006d4c129d596bf",
+        "voterName": "_clement_⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1838203618991783936/ETx4X4-j_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 1591,
+        "timestamp": "2025-07-11T06:27:38.409Z",
+        "voter": "0xe3f27deff96fe178e87559f36cbf868b9e75967d",
+        "voterName": "Sasquatch ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1751641467099983873/54ZOMH2M_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 1590,
+        "timestamp": "2025-07-11T05:16:06.532Z",
+        "voter": "0xedc1a397589a0236c4810883b7d559288a5fe7e1",
+        "voterName": "FattyButHappy. ⌐🄵₿🄷",
+        "voterImage": "https://pbs.twimg.com/profile_images/1788794438141022210/bAq9VoE9_normal.jpg",
+        "weight": "16"
+      },
+      {
+        "id": 1587,
+        "timestamp": "2025-07-11T04:58:32.537Z",
+        "voter": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "voterName": "pipe",
+        "voterImage": "https://pbs.twimg.com/profile_images/1804674353692356608/wGm03Ld8_normal.jpg",
+        "weight": "7"
+      },
+      {
+        "id": 1584,
+        "timestamp": "2025-07-11T04:55:26.880Z",
+        "voter": "0xada31add8450ca0422983b9a3103633b78938617",
+        "voterName": "nocguild.eth",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreiho7a3vx4g2fy3c2sgjq4zj4xnijokapwpzpbls6zewjcandskul4",
+        "weight": "30"
+      },
+      {
+        "id": 1576,
+        "timestamp": "2025-07-08T19:28:32.766Z",
+        "voter": "0x2ee0485f71764bcd2062a84d9455688c581b90f8",
+        "voterName": "SQX",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreigkwkx3vhuaieaiwgms2pbdxc6o7yiujyxpnlpkowbscgv7jfx4zu",
+        "weight": "20"
+      },
+      {
+        "id": 1574,
+        "timestamp": "2025-07-08T18:57:13.890Z",
+        "voter": "0x39245ba5a44284c25a36b5227b5384567d887303",
+        "voterName": "Sameowtha",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmVP1zQMzJtojsTLD8X4rnWyb4ErnumYqV4J2Ke8XTLCk8",
+        "weight": "4"
+      },
+      {
+        "id": 1571,
+        "timestamp": "2025-07-08T00:46:44.712Z",
+        "voter": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "voterName": "satori.base.eth ⌐◨-◨ ❘ ❙ ❚",
+        "voterImage": "https://pbs.twimg.com/profile_images/1782945090740047872/k9Uo6Str_normal.jpg",
+        "weight": "30"
+      },
+      {
+        "id": 1567,
+        "timestamp": "2025-07-07T23:08:38.086Z",
+        "voter": "0x4cb87bb9189eb10ca24dea257c2dcf6fdef3e4ec",
+        "voterName": "cm9ln1a2",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibntb35yrfdab37bzh3yjitggiugqs5chrsexwogfbmikvy7ug5rq",
+        "weight": "5"
+      },
+      {
+        "id": 1565,
+        "timestamp": "2025-07-06T17:44:34.153Z",
+        "voter": "0xcbfefa5e53f15a9a50a57138e8801c4a034b744e",
+        "voterName": "Liquid Jeans",
+        "voterImage": null,
+        "weight": "1"
+      },
+      {
+        "id": 1559,
+        "timestamp": "2025-07-05T06:22:40.354Z",
+        "voter": "0xe3ff24a97bfb65cadef30f6ad19a6ea7e6f6149d",
+        "voterName": "Sam",
+        "voterImage": "https://pbs.twimg.com/profile_images/1882121896885432320/uFxU0Jub_normal.jpg",
+        "weight": "1"
+      }
+    ],
+    "160": [
+      {
+        "id": 1598,
+        "timestamp": "2025-07-12T09:55:31.841Z",
+        "voter": "0x7f8ec393b8f1b7de8d6e9b089d9819e5217046c3",
+        "voterName": "Lorenzo’s !lasagna",
+        "voterImage": "https://pbs.twimg.com/profile_images/1659138889901309952/utKUmitZ_normal.jpg",
+        "weight": "12"
+      },
+      {
+        "id": 1597,
+        "timestamp": "2025-07-12T09:52:30.090Z",
+        "voter": "0x1d2f6943059a42da929d6a8057d1e010095cd801",
+        "voterName": "Chompix ⌐◨-◨",
+        "voterImage": "https://pbs.twimg.com/profile_images/1623563856063635457/Q2Q6KAwu_normal.png",
+        "weight": "12"
+      },
+      {
+        "id": 1595,
+        "timestamp": "2025-07-12T07:43:36.623Z",
+        "voter": "0x52da39325e7b4e185fa7b041082ee11b9c823b34",
+        "voterName": "Creatress Sarai📍Mexico",
+        "voterImage": "https://pbs.twimg.com/profile_images/1787986228023066624/WQnqzaTt_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 1594,
+        "timestamp": "2025-07-12T06:37:01.796Z",
+        "voter": "0x2ece215d730368a3f98b8afaff7d6734c42b792f",
+        "voterName": "thepaleotter",
+        "voterImage": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+        "weight": "3"
+      },
+      {
+        "id": 1589,
+        "timestamp": "2025-07-11T05:16:06.532Z",
+        "voter": "0xedc1a397589a0236c4810883b7d559288a5fe7e1",
+        "voterName": "FattyButHappy. ⌐🄵₿🄷",
+        "voterImage": "https://pbs.twimg.com/profile_images/1788794438141022210/bAq9VoE9_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 1582,
+        "timestamp": "2025-07-09T06:26:40.234Z",
+        "voter": "0xca85460d23bfb2e0079bab5aac84921d9d0762a4",
+        "voterName": "Nataliecrue.eth",
+        "voterImage": "https://pbs.twimg.com/profile_images/1800769798693076993/AWTVeu1K_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 1581,
+        "timestamp": "2025-07-09T03:00:59.909Z",
+        "voter": "0xe126717e61a73fbb4f96175bb3ffafa7ac01f823",
+        "voterName": "Stray Strongs",
+        "voterImage": "https://pbs.twimg.com/profile_images/1908941438882086912/HEfXzHM0_normal.png",
+        "weight": "1"
+      },
+      {
+        "id": 1580,
+        "timestamp": "2025-07-09T00:48:31.323Z",
+        "voter": "0x02f9b04a37b089b5887c491097e62d2111c2bb7f",
+        "voterName": "cmbtya3v",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreifol46ogchic66yoq7fpfptlfheqbb3uijqhrxxmjzu5oakof65ie",
+        "weight": "1"
+      },
+      {
+        "id": 1577,
+        "timestamp": "2025-07-09T00:39:01.016Z",
+        "voter": "0x4d16fce1bd6e327ae31398ce9a2c4e12c077ecb1",
+        "voterName": "Swarthy ( Timo ) Hatter",
+        "voterImage": "https://pbs.twimg.com/profile_images/1982642152736788480/YNeS6q03_normal.jpg",
+        "weight": "8"
+      },
+      {
+        "id": 1573,
+        "timestamp": "2025-07-08T18:57:13.890Z",
+        "voter": "0x39245ba5a44284c25a36b5227b5384567d887303",
+        "voterName": "Sameowtha",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/QmVP1zQMzJtojsTLD8X4rnWyb4ErnumYqV4J2Ke8XTLCk8",
+        "weight": "2"
+      },
+      {
+        "id": 1561,
+        "timestamp": "2025-07-06T05:15:32.125Z",
+        "voter": "0x8becd7ebf3f910090f9264dfd0bb221ea04af8c3",
+        "voterName": "cmb0z77c",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreic6nple3thxmjybb4fwxhhtntn3fu2cwkcimjsiufgbya2eytdupy",
+        "weight": "84"
+      }
+    ],
+    "158": [
+      {
+        "id": 1592,
+        "timestamp": "2025-07-11T10:47:17.877Z",
+        "voter": "0x6cf8568007ed13ae79d4ccd138a58f5fa06f582e",
+        "voterName": "Bix",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreidiht63gse6nns5ti7nnv4ghrtqdnis65hlhh26ym6sqtrmkol3gi",
+        "weight": "25"
+      },
+      {
+        "id": 1588,
+        "timestamp": "2025-07-11T04:58:32.537Z",
+        "voter": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "voterName": "pipe",
+        "voterImage": "https://pbs.twimg.com/profile_images/1804674353692356608/wGm03Ld8_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 1585,
+        "timestamp": "2025-07-11T04:55:26.880Z",
+        "voter": "0xada31add8450ca0422983b9a3103633b78938617",
+        "voterName": "nocguild.eth",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreiho7a3vx4g2fy3c2sgjq4zj4xnijokapwpzpbls6zewjcandskul4",
+        "weight": "16"
+      },
+      {
+        "id": 1578,
+        "timestamp": "2025-07-09T00:48:31.323Z",
+        "voter": "0x02f9b04a37b089b5887c491097e62d2111c2bb7f",
+        "voterName": "cmbtya3v",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreifol46ogchic66yoq7fpfptlfheqbb3uijqhrxxmjzu5oakof65ie",
+        "weight": "1"
+      },
+      {
+        "id": 1575,
+        "timestamp": "2025-07-08T19:28:32.766Z",
+        "voter": "0x2ee0485f71764bcd2062a84d9455688c581b90f8",
+        "voterName": "SQX",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreigkwkx3vhuaieaiwgms2pbdxc6o7yiujyxpnlpkowbscgv7jfx4zu",
+        "weight": "53"
+      },
+      {
+        "id": 1570,
+        "timestamp": "2025-07-07T23:08:38.086Z",
+        "voter": "0x4cb87bb9189eb10ca24dea257c2dcf6fdef3e4ec",
+        "voterName": "cm9ln1a2",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibntb35yrfdab37bzh3yjitggiugqs5chrsexwogfbmikvy7ug5rq",
+        "weight": "20"
+      },
+      {
+        "id": 1563,
+        "timestamp": "2025-07-06T08:02:24.281Z",
+        "voter": "0x073f0dc58e9989c827ba5b7b35570b7315652e63",
+        "voterName": "iambixbite",
+        "voterImage": null,
+        "weight": "1"
+      }
+    ],
+    "156": [
+      {
+        "id": 1579,
+        "timestamp": "2025-07-09T00:48:31.323Z",
+        "voter": "0x02f9b04a37b089b5887c491097e62d2111c2bb7f",
+        "voterName": "cmbtya3v",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreifol46ogchic66yoq7fpfptlfheqbb3uijqhrxxmjzu5oakof65ie",
+        "weight": "2"
+      },
+      {
+        "id": 1572,
+        "timestamp": "2025-07-08T04:04:50.738Z",
+        "voter": "0xfc538ffd2923dddaed09c8ad1a51686275c56183",
+        "voterName": "mikegood.eth",
+        "voterImage": "https://pbs.twimg.com/profile_images/1924267396182736896/MyyqKt7F_normal.jpg",
+        "weight": "92"
+      },
+      {
+        "id": 1569,
+        "timestamp": "2025-07-07T23:08:38.086Z",
+        "voter": "0x4cb87bb9189eb10ca24dea257c2dcf6fdef3e4ec",
+        "voterName": "cm9ln1a2",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibntb35yrfdab37bzh3yjitggiugqs5chrsexwogfbmikvy7ug5rq",
+        "weight": "10"
+      },
+      {
+        "id": 1564,
+        "timestamp": "2025-07-06T09:42:23.009Z",
+        "voter": "0xaad01c20da2d0b331356726a0acb492b30af5cbb",
+        "voterName": "mindtoasted.eth",
+        "voterImage": "https://pbs.twimg.com/profile_images/1839806943361413120/h0ga4V3D_normal.jpg",
+        "weight": "1"
+      },
+      {
+        "id": 1562,
+        "timestamp": "2025-07-06T08:02:24.281Z",
+        "voter": "0x073f0dc58e9989c827ba5b7b35570b7315652e63",
+        "voterName": "iambixbite",
+        "voterImage": null,
+        "weight": "1"
+      }
+    ],
+    "157": [
+      {
+        "id": 1583,
+        "timestamp": "2025-07-10T16:09:15.749Z",
+        "voter": "0x744cdf12d5d289db118ed9293c10cfa952169071",
+        "voterName": "Gnericvibes",
+        "voterImage": "https://pbs.twimg.com/profile_images/1903584010594394112/s2eLw5Uo_normal.jpg",
+        "weight": "2"
+      },
+      {
+        "id": 1560,
+        "timestamp": "2025-07-06T01:58:53.405Z",
+        "voter": "0xa70fe49c71529808eb881455073beded47f7016c",
+        "voterName": "JED XO",
+        "voterImage": "https://pbs.twimg.com/profile_images/1882077328118820864/NuOjAGrN_normal.jpg",
+        "weight": "5"
+      }
+    ],
+    "159": [
+      {
+        "id": 1566,
+        "timestamp": "2025-07-07T23:08:38.086Z",
+        "voter": "0x4cb87bb9189eb10ca24dea257c2dcf6fdef3e4ec",
+        "voterName": "cm9ln1a2",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibntb35yrfdab37bzh3yjitggiugqs5chrsexwogfbmikvy7ug5rq",
+        "weight": "3"
+      }
+    ],
+    "155": [
+      {
+        "id": 1568,
+        "timestamp": "2025-07-07T23:08:38.086Z",
+        "voter": "0x4cb87bb9189eb10ca24dea257c2dcf6fdef3e4ec",
+        "voterName": "cm9ln1a2",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibntb35yrfdab37bzh3yjitggiugqs5chrsexwogfbmikvy7ug5rq",
+        "weight": "2"
+      }
+    ],
+    "153": [
+      {
+        "id": 1586,
+        "timestamp": "2025-07-11T04:55:26.880Z",
+        "voter": "0xada31add8450ca0422983b9a3103633b78938617",
+        "voterName": "nocguild.eth",
+        "voterImage": "https://db.lilnouns.wtf/api/funding/images/bafkreiho7a3vx4g2fy3c2sgjq4zj4xnijokapwpzpbls6zewjcandskul4",
+        "weight": "1"
+      }
+    ]
+  }
+}

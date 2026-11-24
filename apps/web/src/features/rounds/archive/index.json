@@ -1,0 +1,2382 @@
+[
+  {
+    "id": 3,
+    "handle": "lil-nouns-fast-falls",
+    "house": "lilnouns",
+    "name": "Lil Nouns goes to Fast Fall$",
+    "description": "Sponsor 3 Players for Fast Fall$ Lil Nouns is looking to sponsor three players to compete at Fast Fall$, a major competition. Our goal is to have three exceptional players represent the Lil Nouns community and, we hope, qualify for the…",
+    "content": "## Sponsor 3 Players for Fast Fall$\n\nLil Nouns is looking to sponsor three players to compete at Fast Fall$, a major competition. Our goal is to have three exceptional players represent the Lil Nouns community and, we hope, qualify for the Nounsvitational in Japan this December.\n\n## What Winners Will Receive:\n\n- .33 ETH (~$1300) to cover travel and expenses\n- Event entry to Fast Fall$\n- A custom Lil Nouns team kit, including a t-shirt, hat, and Noggles\n\n## Player Requirements:\n\n- Wear the team tag \"lil\" in-game\n- Tweet about attending the event and tag @LilNouns (if you have an X account)\n\nIf a player qualifies for the Nounsvitational, our sponsorship will extend to cover that event as well.",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreicipwsma3iis6y3s44toqjloag46hrf2xilhlqlvvxthdi5xjonvi",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2025-08-28T10:00:00.000Z",
+    "votingStartAt": "2025-09-12T10:00:00.000Z",
+    "endAt": "2025-09-19T10:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:07.648Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lil-nouns-fast-falls",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lil-nouns-fast-falls",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:07.648Z",
+    "proposalCount": 11,
+    "voteCount": "1041",
+    "voterCount": 537,
+    "awards": [
+      {
+        "id": 5,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 14,
+        "payoutTx": null
+      },
+      {
+        "id": 6,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 17,
+        "payoutTx": null
+      },
+      {
+        "id": 7,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 13,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "handle": "lilnouns-japan",
+    "house": "lilnouns",
+    "name": "Lil Nouns is Sponsoring a Content Creator for the Nounsvitational!",
+    "description": "Destination: Japan! Lil Nouns is Sponsoring a Content Creator for the Nounsvitational! This is your chance to document one of the most anticipated events in the Smash community! Lil Nouns is searching for one exceptional content creator to…",
+    "content": "## Destination: Japan! Lil Nouns is Sponsoring a Content Creator for the Nounsvitational!\n\nThis is your chance to document one of the most anticipated events in the Smash community! Lil Nouns is searching for one exceptional content creator to be our official correspondent at the Nounsvitational. We want you to capture the hype, the highlights, and the heart of the tournament, sharing it all with the world from a unique Lil Nouns perspective.\n\n## [#The-Ultimate-Prize-Package](#The-Ultimate-Prize-Package)The Ultimate Prize Package:\n\n**The chosen creator will receive an all-access pass to the action, including:**\n\n- Round Trip Airfare to Japan\n- Hotel Accommodations in the heart of the excitement\n- A VIP Ticket to the full Nounsvitational Experience from December 1st to 8th\n\n(The total value of the flight and hotel is capped at $2,500.)\n\n## [#What-We-Expect-From-Our-Champion](#What-We-Expect-From-Our-Champion)What We Expect From Our Champion:\n\nAs our on-the-ground reporter, you will be expected to:\n\n1. Produce and publish compelling content (videos, photo stories, interviews, etc.) live from the event.\n2. Amplify your work across your social media channels, making sure to tag Lil Nouns in every post.\n\n## [#Ready-for-an-Adventure-Heres-How-to-Apply](#Ready-for-an-Adventure-Heres-How-to-Apply)Ready for an Adventure? Here's How to Apply:\n\n**Your submission must include:**\n\n1. A compelling one-minute video: Tell the Lil Nouns community who you are and why you're the ideal candidate to represent us in Japan.1.\n2. A clear content plan: In your video, outline the kind of stories you'll tell, where you'll post them, and what makes your creative vision a must-see for the Smash community.",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreid63ovote65nsyvjaeexiogls2mur5wbc37aoga3gzznlnbcpglee",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2025-07-04T10:00:00.000Z",
+    "votingStartAt": "2025-07-20T10:00:00.000Z",
+    "endAt": "2025-07-29T10:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:08.434Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lilnouns-japan",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lilnouns-japan",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:08.434Z",
+    "proposalCount": 14,
+    "voteCount": "543",
+    "voterCount": 26,
+    "awards": [
+      {
+        "id": 11,
+        "place": 1,
+        "asset": {
+          "name": "Lil Nouns Winner",
+          "image": "https://db.lilnouns.wtf/api/funding/images/bafkreidannqsqkcd56yho2jnra34xmnc4pzvdyyvfucjappa4z4ov6bsc4",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1",
+        "winnerProposalId": 67,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "handle": "lilnouns-software",
+    "house": "lilnouns",
+    "name": "Lil Nouns' Software Developer Round",
+    "description": "Lil Nouns' Software Developer Round We believe that great ideas can start small, and we're putting our treasury behind the next generation of software projects that have the potential to enrich the Nouns ecosystem. If you're a developer…",
+    "content": "# Lil Nouns' Software Developer Round\n\nWe believe that great ideas can start small, and we're putting our treasury behind the next generation of software projects that have the potential to enrich the Nouns ecosystem. If you're a developer with a big idea and the skills to bring it to life, this funding round is your launchpad.\n\nWe are seeking **Minimum Viable Products (MVPs)** – the foundational first step of a larger vision. Think of this as your seed funding to prove a concept, build a working prototype, and gather the momentum needed for a full-scale Nouns proposal in the future.\n\n**Prizing Distribution:**\nTo foster a collaborative and encouraging environment, we are awarding three top proposals with equal funding:\n\n1st Place: 0.33 ETH\n2nd Place: 0.33 ETH\n3rd Place: 0.33 ETH\n\n## [#How-It-Works](#How-It-Works)How It Works\n\n**Voting:** The Lil Nouns community will decide the winners. Voting will be conducted on a token-weighted basis, where one Lil Noun equals one vote. This ensures that those most invested in our ecosystem have a say in its future.\n\n**Project Timeline:** All funded proposals must be completed within 30 days of receiving the award. We encourage agile development and a focus on delivering a functional MVP within this timeframe.\n\n## [#What-Were-Looking-For](#What-Were-Looking-For)What We're Looking For:\n\n**Innovative:** Does your project introduce a new utility, a novel application, or a creative way to engage with the Nouns ecosystem?\n\n**Feasible:** Can you realistically deliver an MVP within the 30-day timeframe?\n\n**Nounish:** Does your project align with the values and aesthetics of the Nouns and Lil Nouns communities?\n\nThis is your opportunity to build, to experiment, and to make your mark. Let's build the future of Lil Nouns & Nouns, together.\n\nproposal period: 6/20-7/4\nvoting period: 7/4-7/11",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreigt2hod3zlshfylpshqlgzhdsm7ojnvmie62sn5zlcawlbhqnie24",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2025-06-20T20:24:17.857Z",
+    "votingStartAt": "2025-07-04T10:00:00.000Z",
+    "endAt": "2025-07-12T10:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:09.226Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lilnouns-software",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lilnouns-software",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:09.226Z",
+    "proposalCount": 8,
+    "voteCount": "503",
+    "voterCount": 26,
+    "awards": [
+      {
+        "id": 20,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 154,
+        "payoutTx": null
+      },
+      {
+        "id": 21,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 160,
+        "payoutTx": null
+      },
+      {
+        "id": 22,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 158,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "handle": "lilnouns-open-round",
+    "house": "lilnouns",
+    "name": "Lil Nouns Open Round: Do Anything Round",
+    "description": "🌈 Lil Nouns Open Round: Do Anything Round 🌈 Welcome to one of the most wide open and wonderfully weird rounds we’ve ever hosted. In this round, there are no rules. No theme. No restrictions. Just 1 ETH waiting for your most compelling…",
+    "content": "**🌈 Lil Nouns Open Round: Do ****_Anything_**** Round 🌈**\n\nWelcome to one of the most _wide open_ and _wonderfully weird_ rounds we’ve ever hosted.\n\nIn this round, there are no rules. No theme. No restrictions. Just **1 ETH** waiting for your most **compelling idea**, **kind gesture**, or **chaotic genius**.\n\n### [#🏆-Prizes](#🏆-Prizes)🏆 Prizes:\n\n- 🥇 1st Place: 0.2 ETH\n- 🥈 2nd Place: 0.2 ETH\n- 🥉 3rd Place: 0.2 ETH\n- 🏅 4th Place: 0.2 ETH\n- ✨ 5th Place: 0.2 ETH\n\n### [#🤯-What-Can-You-Propose](#🤯-What-Can-You-Propose)🤯 What Can You Propose?\n\nAnything. Literally.\n\n- A project you’ve always wanted to try\n- A donation to a cause you believe in\n- A trip to inspire your art\n- Rent, groceries, therapy, a tattoo — we’re not judging\n\nWhat matters is **how you tell the story**. Make us care. Make us laugh. Make us _feel_ something. This round is all about crafting a compelling proposal that shows Lil Nouns why **your idea deserves ETH**.\n\n### [#📅-Timeline-amp-Requirements](#📅-Timeline-amp-Requirements)📅 Timeline & Requirements:\n\n- If funded, please **complete your idea within 60 days**\n- Share updates with us in the [Lil Nouns Discord](https://discord.gg/...) — we love seeing your progress\n\nSo go ahead. **Dream big. Get weird. Be real.**\nThis is Lil Nouns. We believe in _you_.",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreigt2hod3zlshfylpshqlgzhdsm7ojnvmie62sn5zlcawlbhqnie24",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2025-06-06T04:21:54.781Z",
+    "votingStartAt": "2025-06-19T10:00:00.000Z",
+    "endAt": "2025-06-27T10:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:08.941Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lilnouns-open-round",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lilnouns-open-round",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:08.941Z",
+    "proposalCount": 41,
+    "voteCount": "552",
+    "voterCount": 43,
+    "awards": [
+      {
+        "id": 15,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "200000000000000000",
+        "winnerProposalId": 131,
+        "payoutTx": null
+      },
+      {
+        "id": 16,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "200000000000000000",
+        "winnerProposalId": 141,
+        "payoutTx": null
+      },
+      {
+        "id": 17,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "200000000000000000",
+        "winnerProposalId": 151,
+        "payoutTx": null
+      },
+      {
+        "id": 18,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "200000000000000000",
+        "winnerProposalId": 145,
+        "payoutTx": null
+      },
+      {
+        "id": 19,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "200000000000000000",
+        "winnerProposalId": 142,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "handle": "lilnouns-art-style",
+    "house": "lilnouns",
+    "name": "Propose Your Art Style to Proliferate Lil Nouns",
+    "description": "Lil Nouns wants to fund bold, creative art that helps spread the meme. Pitch a project in your own unique style—posters, comics, zines, animations, street art, anything that feels true to you and Nounish at heart. What to Include: Examples…",
+    "content": "Lil Nouns wants to fund bold, creative art that helps spread the meme. Pitch a project in your own unique style—posters, comics, zines, animations, street art, anything that feels true to you and Nounish at heart.\n\n**What to Include:**\n\n- Examples of your past work\n- A clear idea of what you'd create with funding\n- How it helps spread Lil Nouns\n\nWe’re looking for originality, strong style, and shareability. Show us something fun, fresh, and unmistakably you.\n\nNeed inspo? Check out some of these Iconic Lil Nouns Proposals.\n\n- Mini Basketball - [https://lilnouns.camp/proposals/36](https://lilnouns.camp/proposals/36)\n- Lil Nounsvitational After Party - [https://lilnouns.camp/proposals/260](https://lilnouns.camp/proposals/260)\n- VRGDA on Mainnet - [https://lilnouns.camp/proposals/195](https://lilnouns.camp/proposals/195)\n- Lil Noun purchases the Steak Noun - [https://lilnouns.camp/proposals/4](https://lilnouns.camp/proposals/4)\n\nLet your creativity carry the Lil Nouns meme far and wide.\n\n**All of the work proposed must be completed within 3 months of funding.**\n\n**Prizing:**\n\n- 1st: 0.5 eth\n- 2nd: 0.3 eth\n- 3rd: 0.2 eth\n\n**Proposal Period:** 5/22-6/5 (11:59PM EST)\n**Voting Period:** 6/5-6/12 (11:59PM EST)",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreigt2hod3zlshfylpshqlgzhdsm7ojnvmie62sn5zlcawlbhqnie24",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2025-05-22T10:00:00.000Z",
+    "votingStartAt": "2025-06-06T10:00:00.000Z",
+    "endAt": "2025-06-13T10:05:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:08.150Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lilnouns-art-style",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lilnouns-art-style",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:08.150Z",
+    "proposalCount": 41,
+    "voteCount": "243",
+    "voterCount": 50,
+    "awards": [
+      {
+        "id": 8,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": 49,
+        "payoutTx": null
+      },
+      {
+        "id": 9,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "300000000000000000",
+        "winnerProposalId": 59,
+        "payoutTx": null
+      },
+      {
+        "id": 10,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "200000000000000000",
+        "winnerProposalId": 26,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "handle": "lilnouns-local-impact",
+    "house": "lilnouns",
+    "name": "Lil Nouns Wants to Make a Difference in Your Local Community",
+    "description": "💡 Got a powerful idea and just need a small boost to make it real? No red tape. No long approval chains. Just your creativity, your community, and a chance to make something awesome happen. We’re looking for powerful, heart driven ideas…",
+    "content": "## 💡 Got a powerful idea and just need a small boost to make it real?\nNo red tape. No long approval chains. Just your creativity, your community, and a chance to make something awesome happen.\n\nWe’re looking for powerful, heart-driven ideas that can make a real impact where you live—whether it’s helping someone in need, fixing something that’s broken, or creating something that brings people together.\n\n**Your idea could be:**\n\n- A public art piece that brings color and pride to your neighborhood\n- A weekend pop-up that feeds families or hands out essential supplies\n- A free workshop series teaching real-world skills\n- A project to renovate a neglected space into a place for gathering, learning, or healing\n\n## 🎯 The only requirement? It needs to make a difference.\n\nWe encourage you to share your idea with your community and show us the support behind it—whether it’s likes, comments, testimonials, or a local org backing your vision. The more energy and momentum you build, the stronger your proposal will be.\n\nNow’s your chance to do something incredible, right where you live.\n\nAll proposals must be completed within 3 months of being funded.",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreigt2hod3zlshfylpshqlgzhdsm7ojnvmie62sn5zlcawlbhqnie24",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2025-05-08T10:00:00.000Z",
+    "votingStartAt": "2025-05-23T10:00:00.000Z",
+    "endAt": "2025-05-30T10:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:08.666Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lilnouns-local-impact",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lilnouns-local-impact",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:08.666Z",
+    "proposalCount": 34,
+    "voteCount": "156",
+    "voterCount": 36,
+    "awards": [
+      {
+        "id": 12,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 100,
+        "payoutTx": null
+      },
+      {
+        "id": 13,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 97,
+        "payoutTx": null
+      },
+      {
+        "id": 14,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": "/assets/eth.svg",
+          "symbol": null,
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "330000000000000000",
+        "winnerProposalId": 95,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "handle": "lilnouns-loud-posters",
+    "house": "lilnouns",
+    "name": "Lil Nouns, Loud Posters",
+    "description": "What to Do : Submit a photo of your poster from ESL One Raleigh with a Lil Nouns sticker. Poster must be photographed at the arena. Must have a visible Lil Nouns sticker. Submit by April 14th, 11:59 PM EDT. 1st Place: $50 USDC or 7,500…",
+    "content": "**What to Do**: Submit a photo of your poster from ESL One Raleigh with a Lil Nouns sticker.\n\n- Poster must be photographed at the arena.\n- Must have a visible Lil Nouns sticker.\n- Submit by April 14th, 11:59 PM EDT.\n\n- 1st Place: **$50 USDC** or **7,500 Gold** (Hoodie value).\n- 2nd Place: **$25 USDC** or **3,800 Gold** (T-shirt value).\n\n**Bonus**: All participants enter a giveaway for **Tiny Astral Origins - 3D by Necrolytus** ([Etsy link](https://www.etsy.com/listing/1115737160/tiny-in-diretide-collectors-cache-astral?etsrc=sdt)). Must claim in person at ESL One Raleigh before the Grand Final, or it’s reassigned to another winner.",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafybeih54dt7jfupgb47cbwhsce67z2dbkwcmcbbtmywxspqpduqvw6upa",
+    "creator": "nouns.gg:chompix",
+    "creatorName": "Chompix",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/7788107b-e0a0-4864-310f-ab9631520800/rectcrop3",
+    "startAt": "2025-04-07T05:00:00.000Z",
+    "votingStartAt": "2025-04-15T10:00:00.000Z",
+    "endAt": "2025-04-18T10:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:06.658Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:chompix:lilnouns-loud-posters",
+    "sourceUrl": "https://nouns.gg/c/chompix/rounds/lilnouns-loud-posters",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:06.658Z",
+    "proposalCount": 4,
+    "voteCount": "375",
+    "voterCount": 42,
+    "awards": [
+      {
+        "id": 1,
+        "place": 1,
+        "asset": {
+          "name": "USDC",
+          "image": "/assets/usdc.svg",
+          "symbol": null,
+          "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 6
+        },
+        "value": "50000000",
+        "winnerProposalId": 2,
+        "payoutTx": null
+      },
+      {
+        "id": 2,
+        "place": 2,
+        "asset": {
+          "name": "USDC",
+          "image": "/assets/usdc.svg",
+          "symbol": null,
+          "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 6
+        },
+        "value": "25000000",
+        "winnerProposalId": 1,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "handle": "lil-dpg",
+    "house": "lilnouns",
+    "name": "Lil Nouns Rounds - Asia - Don’t Park on the Grass",
+    "description": "Lil Nouns Esports is offering 2 winners 1,000 USDC each to join our Smash roster at Don't Park On The Grass! This opportunity is exclusive to players residing in Asia who are looking to travel and compete at the event. Winners will also…",
+    "content": "Lil Nouns Esports is offering 2 winners 1,000 USDC each to join our Smash roster at Don't Park On The Grass!\n\nThis opportunity is exclusive to players residing in Asia who are looking to travel and compete at the event. Winners will also receive a Lil Nouns-branded jersey and a care package of swag to represent Lil Nouns at the tournament. We expect active participation in sharing key event posts before, during, and after the event.\n\nTo be eligible, submit a proposal explaining why you would be an excellent representative for Lil Nouns at Don't Park On The Grass. Tell us about yourself, your previous results, and why our community should choose you.\n\nPlease include a link to your preferred social media account so we know who you are!\n\nGood luck!",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreid63ovote65nsyvjaeexiogls2mur5wbc37aoga3gzznlnbcpglee",
+    "creator": "nouns.gg:lilnouns",
+    "creatorName": "Lil Nouns",
+    "creatorImage": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9460da51-7bb1-445b-c733-e18723c25c00/original",
+    "startAt": "2024-09-05T10:00:00.000Z",
+    "votingStartAt": "2024-09-26T05:00:00.000Z",
+    "endAt": "2024-10-05T05:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:07.086Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "nouns.gg"
+    },
+    "proposeStrategyDescription": "Archived round, run on nouns.gg",
+    "voteStrategyDescription": "Archived round, run on nouns.gg",
+    "source": "nouns.gg",
+    "sourceId": "round:lilnouns:lil-dpg",
+    "sourceUrl": "https://nouns.gg/c/lilnouns/rounds/lil-dpg",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:07.086Z",
+    "proposalCount": 7,
+    "voteCount": "878",
+    "voterCount": 536,
+    "awards": [
+      {
+        "id": 3,
+        "place": 1,
+        "asset": {
+          "name": "USDC",
+          "image": "/assets/usdc.svg",
+          "symbol": null,
+          "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 6
+        },
+        "value": "1000000000",
+        "winnerProposalId": 7,
+        "payoutTx": null
+      },
+      {
+        "id": 4,
+        "place": 2,
+        "asset": {
+          "name": "USDC",
+          "image": "/assets/usdc.svg",
+          "symbol": null,
+          "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "chainId": 8453,
+          "tokenId": null,
+          "decimals": 6
+        },
+        "value": "1000000000",
+        "winnerProposalId": 5,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "handle": "prop-house-round-10",
+    "house": "lilnouns",
+    "name": "Round 10 (Prop House)",
+    "description": "As Halloween approaches we want to run this 20x.5eth round to provide as many treats as possible for the Lil Nouns Dao coming into this Hollow's Eve. Whether the final winners choose to accept as a treat or turn into a trick... well,…",
+    "content": "As Halloween approaches we want to run this 20x.5eth round to provide as many treats as possible for the Lil Nouns Dao coming into this Hollow's Eve. Whether the final winners choose to accept as a treat or turn into a trick... well, that's up to them . :pepepumpkin: Please come with all your zany ideas. Halloween theme is not necessary. but we all love a good Lil SCARE!",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-10-17T22:00:00.000Z",
+    "votingStartAt": "2022-10-24T22:00:00.000Z",
+    "endAt": "2022-10-28T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:16.596Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-70",
+    "sourceUrl": "https://web.archive.org/web/20221018235258/https://prod.backend.prop.house/auctions/70/proposals",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:16.596Z",
+    "proposalCount": 1,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 87,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 88,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 89,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 90,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 91,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 92,
+        "place": 6,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 93,
+        "place": 7,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 94,
+        "place": 8,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 95,
+        "place": 9,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 96,
+        "place": 10,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 97,
+        "place": 11,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 98,
+        "place": 12,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 99,
+        "place": 13,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 100,
+        "place": 14,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 101,
+        "place": 15,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 102,
+        "place": 16,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 103,
+        "place": 17,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 104,
+        "place": 18,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 105,
+        "place": 19,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 106,
+        "place": 20,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "500000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "handle": "prop-house-round-9",
+    "house": "lilnouns",
+    "name": "Round 9 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-10-03T22:00:00.000Z",
+    "votingStartAt": "2022-10-10T22:00:00.000Z",
+    "endAt": "2022-10-15T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:16.079Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-60",
+    "sourceUrl": "https://web.archive.org/web/20221018235308/https://prod.backend.prop.house/auctions/60/proposals",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:16.079Z",
+    "proposalCount": 31,
+    "voteCount": "522",
+    "voterCount": 66,
+    "awards": [
+      {
+        "id": 82,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": 174,
+        "payoutTx": null
+      },
+      {
+        "id": 83,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": 175,
+        "payoutTx": null
+      },
+      {
+        "id": 84,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": 172,
+        "payoutTx": null
+      },
+      {
+        "id": 85,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": 162,
+        "payoutTx": null
+      },
+      {
+        "id": 86,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": 173,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "handle": "prop-house-round-8",
+    "house": "lilnouns",
+    "name": "Round 8 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 39 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-09-19T22:00:00.000Z",
+    "votingStartAt": "2022-09-26T22:00:00.000Z",
+    "endAt": "2022-09-30T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.347Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-53",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.347Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 72,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 73,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 74,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 75,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 76,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 77,
+        "place": 6,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 78,
+        "place": 7,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 79,
+        "place": 8,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 80,
+        "place": 9,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 81,
+        "place": 10,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "handle": "prop-house-round-7",
+    "house": "lilnouns",
+    "name": "Round 7 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 43 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-09-05T22:00:00.000Z",
+    "votingStartAt": "2022-09-12T22:00:00.000Z",
+    "endAt": "2022-09-16T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.335Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-50",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.335Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 62,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 63,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 64,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 65,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 66,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 67,
+        "place": 6,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 68,
+        "place": 7,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 69,
+        "place": 8,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 70,
+        "place": 9,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 71,
+        "place": 10,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "handle": "prop-house-round-6",
+    "house": "lilnouns",
+    "name": "Round 6 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 38 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-08-18T22:00:00.000Z",
+    "votingStartAt": "2022-08-25T22:00:00.000Z",
+    "endAt": "2022-08-30T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.329Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-44",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.329Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 57,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 58,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 59,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 60,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 61,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "handle": "prop-house-round-5",
+    "house": "lilnouns",
+    "name": "Round 5 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 37 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-08-03T22:00:00.000Z",
+    "votingStartAt": "2022-08-10T22:00:00.000Z",
+    "endAt": "2022-08-15T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.317Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-27",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.317Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 47,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 48,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 49,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 50,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 51,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 52,
+        "place": 6,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 53,
+        "place": 7,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 54,
+        "place": 8,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 55,
+        "place": 9,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 56,
+        "place": 10,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "handle": "prop-house-round-4",
+    "house": "lilnouns",
+    "name": "Round 4 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 31 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-07-20T22:00:00.000Z",
+    "votingStartAt": "2022-07-27T22:00:00.000Z",
+    "endAt": "2022-08-02T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.308Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-21",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.308Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 42,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 43,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 44,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 45,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 46,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "handle": "prop-house-round-3",
+    "house": "lilnouns",
+    "name": "Round 3 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 30 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-07-07T22:00:00.000Z",
+    "votingStartAt": "2022-07-14T22:00:00.000Z",
+    "endAt": "2022-07-19T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.298Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-17",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.298Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 39,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "3000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 40,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "3000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 41,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "3000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "handle": "prop-house-round-2",
+    "house": "lilnouns",
+    "name": "Round 2 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 35 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-06-22T22:00:00.000Z",
+    "votingStartAt": "2022-06-29T22:00:00.000Z",
+    "endAt": "2022-07-06T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.283Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-10",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.283Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 28,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 29,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 30,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 31,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 32,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 33,
+        "place": 6,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 34,
+        "place": 7,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 35,
+        "place": 8,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 36,
+        "place": 9,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 37,
+        "place": 10,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 38,
+        "place": 11,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "1000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "handle": "prop-house-round-1",
+    "house": "lilnouns",
+    "name": "Round 1 (Prop House)",
+    "description": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on…",
+    "content": "An open round where builders are encouraged to propose any idea they believe will benefit the Lil Nouns ecosystem. Anyone with an ETH address is welcome to propose. Once the proposing period is complete, Lil Nouns holders will vote on their favorite proposals. The proposals with the most votes will get funded.\n\n_Imported from the Lil Nouns Prop House. This round had 30 proposals; Prop House is offline and the Internet Archive has no snapshot of them, so only the round itself could be recovered._",
+    "image": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "creator": "prop-house:lil-nouns",
+    "creatorName": "Lil Nouns Prop House",
+    "creatorImage": "https://db.lilnouns.wtf/api/funding/images/bafkreibeskuv5hweguw2g6cfd3i5pmile7e7772ilrsbucorfsodm4lyru",
+    "startAt": "2022-06-01T22:00:00.000Z",
+    "votingStartAt": "2022-06-08T22:00:00.000Z",
+    "endAt": "2022-06-15T22:00:00.000Z",
+    "state": "ended",
+    "snapshotBlock": null,
+    "settledAt": "2026-11-08T18:38:15.273Z",
+    "proposeStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "voteStrategy": {
+      "type": "archive",
+      "platform": "Prop House"
+    },
+    "proposeStrategyDescription": "Archived round, run on Prop House",
+    "voteStrategyDescription": "Archived round, run on Prop House",
+    "source": "prop-house",
+    "sourceId": "auction-4",
+    "sourceUrl": "https://web.archive.org/web/20221018235231if_/https://prod.backend.prop.house/auctions/forCommunity/2",
+    "featured": false,
+    "createdAt": "2026-11-08T18:38:15.273Z",
+    "proposalCount": 0,
+    "voteCount": "0",
+    "voterCount": 0,
+    "awards": [
+      {
+        "id": 23,
+        "place": 1,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 24,
+        "place": 2,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 25,
+        "place": 3,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 26,
+        "place": 4,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      },
+      {
+        "id": 27,
+        "place": 5,
+        "asset": {
+          "name": "Ethereum",
+          "image": null,
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "tokenId": null,
+          "decimals": 18
+        },
+        "value": "2000000000000000000",
+        "winnerProposalId": null,
+        "payoutTx": null
+      }
+    ]
+  }
+]
