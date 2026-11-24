@@ -117,6 +117,7 @@ claude-*.log
 
 # CMS uploads
 uploads/
+!/api/rounds/uploads/
 media/
 
 
@@ -129,6 +130,9 @@ packages/subgraph-v2/
 packages/subgraph-v3/
 packages/contracts/
 docs/
+!/docs/
+/docs/*
+!/docs/rounds-onchain/
 
 # Security & audit/todo documentation – never commit to production!
 SECURITY-AUDIT-HARDCODED-SECRETS.md
@@ -138,3 +142,10 @@ TODO-REPORT.md
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+# Local onchain rounds tooling
+/.vercel/
+/.rounds-secrets/
+/broadcast/
+/cache/
+/contracts/cache/

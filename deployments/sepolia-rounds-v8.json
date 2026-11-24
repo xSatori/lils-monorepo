@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 8,
+  "chain": { "name": "Ethereum Sepolia", "chainId": 11155111 },
+  "verifiedAt": "2026-09-21T21:31:40Z",
+  "sourceRevision": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+  "dirtyState": true,
+  "deployer": "0x45803D21b418c8a675c7654597BE1056019C655E",
+  "testAdminOwners": [
+    "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+    "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184"
+  ],
+  "treasury": "0xd5f279ff9EB21c6D40C8f345a66f2751C4eeA1fB",
+  "votingPowerAdapter": "0xDC13e69c8e335d419205c22680f0B27b3FD79C36",
+  "creationFeeWei": "10000000000000000",
+  "testMode": true,
+  "activeImplementationVersion": 8,
+  "deployments": {
+    "SepoliaRoundTestAdmin": {
+      "address": "0xd280F97BAe03CE78D838462ee04B014921291cBA",
+      "transactionHash": "0x18546ff2052016d8ca40e3dbeff89198064747f67698bd8a7e6d5539c871eb60",
+      "blockNumber": 11753527,
+      "nonce": 78,
+      "gasUsed": "964008",
+      "runtimeBytes": 4131
+    },
+    "RoundV8": {
+      "address": "0x0d0764DF2f01eC4d580772e6B461605d45352734",
+      "transactionHash": "0xf49446ba44d050d5e0b9d2ae2783d3e573fb2e8fd0066a48c2865e181b3761ff",
+      "blockNumber": 11753528,
+      "nonce": 79,
+      "gasUsed": "5058999",
+      "runtimeBytes": 22861
+    },
+    "RoundPrizeVaultV8": {
+      "address": "0x07C1b4070dF4753C2CC5590c3BFAccf1f39859D7",
+      "transactionHash": "0x6c66aa4c1a996b5728805e045487fd5a13cfbee8b3b5e9e39292dd06d853ffd8",
+      "blockNumber": 11753529,
+      "nonce": 80,
+      "gasUsed": "5385432",
+      "runtimeBytes": 24368
+    },
+    "RoundFactoryV8": {
+      "address": "0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6",
+      "transactionHash": "0x347670f6bd3bdabd5d53268b38595d027664e0677041c405f644ab553fd924f6",
+      "blockNumber": 11753530,
+      "nonce": 81,
+      "gasUsed": "2664996",
+      "runtimeBytes": 11346
+    }
+  },
+  "verification": {
+    "receiptStatus": "0x1 for all four transactions",
+    "runtimeLengthMatchesArtifacts": true,
+    "nonImmutableRuntimeMismatchBytes": 0,
+    "factoryStateReadDirectlyFromSepolia": true,
+    "factoryRoundCountAtVerification": 0,
+    "erc1271OwnersOperationallyValidated": false,
+    "sourcePublishedToExplorer": true,
+    "sourcePublicationNote": "All four deployment contracts returned Pass - Verified on Sepolia Etherscan on 2026-09-21. This does not verify future clones automatically.",
+    "explorerUrls": {
+      "SepoliaRoundTestAdmin": "https://sepolia.etherscan.io/address/0xd280F97BAe03CE78D838462ee04B014921291cBA#code",
+      "RoundV8": "https://sepolia.etherscan.io/address/0x0d0764DF2f01eC4d580772e6B461605d45352734#code",
+      "RoundPrizeVaultV8": "https://sepolia.etherscan.io/address/0x07C1b4070dF4753C2CC5590c3BFAccf1f39859D7#code",
+      "RoundFactoryV8": "https://sepolia.etherscan.io/address/0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6#code"
+    }
+  },
+  "hostedPreview": {
+    "project": "satori-ffbfc349/lils-monorepo",
+    "deploymentId": "dpl_JD9utxr5nNTVwLL65cJCw3oUp2d1",
+    "url": "https://lils-monorepo-nq6r1857p-satori-ffbfc349.vercel.app",
+    "status": "READY",
+    "uploadFactoryEnvironment": "Preview only: 0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6",
+    "runtimeUploadVerified": false
+  },
+  "broadcastRecord": "broadcast/DeployTestRoundsV8.s.sol/11155111/run-latest.json"
+}

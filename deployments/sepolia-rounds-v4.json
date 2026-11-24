@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 4,
+  "chain": {
+    "name": "ethereum-sepolia",
+    "chainId": 11155111
+  },
+  "generatedAt": "2026-09-19T00:27:47.727Z",
+  "git": {
+    "commitSha": "d37ac9c087382ee620ce92122d86552cc8446c4b",
+    "dirty": true
+  },
+  "compiler": {
+    "version": "0.8.24+commit.e11b9ed9",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "cancun"
+  },
+  "deployer": "0x63939F7EBf558F90Ec12b7dd5a4c7DCAE51d10D2",
+  "globalAdmins": [
+    "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+    "0x66cd193d0c0fb3b9b44dd371107617a7e9f38184"
+  ],
+  "treasury": "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+  "creationFeeWei": "100000000000000",
+  "testMode": true,
+  "contracts": {
+    "votingToken": "0xEfd032ffd80776FE7bE721e00fe0868bC97853B9",
+    "votingPowerAdapter": "0x92F8b9ce56902aa0C50869eDf30e761d0971Ce06",
+    "roundImplementation": "0xe4A60C7604Dc0753BC2920bE25cd3BC5294Ea525",
+    "vaultImplementation": "0x1F1AfC11f04ac2cE352faE7EbF28C64dA05879a2",
+    "factory": "0x6D00E67aF83E89A8E888EF0920c99f9eCf9527B5",
+    "testRound": "0xfe479Ba8BCDa873C8ADf2eA719c5B076d7093068",
+    "prizeVault": "0x70D7B561Df1B18Ea77bbaA4e2928c87299E68910"
+  },
+  "bytecodeHashes": {
+    "votingToken": "0x24433bed9bf68308656995fee693ed70f237061e58fecbc04159987266a93e3a",
+    "votingPowerAdapter": "0x2ab6e9c318550ea34c87ba95102b0a7ec11b3ffe509125c081044c8a0cbefb09",
+    "roundImplementation": "0x0a2f421f7edd82e67cbc75533bf5b7f9f250426485e7561f2c6b1373076ffc54",
+    "vaultImplementation": "0x18cc536ce3320f764c8f53f2fc650470d844b7267b5fb774c5bf1d8f9c3ed3b3",
+    "factory": "0x342d632d85cb143faf5b00177b3462c17f684747bb7b83bcb1428942d10c12ba",
+    "testRound": "0x2852cbe15b448c870af2e668458ac67377f16c613e30b8d02067ac5bcc301fb9",
+    "prizeVault": "0x8a46c3f727a87fb5c48c7c9e7a8469e87bb9bab37264077ca8a243a2de8d84ee"
+  },
+  "deploymentTransactions": {
+    "roundImplementation": {
+      "contract": "RoundV4",
+      "address": "0xe4a60c7604dc0753bc2920be25cd3bc5294ea525",
+      "transactionHash": "0x527f74d3b1423418f6f244e7c4b6f71d948f6eed0c46bbf6c80d3210aa83576a",
+      "blockNumber": 11733988,
+      "gasUsed": "3741574"
+    },
+    "vaultImplementation": {
+      "contract": "RoundPrizeVaultV4",
+      "address": "0x1f1afc11f04ac2ce352fae7ebf28c64da05879a2",
+      "transactionHash": "0x812a485521bcf980e9e74619b95a7af243ae4df7541c8a5cf12b2bd3af16dd9d",
+      "blockNumber": 11733989,
+      "gasUsed": "5291534"
+    },
+    "votingToken": {
+      "contract": "MockLilNounsVotes",
+      "address": "0xefd032ffd80776fe7be721e00fe0868bc97853b9",
+      "transactionHash": "0x8da08e216fb23469fd4ca64d7f667412928e78f063eb13ba768ee44c2c824a26",
+      "blockNumber": 11734006,
+      "gasUsed": "642960"
+    },
+    "votingPowerAdapter": {
+      "contract": "LilNounsVotingPower",
+      "address": "0x92f8b9ce56902aa0c50869edf30e761d0971ce06",
+      "transactionHash": "0x9734f8a42850b23e394c71c2a667136b1e7bebeb8ded233860d6153274b53313",
+      "blockNumber": 11734007,
+      "gasUsed": "168988"
+    },
+    "factory": {
+      "contract": "RoundFactoryV3",
+      "address": "0x6d00e67af83e89a8e888ef0920c99f9ecf9527b5",
+      "transactionHash": "0x2348181403c20492e99ecd8439648eb8aec67ce4a2ef0d49b39ac8a379bfcd62",
+      "blockNumber": 11734008,
+      "gasUsed": "3060633"
+    },
+    "supersededFactory": {
+      "contract": "RoundFactoryV3",
+      "address": "0x26e918a8b460078ecb9582dc1fe44e4a846b1dde",
+      "transactionHash": "0x01fa5f331a0a0e70936d5459804fdee193cf4e5a0601d815b9b24e9cbb56fa97",
+      "blockNumber": 11733990,
+      "gasUsed": "3060633"
+    }
+  },
+  "constructorArguments": {
+    "votingToken": [
+      "0x63939F7EBf558F90Ec12b7dd5a4c7DCAE51d10D2"
+    ],
+    "votingPowerAdapter": [
+      "0xEfd032ffd80776FE7bE721e00fe0868bC97853B9"
+    ],
+    "factory": [
+      "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "0x66cd193d0c0fb3b9b44dd371107617a7e9f38184",
+      "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+      "100000000000000",
+      "0xe4A60C7604Dc0753BC2920bE25cd3BC5294Ea525",
+      "0x1F1AfC11f04ac2cE352faE7EbF28C64dA05879a2",
+      "0x92F8b9ce56902aa0C50869eDf30e761d0971Ce06",
+      true
+    ]
+  },
+  "roundInitializerArguments": {
+    "config": {
+      "metadataURI": "ipfs://lil-nouns-rounds-v4-sepolia-e2e",
+      "metadataHash": "0x12180826845a6196b9cd95ab338f6d7829b495461010d6d7e4d68e31f36efbe2",
+      "roundStart": "1789775820",
+      "submissionsOpen": "1789776060",
+      "submissionsClose": "1789776360",
+      "votingStart": "1789776660",
+      "votingEnd": "1789776960",
+      "votingPowerAdapter": "0x92F8b9ce56902aa0C50869eDf30e761d0971Ce06",
+      "votingStrategy": 1,
+      "snapshotMode": 0,
+      "customSnapshotBlock": "0",
+      "baseOrFixedVotes": "0",
+      "maxVotesPerSubmission": "6",
+      "maxSubmissionsPerWallet": 1,
+      "maxSubmissions": 8,
+      "winnerCount": 1,
+      "minTitleLength": 3,
+      "maxTitleLength": 120,
+      "minDescriptionLength": 10,
+      "maxDescriptionLength": 2000
+    },
+    "vaultConfig": {
+      "recoveryRecipient": "0x63939F7EBf558F90Ec12b7dd5a4c7DCAE51d10D2",
+      "claimPeriod": 300,
+      "recoveryDelay": 300,
+      "allocations": [
+        {
+          "winnerRank": 0,
+          "assetType": 0,
+          "token": "0x0000000000000000000000000000000000000000",
+          "tokenId": "0",
+          "amount": "200000000000000"
+        },
+        {
+          "winnerRank": 0,
+          "assetType": 0,
+          "token": "0x0000000000000000000000000000000000000000",
+          "tokenId": "0",
+          "amount": "200000000000000"
+        }
+      ]
+    },
+    "callerSalt": "0x91a398f55093b0b09b41101299a8c60ef661ca3c452bfc98b1c9d719661d3f74"
+  },
+  "lifecycleTransactions": {
+    "setup.fundActorA": "0x9c73a7f9e6ef3dc8c04ead6b40ff77fd97f6e37ba07202193d3745a208911fee",
+    "setup.fundActorB": "0xe06eeb4d04f696a909def20249d67ed6da760f7af7b0d4432d9854f94e2d6fb2",
+    "setup.mintDeployer": "0xef61a0cddd8ebf6b2caf61ac2425c47eb7afe2f4d44e745bc0ae1d86d68150e3",
+    "setup.mintActorA": "0x5c46545839e95a760303dfa751815f5c4e84b9e9c78bbf8537ab844ba02f3b58",
+    "setup.mintActorB": "0x725902a14b8cfeb13ba4913d09501a325a6789d9c0f6ac6e489a4ab74c55a0cd",
+    "setup.delegateDeployer": "0x24b2ae6ec87465790496ed5b6848d7f1e55c779f78ebb4affdc016d91ff7e7a0",
+    "setup.delegateActorA": "0x6ac1bb9e297dc913aeecb5f89e695249950e7c9cc119f6315416481c033a102b",
+    "setup.delegateActorB": "0x454152a70e1e1c0271ed7711eddcf8ba4ad910f5d73b71a6fa3b7c77d9722773",
+    "setup.createRound": "0x830643908ce979986a8f44bd62f6d19be27c4b40dd95489e90a25125868bb662",
+    "setup.adminAAdded": "0x7fb488a027c724cb1437f7f485b89c12a36fe59d35884ef7e4fed6bfff61934e",
+    "setup.adminBAdded": "0x0330ebbeff053e97efb19024658921589dcfaa6236cff2b5d6d24eea2ad6be3e",
+    "setup.adminBRemoved": "0xfe6bce831202d2a3aa0f4fe131266116318bd2969294c8e5f956b2cec6f107fc",
+    "setup.fundNative": "0x352e21541778a20b87fc663a7301171c0d785bb2328bc6d327027675578ffb39",
+    "setup.seal": "0xbca765e80d6b701710a8f2039a3027f278b7065a0eef578c7c16064270fc7d8d",
+    "submissions.actorA": "0xaab2b788c7cdf982ae0322f5439ed98f211fe8c7980d2a6adf1425b569fd18dd",
+    "submissions.actorB": "0xf5cfa1f32c201f4464bf4d01e6f5e095425446de0faf7676f64485a22f2790e5",
+    "review.rejectActorB": "0xb9fbd0f6bfa6d259727bbef3b6555f9deba1a35c64219399300d4630843758de",
+    "review.reapproveActorB": "0xaa796e3a74f9dffd91e982d074f8f4ead69a36ff3cf8f6a873385af10242e692",
+    "voting.snapshot": "0xf7ee8b36e124552df92472c54f9901fb5dfd29a28b638a443e29f19dd6c9792b",
+    "voting.partial": "0x8eeb823d9803e0366a4029fb5ca7f742898893b6677878eaac0e2409729a3fc8",
+    "voting.additive": "0x26bcdbee85e9830ee2db484c55d7b32b8508432048ba558f2845020547762807",
+    "voting.actorB": "0x50ec1038c5d9c56d19a4f4e89b69ac1195b4cd9f749e9e01b8bfe2d4c2fa15d6",
+    "voting.deployer": "0xe8864ca4da6de838b9d997f5d64bd4bd664cd47d1d3d2dac895954fd4a0043f9",
+    "finalization.finalize": "0x25f7fbce98d0b3d444031cc86e1295cccc557eb3494412007d7d8c3d5098e3fa",
+    "finalization.refinalize": "0x399957dd6b25ed139ffcdbbe32721dd0eb44d424d30d5106c4d6dfc294c36de5",
+    "finalization.holdReleaseAllocation": "0x814ccf9e6d2a15632982196359eb1539f6ad305b970275b73dc9ef68411d21b4",
+    "finalization.unholdReleaseAllocation": "0xb1a3eed508b513b0eb4d677291655d9c6b8dea33c4c100622135ed59a07c3df2",
+    "finalization.holdReclaimAllocation": "0x6c97dcf35d592246c9529ecde4eb421f6ed91ff5750a80acebabae238cb983fd",
+    "distribution.publicRelease": "0x3df35c2c3908d0b26e0dc0cf414f17ad9a3c62c795d06352d0f868a5a5581fde",
+    "distribution.reclaim": "0xec0fb7c6c3c38ec5c724bd84658e61311cbbb6a94a5a304a1ee8b4d08c72aa84"
+  },
+  "evidence": {
+    "treasuryBefore": "400000000000000",
+    "treasuryAfter": "500000000000000",
+    "treasuryFeeDelta": "100000000000000",
+    "factoryBalance": "0",
+    "nativePrize": "200000000000000",
+    "rejections": [
+      {
+        "label": "direct ETH rejected",
+        "reverted": true,
+        "message": "Cannot read properties of undefined (reading 'length')"
+      },
+      {
+        "label": "per-wallet submission cap",
+        "reverted": true,
+        "message": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "vote before voting",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "unauthorized moderation",
+        "reverted": true,
+        "message": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "unauthorized admin management",
+        "reverted": true,
+        "message": "The contract function \"grantRoundAdmin\" reverted."
+      },
+      {
+        "label": "submission during review",
+        "reverted": true,
+        "message": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "snapshot recapture",
+        "reverted": true,
+        "message": "The contract function \"captureSnapshot\" reverted."
+      },
+      {
+        "label": "moderation frozen",
+        "reverted": true,
+        "message": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "self voting",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "duplicate allocation",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "per-entry cap",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "remaining vote limit",
+        "reverted": true,
+        "message": "The contract function \"castVotes\" reverted."
+      }
+    ],
+    "defaultApproved": true,
+    "snapshotBlock": "11734107",
+    "voteTotals": [
+      "12",
+      "9"
+    ],
+    "finalizedWinner": "0xA27083eFF454722255762e1E3C09D88a289F1d7F",
+    "distributionAvailableAt": "1789777308",
+    "reclaimAllocationHeldAt": "1789777068",
+    "finalState": {
+      "finalized": true,
+      "winner": "0xA27083eFF454722255762e1E3C09D88a289F1d7F",
+      "directTotals": [
+        "12",
+        "9"
+      ],
+      "projectedTotals": [
+        "12",
+        "9"
+      ],
+      "winnerPrizeDelta": "200000000000000",
+      "reclaimedDelta": "200000000000000",
+      "eventCounts": {
+        "submissions": 2,
+        "votes": 5,
+        "snapshots": 1,
+        "finalizations": 1,
+        "releases": 1,
+        "holds": 3,
+        "reclaims": 1
+      }
+    }
+  },
+  "explorerLinks": {
+    "factory": "https://sepolia.etherscan.io/address/0x6D00E67aF83E89A8E888EF0920c99f9eCf9527B5",
+    "roundImplementation": "https://sepolia.etherscan.io/address/0xe4A60C7604Dc0753BC2920bE25cd3BC5294Ea525",
+    "vaultImplementation": "https://sepolia.etherscan.io/address/0x1F1AfC11f04ac2cE352faE7EbF28C64dA05879a2",
+    "votingToken": "https://sepolia.etherscan.io/address/0xEfd032ffd80776FE7bE721e00fe0868bC97853B9",
+    "votingPowerAdapter": "https://sepolia.etherscan.io/address/0x92F8b9ce56902aa0C50869eDf30e761d0971Ce06",
+    "testRound": "https://sepolia.etherscan.io/address/0xfe479Ba8BCDa873C8ADf2eA719c5B076d7093068",
+    "prizeVault": "https://sepolia.etherscan.io/address/0x70D7B561Df1B18Ea77bbaA4e2928c87299E68910"
+  },
+  "verification": {
+    "status": "not_attempted",
+    "reason": "No explorer API credential was configured, and publishing source metadata to a third-party verifier was not separately approved. Bytecode hashes and receipts were reconciled directly by RPC."
+  },
+  "secretsIncluded": false
+}

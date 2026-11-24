@@ -1,0 +1,163 @@
+{
+  "chainName": "Anvil local",
+  "chainId": 31337,
+  "gitCommitSha": "UNKNOWN",
+  "dirtyState": true,
+  "compiler": "solc 0.8.24",
+  "optimizer": {
+    "enabled": true,
+    "runs": 200
+  },
+  "constructorArguments": {
+    "mockVotingToken": ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
+    "votingPowerAdapter": ["0x5fbdb2315678afecb367f032d93f642f64180aa3"],
+    "implementation": [],
+    "factory": [
+      "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "100000000000000",
+      "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+      "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      true
+    ]
+  },
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "globalAdmins": [
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+  ],
+  "treasury": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+  "votingToken": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+  "votingPowerAdapter": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+  "implementation": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+  "implementationVersion": 2,
+  "factory": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+  "creationFeeWei": "100000000000000",
+  "testProfile": {
+    "submissionsSeconds": 300,
+    "moderationReviewSeconds": 300,
+    "votingSeconds": 300
+  },
+  "roundInitializer": {
+    "creator": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+    "userSalt": "0xfb0235842d61260e870aa41a515123ef6ea69f14cca1541bca722d593653e60c",
+    "config": {
+      "metadataURI": "ipfs://local-round",
+      "metadataHash": "0x3eca0930a1fb1638fa77cdcaf543f2ffdf322e5b1fc2d50f0bcf8b81cb6ad804",
+      "roundStart": "1789735059",
+      "submissionsOpen": "1789735059",
+      "submissionsClose": "1789735359",
+      "votingStart": "1789735659",
+      "votingEnd": "1789735959",
+      "votingPowerAdapter": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      "votingStrategy": 1,
+      "snapshotMode": 0,
+      "customSnapshotBlock": "0",
+      "baseOrFixedVotes": "0",
+      "maxVotesPerSubmission": "6",
+      "maxSubmissionsPerWallet": 1,
+      "maxSubmissions": 10,
+      "winnerCount": 1,
+      "minTitleLength": 3,
+      "maxTitleLength": 120,
+      "minDescriptionLength": 10,
+      "maxDescriptionLength": 2000
+    }
+  },
+  "deployments": {
+    "mockVotingToken": {
+      "address": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "transactionHash": "0x81cb5ce89ebc636b57f5308a28c8b94142a80395a4049b2397363fa1e21d7add",
+      "blockNumber": "1"
+    },
+    "votingPowerAdapter": {
+      "address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      "transactionHash": "0xf65c8fd46b08a0b4713a15e60201db2b6737ca78025e7096524ef7d953bc366c",
+      "blockNumber": "2"
+    },
+    "implementation": {
+      "address": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+      "transactionHash": "0x5ed6fe113412bb1b59d391e46a63ec0ea559b6891ea991d3236a9249f3f0c44d",
+      "blockNumber": "3"
+    },
+    "factory": {
+      "address": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+      "transactionHash": "0x867fd37641882686f9e66ae2f2282afc209e5c5f8f5f5c4242782d4cf6db40ac",
+      "blockNumber": "4"
+    }
+  },
+  "bytecodeHashes": {
+    "mockVotingToken": "0x24433bed9bf68308656995fee693ed70f237061e58fecbc04159987266a93e3a",
+    "votingPowerAdapter": "0xf2b17fb49ce6e8ff05401d4f1b7a172502859f8cb7aff28dd9882002f96c797f",
+    "implementation": "0x0ef4017ebc572c327ebd268f911b59551be6f8cb8decd43b216b74668f99f763",
+    "factory": "0x21f7d17e98fda7f9144ee7c14ec4e70c8193d9f2e66c1af64cd3f081ae0823e8"
+  },
+  "testRound": "0x9cb75B91A955069343E0CCD5a46C6C5784758a3E",
+  "evidence": {
+    "createRound": "0x4f5a478c3a6ad8b7f290033ea04b388619d4d1d2a563c02666da9320ab2372a7",
+    "createRoundBlock": "9",
+    "treasuryBalanceBefore": "10000000000000000000000",
+    "treasuryBalanceAfter": "10000000100000000000000",
+    "factoryBalanceAfter": "0",
+    "adminAdded": "0xb2d43518e6b1ee53b6f2d19261df8202b19230e0276aa7b2cd990835ebdd93c7",
+    "adminRemoved": "0xbd45b558e3ca6287a94ee946a64c72df66dff21775e79b3e91093c757a54a794",
+    "submissions": [
+      "0x99b7e3f76752f30c58d0e319f96d6704c6b860044b58fd55f7eca7d6b2dd9672",
+      "0xc2cb61b98b47b8877f1b287da624a70d6a3447ae8aecd8fcfafefbf0156172f6"
+    ],
+    "approvals": [
+      "0xea8d9a6c3681fb96c1c09e5c1f7ad55927e9e4db44237d44e7c2e2d8d0dc0439",
+      "0x73ebc41e5d84a8b92e38c31374ea4a24443a2df799239cbf95dbce20bb2b0a6d"
+    ],
+    "snapshot": "0xf01048b82d2ad37a68139046ea85a1e21b12cd10f77272d5669e77d3f193c974",
+    "votes": [
+      "0x701c53cae889dcb4e3315653f4cb9bb74987397910b102dd2a87b900098f6e59",
+      "0x5f003100615b8498a59687a3949d61cb2e89bbfc4502a82928212ab5aadc943e",
+      "0x2afe9fb37fedc0a55214833b884e1df7882683f2cd9eecfb34ce93e3ac5b5d4d"
+    ],
+    "finalized": "0x114bc738f84dc8961884aa6ffe5f37d4939d9d2f629bdb75e0892bfff6ff522c",
+    "refinalized": "0xc5d5486f138b634b9851b417c3e5525f15a06c0b27ad3bd10543fb6abdbdbc34",
+    "winnerIds": ["0"],
+    "usedVotes": "9",
+    "rejections": [
+      {
+        "label": "per-wallet submission cap",
+        "reverted": true,
+        "error": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "vote before voting phase",
+        "reverted": true,
+        "error": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "unauthorized moderation",
+        "reverted": true,
+        "error": "The contract function \"moderateSubmission\" reverted."
+      },
+      {
+        "label": "submission during moderation review",
+        "reverted": true,
+        "error": "The contract function \"submit\" reverted."
+      },
+      {
+        "label": "self voting",
+        "reverted": true,
+        "error": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "per-entry vote cap",
+        "reverted": true,
+        "error": "The contract function \"castVotes\" reverted."
+      },
+      {
+        "label": "remaining vote limit",
+        "reverted": true,
+        "error": "The contract function \"castVotes\" reverted."
+      }
+    ]
+  },
+  "verificationStatus": "local runtime verified",
+  "timestampUtc": "2026-09-18T12:37:39.833Z"
+}

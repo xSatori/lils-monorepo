@@ -1,5 +1,5 @@
 import { expect, it } from "bun:test";
-import { createDeterministicCar } from "./deterministic-car";
+import { createDeterministicCar } from "@nouns/rounds-media";
 import { verifyPinFiles } from "./manual-pins";
 
 it("verifies metadata and every image against the prepared bytes at their own CID", async () => {

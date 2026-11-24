@@ -7,6 +7,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { discordApiPlugin } from './vite-plugin-discord-api.js'
 import { ogImagesPlugin } from './vite-plugin-og-images.js'
+import { roundsUploadApiPlugin } from './vite-plugin-rounds-upload-api.js'
 import { rpcApiPlugin } from './vite-plugin-rpc-api.js'
 
 function readGit(command) {
@@ -51,6 +52,7 @@ export default defineConfig({
     }), // Handles path aliases from tsconfig
     discordApiPlugin(), // Handle Discord API proxy in dev
     ogImagesPlugin(), // Handle OG image API routes in dev
+    roundsUploadApiPlugin(),
     rpcApiPlugin(), // Handle /api/rpc (Goldsky proxy) in dev
     // Inject process polyfill
     {

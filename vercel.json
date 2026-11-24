@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "bun run --cwd packages/types build && bun run --cwd packages/assets build && bun run --cwd packages/ui build && bun run --cwd apps/web build",
+  "outputDirectory": "apps/web/dist",
+  "routes": [
+    { "src": "/discord", "status": 302, "headers": { "Location": "https://discord.gg/X6gpawuBaX" } },
+    { "src": "/docs", "status": 302, "headers": { "Location": "https://nouns.notion.site/Explore-Nouns-a2a9dceeb1d54e10b9cbf3f931c2266f" } },
+    { "src": "/api/rounds/uploads/([^/]+)", "dest": "/api/rounds/uploads/[action]?action=$1" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}

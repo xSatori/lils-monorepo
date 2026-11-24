@@ -6,7 +6,7 @@ import {
   type Address,
   type Hex,
 } from "viem";
-import { createDeterministicCar } from "./deterministic-car";
+import { createDeterministicCar } from "@nouns/rounds-media";
 import { getRoundFactoryAbi, roundV5Abi } from "./contracts";
 
 export const ALLOWED_IMAGE_MIME_TYPES = [

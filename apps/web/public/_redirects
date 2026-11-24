@@ -1,4 +1,5 @@
 # API routes - must come before SPA fallback
+/api/rounds/uploads/*    /.netlify/functions/rounds-uploads/:splat    200!
 /api/discord/events    /.netlify/functions/api-discord-events    200
 # RPC: no Netlify function (avoid per-invocation billing). Use Alchemy/Infura in app; optional VITE_RPC_PROXY_URL for external edge proxy.
 

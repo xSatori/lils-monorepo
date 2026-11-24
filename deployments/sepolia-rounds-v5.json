@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 5,
+  "chain": {
+    "name": "Ethereum Sepolia",
+    "chainId": 11155111
+  },
+  "generatedAt": "2026-09-19T15:25:01.603Z",
+  "gitCommitSha": "UNKNOWN",
+  "dirtyState": true,
+  "compiler": {
+    "version": "0.8.24",
+    "optimizer": true,
+    "optimizerRuns": 200,
+    "evmVersion": "cancun"
+  },
+  "deployer": "0x45803D21b418c8a675c7654597BE1056019C655E",
+  "globalAdmins": [
+    "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+    "0x66cd193d0c0fb3b9b44dd371107617a7e9f38184"
+  ],
+  "treasury": "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+  "creationFeeWei": "100000000000000",
+  "testMode": true,
+  "implementationVersion": 5,
+  "deployments": {
+    "MockLilNounsVotes": {
+      "address": "0xdddf394ec7cc88bdcd54bf45326b123885a8ee6a",
+      "transactionHash": "0x9729d64994dc7647df14e73d045c78245d97d89c41b66782b0f8676d7fa22883",
+      "blockNumber": 11738146,
+      "bytecodeHash": "0x24433bed9bf68308656995fee693ed70f237061e58fecbc04159987266a93e3a",
+      "constructorArguments": [
+        "0x45803D21b418c8a675c7654597BE1056019C655E"
+      ],
+      "verificationStatus": "VERIFIED"
+    },
+    "LilNounsVotingPower": {
+      "address": "0xdc13e69c8e335d419205c22680f0b27b3fd79c36",
+      "transactionHash": "0x8bc568baf92f36ce6739f0150a09bae6d8a5cf92ba6c7bfbad18d43df605a487",
+      "blockNumber": 11738147,
+      "bytecodeHash": "0xc3d9d48ae42a412b39e34c23a8882978d6cfcd27351e633170f48f06b4680df0",
+      "constructorArguments": [
+        "0xddDF394EC7CC88bDCD54bF45326B123885A8eE6a"
+      ],
+      "verificationStatus": "VERIFIED"
+    },
+    "MockPrizeERC20": {
+      "address": "0x7768dbc8c3f81b3b4b80565234ae6df5c94a5ee5",
+      "transactionHash": "0xa8f9124be7f67f3b513cfed67a1fa982ff84707adde3c640b9737948586037ce",
+      "blockNumber": 11738148,
+      "bytecodeHash": "0x7399644d557c30308b780cd459bc1114fd20052bca9de16ecb95dafbfcc28b03",
+      "constructorArguments": null,
+      "verificationStatus": "VERIFIED"
+    },
+    "MockPrizeERC721": {
+      "address": "0x67bacb16fde9ad896faffc3eb8585c0349b5f6d1",
+      "transactionHash": "0xad39ed6de0e205593919d4fa55bcb7e35bb928ba233b0a46ff371f82483e7be9",
+      "blockNumber": 11738150,
+      "bytecodeHash": "0xc14ae3f9bdb6b17b9dc3c966018309476f1f08e1cd14090b1dce5b8d135c9f3d",
+      "constructorArguments": null,
+      "verificationStatus": "VERIFIED"
+    },
+    "MockPrizeERC1155": {
+      "address": "0xd7e70ae807b16e714027b45056516c98bbd7266f",
+      "transactionHash": "0x595b7814e0e2de995e1c5507fba01e411b7e3972a99a52a4937c88906dfbd68c",
+      "blockNumber": 11738151,
+      "bytecodeHash": "0xf6594e815b6bec41dd58ff54f86b549304d7423c09964f65c0b802de18727886",
+      "constructorArguments": null,
+      "verificationStatus": "VERIFIED"
+    },
+    "RoundV5": {
+      "address": "0xca319f00c3806a41c62b5d1104d56f32e9518e29",
+      "transactionHash": "0x587fd68b187e04a5cefd982f21663a26199ecff3c9a61b6957fa1b5a011c5b86",
+      "blockNumber": 11738152,
+      "bytecodeHash": "0x9830787679b92b22666923d1f2fd7d249c86abaf0e758b7afc430780f13b57ad",
+      "constructorArguments": null,
+      "verificationStatus": "VERIFIED"
+    },
+    "RoundPrizeVaultV5": {
+      "address": "0xdb51b57048d83cb258ab800073e844db3fc4a826",
+      "transactionHash": "0x1ecfaa4a6745a53c74b88d35421f08e713658b87dd6643607b54eef968ce6098",
+      "blockNumber": 11738153,
+      "bytecodeHash": "0x69ac6b446ce888f7f013a52428980c141e57f3732a2374299f9f57075e63e77b",
+      "constructorArguments": null,
+      "verificationStatus": "VERIFIED"
+    },
+    "RoundFactoryV3": {
+      "address": "0xd4cb8549980add2fea586fd13a47613118b0b5b4",
+      "transactionHash": "0x78058c01d34c1100ed5b9557c43a5dd57dc42cd9dd368a8572539df7b1b932ec",
+      "blockNumber": 11738154,
+      "bytecodeHash": "0xbb52d713e228cf45821053f16780444588b5d7e88a6973b5d2ea2095adbbd77b",
+      "constructorArguments": [
+        "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+        "0x66cd193d0C0Fb3B9b44Dd371107617A7e9f38184",
+        "0x2fC16Ed86E11544Fc9d67214705aAa60A3fEdEA5",
+        "100000000000000",
+        "0xCa319f00c3806A41C62b5d1104d56F32E9518e29",
+        "0xdb51b57048d83Cb258aB800073e844Db3Fc4A826",
+        "0xDC13e69c8e335d419205c22680f0B27b3FD79C36",
+        "true"
+      ],
+      "verificationStatus": "VERIFIED"
+    }
+  },
+  "endToEnd": {
+    "round": "0x657ac7E91d122576415dC5C4f4B1dbdAa7fD7159",
+    "prizeVault": "0xEC7016A448feE6765a1A5Ce09B6E91e122e98f1f",
+    "transactions": {
+      "creation": "0x071a6d56ece15058a4ad6d813df2a69b0a83b89f3f7e5c930bb3e85e2616bba2",
+      "executorFunding": "0x145b915cbc7cf8bdb847398bee8dbfe31418c57ef296198dc609887b267af726",
+      "media": [
+        "0xb18dec471a8894ecc0a6cfa073008bddf5070bf7199033e295d326f86976fde5"
+      ],
+      "voting": [
+        "0xaa54fa4910811799f95cd0897a70f2350cf04331e61dc76d27b9a4c3bd70212d",
+        "0x03f3ba6019f46fe09aea2e1dcae826d06e863215834c1f5f9dc5daba97147834",
+        "0x29b23928481dd409e4c20ab56f4f1a8c6c974a1d05e1d830577b1933ce8d287b"
+      ],
+      "finalization": [
+        "0xd3d383bf85498b65803b6f82a18c6fe87b006eb63eeb6b07f51438a35dd3ff7b"
+      ],
+      "idempotentRefinalization": "0x1e9cadca4ec6fbe98207eda59e3201af8f0bbbb1c769f309edaafbbc620bc75e",
+      "distribution": [
+        "0x69352bb7cbb014250cc5e912365a31389753b831ddcb73f939f6b60abd781eb3",
+        "0x36aaa90ab07ebb0aa80a9ade3a505bcdd3e437b5d4e60927e9b4cdcda7edf4f4",
+        "0x363751a4b8c444205ee63a8969a3b8a73802e35a19891f6112ada80521abed0e",
+        "0x374bdc46f62f7222989fb13ee310153d0b41ec799620d6674c967577a814de25"
+      ],
+      "admin": [
+        "0x071a6d56ece15058a4ad6d813df2a69b0a83b89f3f7e5c930bb3e85e2616bba2",
+        "0xaf20fdce6e6fe103482af6318856774766f7f5942218f9f2b842c58ddcb3459f",
+        "0xfb1ff3683b118151ef907e06e5024ad6ae898918f80afa93c57641032ba967b8",
+        "0xa8f6ac801e905b580bf5b7f85ac2f4d266ded5e8dabcedf9eac8c5579414761e",
+        "0x3ec8149428b28a6eca047a4bd62c20ed62e9dd1f3fb5ea50188cbac93340235c",
+        "0x4734c9b796bbb35145e1dfe12b03e91967a60c68b564bcfd477cf9b4e3b4816b"
+      ],
+      "submissions": [
+        "0x83d5e7a9306a5e7b4bcf521d94b58122110d9cd037da8ee94cef3be6bb57e3e4",
+        "0x8ebeefe64fdc079d9a36db087af077688f18a63b0889f00d7d0951cb8fa830fa"
+      ],
+      "moderation": [],
+      "snapshot": [
+        "0xe6cc31e3a1fc2d299ae321b64f36c5bb4454c32d34795657a4f57b6b22d85b5d"
+      ],
+      "prizeFundingAndSeal": [
+        "0xf3dbff99564205528d7aea926575e13f67f502f44ce9fd3c2f1a7fd501b6fa36",
+        "0x9cee614d0577ffeddebebde52c2515b5b6fca12267447f070cafe8570268d39d",
+        "0x099d979e3e482dc83d7a540dc89dcb715b03e6a1c7f64cc437d2ecb6e7bdeca3",
+        "0x266bd7ce1bd6aa7084ce3d33318a39263acdff3a7427af48451749a3565dd6ed",
+        "0xff8ad7d7ae49157aa12afc2d93191684a007d8c9edb274680c2adb199a8f06be"
+      ]
+    },
+    "assertions": {
+      "feeForwardedWei": "100000000000000",
+      "factoryRetainedWei": "0",
+      "creatorIsAdmin": true,
+      "additionalAdminsAdded": true,
+      "additionalAdminRemoved": true,
+      "submissionsDefaultApproved": true,
+      "moderationBufferSeconds": 300,
+      "snapshotCaptured": true,
+      "snapshotBlock": "11738293",
+      "usedVotes": "9",
+      "submissionTotals": [
+        "5",
+        "4"
+      ],
+      "additiveVotes": "5",
+      "deterministicWinnerSubmissionId": "0",
+      "winner": "0x14C676D97ac0F3Be0e0D10D190601cc531e327C7",
+      "permissionlessExecutor": "0x7dA8f7c43dE2835dF4C041069EBcf6a8cD62eeA2",
+      "executorIsRoundAdmin": false,
+      "allPrizeTypesReleased": true,
+      "pinata": {
+        "originalCid": "bafkreids5j4lobvthy2klxosd2sc4o67uvzejirva47bywitwyi5twpq4e",
+        "metadataCid": "bafkreiexax4osko3fqbmjuu2opkjvrg2scsblhtx2dyz2qusywaxz6seoq",
+        "adminImageCid": "bafkreicddtwwsfvcuinbk3ryoanp4vn3274is2p3x7cw277athkh6jsuma",
+        "originalRetryDuplicate": true,
+        "metadataRetryDuplicate": true,
+        "adminRetryDuplicate": true,
+        "secondSubmissionPinned": true,
+        "gatewayBytesVerified": true,
+        "concurrentUploadExpectedCid": "bafkreieepzyygxxqf4mpngk7ptdyjasic6oaeqg3csfc5g54trp2q5cse4",
+        "concurrentUploadCount": 3,
+        "concurrentUploadRootsMatch": true,
+        "concurrentUploadProviderRecordCount": 1
+      }
+    },
+    "evidenceFile": "deployments/sepolia-rounds-v5-e2e.json"
+  },
+  "preview": {
+    "url": "https://lils-monorepo-nn8iwiim1-satori-ffbfc349.vercel.app",
+    "deploymentId": "dpl_2hxvKuofqUZAAo8C3GX1ahvw5t8r",
+    "target": "preview",
+    "status": "READY",
+    "validCommittedUploadTest": "PASSED"
+  },
+  "verification": {
+    "explorer": "https://sepolia.etherscan.io",
+    "status": "VERIFIED",
+    "checkedContracts": [
+      "MockLilNounsVotes",
+      "LilNounsVotingPower",
+      "MockPrizeERC20",
+      "MockPrizeERC721",
+      "MockPrizeERC1155",
+      "RoundV5",
+      "RoundPrizeVaultV5",
+      "RoundFactoryV3"
+    ]
+  }
+}

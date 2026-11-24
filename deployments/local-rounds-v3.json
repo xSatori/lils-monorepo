@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 3,
+  "chain": {
+    "name": "anvil",
+    "chainId": 31337
+  },
+  "gitCommitSha": "UNKNOWN",
+  "generatedAt": "2026-09-18T15:21:36.821Z",
+  "creationFee": "100000000000000",
+  "actors": {
+    "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "admin1": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "admin2": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+    "creator": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+    "treasury": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+    "submitter": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+    "voter": "0x976EA74026E726554dB657fA54763abd0C3a0aa9"
+  },
+  "contracts": {
+    "votes": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    "adapter": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+    "roundImplementation": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+    "vaultImplementation": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+    "factory": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"
+  },
+  "round": "0xfF7a294C40A3d716b153bCa0fc377C9509dd8F3f",
+  "vault": "0x8c3633AE4b9e54587728E467d413589972E5E4B9",
+  "transactions": {
+    "create": "0x15da96aa2abd6a9affe593770822f32396fc3da1f89a49a468de0218a2343c04",
+    "actorSetup": [
+      "0x835ad13b4091eb079ce830ccd6c787e4df4f6f8d897c58bf529de22b33245bd4",
+      "0xa7edd1283fb64b20cd89942b71a3621751c24721b8bab42e2525c0708443ed93"
+    ],
+    "lifecycle": [
+      "0xb87af266c8726478072684f797eecfc5c46ea180c82f66f732ccc9a8c09f7963",
+      "0x75c3f7a14a9926c5d0eb22ebe1386e3064fdba2352640685ae895e16d8e67718",
+      "0x01e019cbe024909ca2bf5423e3531b69ec1a90a3343d700d047671d4d3882da9",
+      "0xfc65e6834d50689245eb3c035c2af6ddbd9c0adb87ae853c6ea05a7850bf8d4c",
+      "0xaa2a2482401392c53166698ee63e2b7ac553c102aaf358a4fbbb022f90dea4aa",
+      "0x79f358d7df15dfc3b2abf258fbb061f8be8ca98ab35c37e16110166dc6458611",
+      "0xf3fa16c9e386b6f55c15bc1a8e486114ba088083ee077ed50aa6ed19d15e15c5",
+      "0x9bd6b9b5296aabee4dc76bc0cc34e0287b580a0228f76311dcd2cd85e8f4ed06"
+    ]
+  },
+  "assertions": {
+    "feeForwarded": true,
+    "factoryRetainedWei": "0",
+    "prizeReleasedWei": "10000000000000000",
+    "deterministicWinner": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc"
+  }
+}

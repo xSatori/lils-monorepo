@@ -30,12 +30,16 @@
     "@payloadcms/richtext-lexical": "3.13.0",
     "@snapshot-labs/snapshot.js": "0.14.14",
     "ethers": "6.15.0",
+    "multiformats": "14.0.5",
+    "pg": "8.16.3",
+    "viem": "2.38.1",
     "sharp": "0.34.5",
     "solmate": "6.2.0",
     "uint8array-extras": "^1.3.0",
     "wrangler": "4"
   },
   "devDependencies": {
+    "@openzeppelin/contracts-rounds": "npm:@openzeppelin/contracts@5.4.0",
     "@changesets/cli": "^2.27.1",
     "@turbo/gen": "^1.11.2",
     "@types/react": "18.3.12",
