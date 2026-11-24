@@ -3,23 +3,23 @@ pragma solidity ^0.8.24;
 
 import { Test } from "forge-std/Test.sol";
 import { Clones } from "@openzeppelin/contracts/proxy/Clones.sol";
-import { RoundV8 } from "../src/v8/RoundV8.sol";
+import { RoundRelease010 } from "../src/0.1.0/RoundRelease010.sol";
 import { RoundTypes } from "../src/RoundTypes.sol";
 import { MockLilNounsVotes } from "../src/mocks/MockLilNounsVotes.sol";
 import { LilNounsVotingPower } from "../src/LilNounsVotingPower.sol";
-import { RoundValidationV8 } from "../src/v8/RoundValidationV8.sol";
+import { RoundValidationRelease010 } from "../src/0.1.0/RoundValidationRelease010.sol";
 
-contract ReadyVaultV8Mock {
+contract ReadyVaultRelease010Mock {
     function isReadyForSubmissions() external pure returns (bool) {
         return true;
     }
 }
 
-contract RoundsV8CoreTest is Test {
+contract RoundsRelease010CoreTest is Test {
     MockLilNounsVotes private token;
     LilNounsVotingPower private adapter;
-    RoundV8 private implementation;
-    RoundV8 private round;
+    RoundRelease010 private implementation;
+    RoundRelease010 private round;
     address private alice = makeAddr("alice");
     address private bob = makeAddr("bob");
 
@@ -81,10 +81,10 @@ contract RoundsV8CoreTest is Test {
         _submit(bob, "bbb");
         vm.warp(round.votingEnd());
 
-        vm.expectRevert(RoundV8.InvalidFinalizationBatch.selector);
+        vm.expectRevert(RoundRelease010.InvalidFinalizationBatch.selector);
         round.finalizeBatch(0);
         uint256 oversized = round.MAX_FINALIZATION_BATCH() + 1;
-        vm.expectRevert(RoundV8.InvalidFinalizationBatch.selector);
+        vm.expectRevert(RoundRelease010.InvalidFinalizationBatch.selector);
         round.finalizeBatch(oversized);
         (uint256 cursor, bool complete) = round.finalizeBatch(1);
         assertEq(cursor, 1);
@@ -98,7 +98,7 @@ contract RoundsV8CoreTest is Test {
         assertEq(round.getWinners().length, 2);
         assertEq(round.getWinners()[0], 0);
         assertEq(round.getWinners()[1], 1);
-        vm.expectRevert(RoundV8.NotFinalizable.selector);
+        vm.expectRevert(RoundRelease010.NotFinalizable.selector);
         round.finalizeBatch(1);
     }
 
@@ -159,15 +159,15 @@ contract RoundsV8CoreTest is Test {
         RoundTypes.RoundConfig memory config = _config(3, 2);
         config.snapshotMode = RoundTypes.SnapshotMode.CUSTOM_BLOCK;
         config.customSnapshotBlock = 99;
-        RoundV8 candidate = RoundV8(payable(Clones.clone(address(implementation))));
-        address vault = address(new ReadyVaultV8Mock());
-        vm.expectRevert(RoundValidationV8.InvalidSnapshot.selector);
+        RoundRelease010 candidate = RoundRelease010(payable(Clones.clone(address(implementation))));
+        address vault = address(new ReadyVaultRelease010Mock());
+        vm.expectRevert(RoundValidationRelease010.InvalidSnapshot.selector);
         candidate.initialize(
             address(this), address(this), vault, 8, bytes32(uint256(1)), bytes32(uint256(2)), config
         );
 
         config.snapshotMode = RoundTypes.SnapshotMode.VOTING_START;
-        vm.expectRevert(RoundValidationV8.InvalidSnapshot.selector);
+        vm.expectRevert(RoundValidationRelease010.InvalidSnapshot.selector);
         candidate.initialize(
             address(this), address(this), vault, 8, bytes32(uint256(1)), bytes32(uint256(2)), config
         );
@@ -189,7 +189,7 @@ contract RoundsV8CoreTest is Test {
         vm.warp(round.votingStart());
 
         vm.startPrank(alice);
-        vm.expectRevert(RoundV8.SelfVote.selector);
+        vm.expectRevert(RoundRelease010.SelfVote.selector);
         round.castVotes(_ids(0), _amounts(1));
         round.castVotes(_ids(1), _amounts(1));
         round.castVotes(_ids(1), _amounts(1));
@@ -200,9 +200,9 @@ contract RoundsV8CoreTest is Test {
         uint256[] memory duplicateAmounts = new uint256[](2);
         duplicateAmounts[0] = 1;
         duplicateAmounts[1] = 1;
-        vm.expectRevert(RoundV8.DuplicateSubmission.selector);
+        vm.expectRevert(RoundRelease010.DuplicateSubmission.selector);
         round.castVotes(duplicateIds, duplicateAmounts);
-        vm.expectRevert(RoundV8.VoteLimitExceeded.selector);
+        vm.expectRevert(RoundRelease010.VoteLimitExceeded.selector);
         round.castVotes(_ids(1), _amounts(2));
         vm.stopPrank();
 
@@ -222,7 +222,7 @@ contract RoundsV8CoreTest is Test {
         vm.roll(block.number + 1);
         assertEq(round.votingLimit(newlyDelegated), 0);
         vm.prank(newlyDelegated);
-        vm.expectRevert(RoundV8.NoVotingPower.selector);
+        vm.expectRevert(RoundRelease010.NoVotingPower.selector);
         round.castVotes(_ids(2), _amounts(1));
     }
 
@@ -239,7 +239,7 @@ contract RoundsV8CoreTest is Test {
         vm.warp(round.votingStart());
         vm.startPrank(alice);
         round.castVotes(_ids(0), _amounts(2));
-        vm.expectRevert(RoundV8.PerSubmissionCapExceeded.selector);
+        vm.expectRevert(RoundRelease010.PerSubmissionCapExceeded.selector);
         round.castVotes(_ids(0), _amounts(1));
         vm.stopPrank();
         assertEq(round.usedVotes(alice), 2);
@@ -255,14 +255,14 @@ contract RoundsV8CoreTest is Test {
         _scheduleAndOpen();
         _submit(bob, "bbb");
         vm.prank(alice);
-        vm.expectRevert(RoundV8.InvalidPhase.selector);
+        vm.expectRevert(RoundRelease010.InvalidPhase.selector);
         round.castVotes(_ids(0), _amounts(1));
         vm.warp(round.votingStart());
         vm.prank(alice);
         round.castVotes(_ids(0), _amounts(1));
         vm.warp(round.votingEnd());
         vm.prank(alice);
-        vm.expectRevert(RoundV8.InvalidPhase.selector);
+        vm.expectRevert(RoundRelease010.InvalidPhase.selector);
         round.castVotes(_ids(0), _amounts(1));
     }
 
@@ -311,10 +311,10 @@ contract RoundsV8CoreTest is Test {
         // accounts for dirty-slot discounts from earlier calls in this test.
         uint256 coldUpperBound =
             measured + uniqueSlots * 2_100 + uniqueWriteSlots * 20_000 + 100_000;
-        emit log_named_uint("V8 final 250 measured gas", measured);
-        emit log_named_uint("V8 final 250 unique storage slots", uniqueSlots);
-        emit log_named_uint("V8 final 250 unique write slots", uniqueWriteSlots);
-        emit log_named_uint("V8 final 250 conservative cold upper bound", coldUpperBound);
+        emit log_named_uint("0.1.0 final 250 measured gas", measured);
+        emit log_named_uint("0.1.0 final 250 unique storage slots", uniqueSlots);
+        emit log_named_uint("0.1.0 final 250 unique write slots", uniqueWriteSlots);
+        emit log_named_uint("0.1.0 final 250 conservative cold upper bound", coldUpperBound);
         assertLt(coldUpperBound, 8_000_000);
         assertEq(lastCursor, 1_000);
         assertTrue(finished);
@@ -389,7 +389,7 @@ contract RoundsV8CoreTest is Test {
         vm.roll(100);
         token = new MockLilNounsVotes(address(this));
         adapter = new LilNounsVotingPower(address(token));
-        implementation = new RoundV8();
+        implementation = new RoundRelease010();
     }
 
     function testMode() external pure returns (bool) {
@@ -405,11 +405,11 @@ contract RoundsV8CoreTest is Test {
     }
 
     function _createRoundWithConfig(RoundTypes.RoundConfig memory config) private {
-        round = RoundV8(payable(Clones.clone(address(implementation))));
+        round = RoundRelease010(payable(Clones.clone(address(implementation))));
         round.initialize(
             address(this),
             address(this),
-            address(new ReadyVaultV8Mock()),
+            address(new ReadyVaultRelease010Mock()),
             8,
             bytes32(uint256(1)),
             bytes32(uint256(2)),
@@ -423,8 +423,8 @@ contract RoundsV8CoreTest is Test {
         returns (RoundTypes.RoundConfig memory)
     {
         return RoundTypes.RoundConfig({
-            metadataURI: "ipfs://round-v8",
-            metadataHash: keccak256("round-v8"),
+            metadataURI: "ipfs://round-0.1.0",
+            metadataHash: keccak256("round-0.1.0"),
             roundStart: 0,
             submissionsOpen: 0,
             submissionsClose: 0,
@@ -453,7 +453,7 @@ contract RoundsV8CoreTest is Test {
     }
 
     function _submit(address owner, string memory title) private {
-        RoundV8.SubmissionInput memory input = RoundV8.SubmissionInput({
+        RoundRelease010.SubmissionInput memory input = RoundRelease010.SubmissionInput({
             submissionType: RoundTypes.SubmissionType.PROJECT,
             title: title,
             description: "description",

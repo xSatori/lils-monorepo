@@ -291,7 +291,7 @@ describe("Rounds detail primary actions", () => {
     );
   });
 
-  it("shows resumable finalization progress for V8 without manual snapshot capture", () => {
+  it("shows resumable finalization progress for 0.1.0 without manual snapshot capture", () => {
     const markup = renderToStaticMarkup(
       <LifecycleActions
         round={
@@ -316,7 +316,7 @@ describe("Rounds detail primary actions", () => {
     expect(markup).not.toContain("Finalize deterministic results");
   });
 
-  it("allows V8 empty rounds to finalize", () => {
+  it("allows 0.1.0 empty rounds to finalize", () => {
     const markup = renderToStaticMarkup(
       <LifecycleActions
         round={

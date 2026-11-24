@@ -350,7 +350,7 @@ export function AdminPanel({
       </h2>
       <p className="mt-1 text-content-secondary paragraph-sm">
         Moderation remains available through the review buffer and freezes when
-        voting starts. New v4 entries begin approved; use reject or hide only
+        voting starts. New entries on this contract begin approved; use reject or hide only
         when moderation requires it. Only the creator can manage round admins.
       </p>
       {creator && (
@@ -565,14 +565,14 @@ export function VotingPanel({
 
 export function LifecycleActions({ round, isPending, onAction }: Common) {
   const now = Date.now() / 1000;
-  const isV8 = round.implementationVersion >= 8;
+  const usesBatchedFinalization = round.implementationVersion >= 8;
   const processed = round.finalizationCursor ?? 0n;
   const total = BigInt(round.submissions?.length ?? 0);
   const remaining = total > processed ? total - processed : 0n;
   const batchSize = total === 0n ? 50n : remaining < 50n ? remaining : 50n;
   return (
     <div className="flex flex-col items-center gap-3">
-      {!isV8 &&
+      {!usesBatchedFinalization &&
         !round.snapshotCaptured &&
         now >= round.votingStart &&
         now < round.votingEnd && (
@@ -584,7 +584,7 @@ export function LifecycleActions({ round, isPending, onAction }: Common) {
             Capture voting snapshot
           </Button>
         )}
-      {isV8 &&
+      {usesBatchedFinalization &&
         round.lifecycleState === LifecycleState.Ended &&
         !round.finalized && (
           <div className="w-full max-w-md text-center" aria-live="polite">
@@ -620,7 +620,7 @@ export function LifecycleActions({ round, isPending, onAction }: Common) {
             </Button>
           </div>
         )}
-      {!isV8 &&
+      {!usesBatchedFinalization &&
         round.lifecycleState === LifecycleState.Ended &&
         !round.finalized && (
           <Button

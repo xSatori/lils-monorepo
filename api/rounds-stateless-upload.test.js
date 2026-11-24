@@ -2,24 +2,24 @@ const { describe, expect, it } = require("bun:test");
 const { keccak256 } = require("viem");
 
 describe("stateless committed CAR verification", () => {
-  it("recognizes V8 and V7 rounds alongside the configured Sepolia factory", async () => {
+  it("recognizes 0.1.0 and V7 rounds alongside the configured Sepolia factory", async () => {
     const { allowedRoundFactories } = await import(
       "./_rounds-stateless-upload.mjs"
     );
     const v6 = "0xC7e45B337975f1EC07cac943d0CeC6609E544377";
     const v7 = "0x4c05EF874bA1AF1D97C0708075CD531a38283454";
-    const v8 = "0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6";
+    const currentFactory = "0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6";
     expect(allowedRoundFactories(11155111, v6)).toEqual([
       v6.toLowerCase(),
-      v8.toLowerCase(),
+      currentFactory.toLowerCase(),
       v7.toLowerCase(),
     ]);
     expect(allowedRoundFactories(11155111, v7)).toEqual([
       v7.toLowerCase(),
-      v8.toLowerCase(),
+      currentFactory.toLowerCase(),
     ]);
-    expect(allowedRoundFactories(11155111, v8)).toEqual([
-      v8.toLowerCase(),
+    expect(allowedRoundFactories(11155111, currentFactory)).toEqual([
+      currentFactory.toLowerCase(),
       v7.toLowerCase(),
     ]);
     expect(allowedRoundFactories(1, v6)).toEqual([v6.toLowerCase()]);

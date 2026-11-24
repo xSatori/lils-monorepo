@@ -17,7 +17,7 @@ import { IRoundPrizeView } from "../interfaces/IRoundPrizeView.sol";
 import { IRoundFactoryAdminView } from "../interfaces/IRoundFactoryAdminView.sol";
 import { PrizeTypes } from "../v3/PrizeTypes.sol";
 
-contract RoundPrizeVaultV8 is
+contract RoundPrizeVaultRelease010 is
     IRoundPrizeVault,
     Initializable,
     ReentrancyGuard,

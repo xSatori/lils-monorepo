@@ -14,7 +14,7 @@ import {
 } from "./rpc";
 
 describe("Rounds contract-version compatibility", () => {
-  it("uses resumable finalization only for V8 rounds", () => {
+  it("uses resumable finalization only for 0.1.0 rounds", () => {
     expect(getRoundAbi(8).some((item) => item.name === "finalizeBatch")).toBe(
       true,
     );
@@ -27,7 +27,7 @@ describe("Rounds contract-version compatibility", () => {
     expect(getRoundAbi(7).some((item) => item.name === "finalize")).toBe(true);
   });
 
-  it("reads finalization progress only for V8 rounds", async () => {
+  it("reads finalization progress only for 0.1.0 rounds", async () => {
     const calls: string[] = [];
     const client = {
       readContract: async ({ functionName }) => {
@@ -62,7 +62,7 @@ describe("Rounds contract-version compatibility", () => {
     expect(normalizeSubmissionsClose(2, 1_100, 1_234)).toBe(1_100);
   });
 
-  it("selects the V8 factory while preserving V7, V6, and V5 rounds", () => {
+  it("selects the 0.1.0 factory while preserving V7, V6, and V5 rounds", () => {
     const contracts = getRoundsContracts(11_155_111);
 
     expect(contracts.factory).toBe(
@@ -85,7 +85,7 @@ describe("Rounds contract-version compatibility", () => {
     ]);
   });
 
-  it("does not override the configured V8 factory with an invalid or legacy address", () => {
+  it("does not override the configured 0.1.0 factory with an invalid or legacy address", () => {
     const v7 = "0x4c05EF874bA1AF1D97C0708075CD531a38283454";
     const contracts = getRoundsContracts(11_155_111, v7);
 
@@ -116,20 +116,20 @@ describe("Rounds contract-version compatibility", () => {
     expect(getRoundsContracts(1, v7).factoryGeneration).toBeUndefined();
   });
 
-  it("keeps V8 active and V7 historical when a stale V7 environment override remains", () => {
-    const v8 = "0x8888888888888888888888888888888888888888";
+  it("keeps 0.1.0 active and V7 historical when a stale V7 environment override remains", () => {
+    const currentFactory = "0x8888888888888888888888888888888888888888";
     const v7 = "0x7777777777777777777777777777777777777777";
     const contracts = resolveRoundsContracts(
       11_155_111,
       {
-        roundsFactory: v8,
+        roundsFactory: currentFactory,
         roundsFactoryGeneration: 8,
         roundsLegacyFactories: [{ address: v7, generation: 7 }],
       },
       v7,
     );
 
-    expect(contracts.factory).toBe(v8);
+    expect(contracts.factory).toBe(currentFactory);
     expect(contracts.factoryGeneration).toBe(8);
     expect(contracts.legacyFactories).toEqual([{ address: v7, generation: 7 }]);
   });

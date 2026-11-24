@@ -6,10 +6,10 @@ import { ReentrancyGuard } from "@openzeppelin/contracts/utils/ReentrancyGuard.s
 import { IRoundV3 } from "../interfaces/IRoundV3.sol";
 import { IRoundPrizeVault } from "../interfaces/IRoundPrizeVault.sol";
 import { RoundTypes } from "../RoundTypes.sol";
-import { RoundValidationV8 } from "./RoundValidationV8.sol";
+import { RoundValidationRelease010 } from "./RoundValidationRelease010.sol";
 import { PrizeTypes } from "../v3/PrizeTypes.sol";
 
-contract RoundFactoryV8 is ReentrancyGuard {
+contract RoundFactoryRelease010 is ReentrancyGuard {
     uint256 public constant TEST_PHASE_DURATION = 5 minutes;
     address public constant treasury = 0xd5f279ff9EB21c6D40C8f345a66f2751C4eeA1fB;
     address public constant MAINNET_GLOBAL_ADMIN = 0xeE09d7138B34EAC649ff0CEBE43f258464537701;
@@ -138,10 +138,10 @@ contract RoundFactoryV8 is ReentrancyGuard {
         if (msg.value != creationFee) revert InvalidFee();
         uint32 version = activeImplementationVersion;
         if (version >= 6) {
-            RoundValidationV8.validateUnscheduled(config);
+            RoundValidationRelease010.validateUnscheduled(config);
             if (vaultConfig.allocations.length == 0) revert EmptyPrizePlan();
         } else {
-            RoundValidationV8.validate(config);
+            RoundValidationRelease010.validate(config);
         }
         if (config.votingPowerAdapter != votingPowerAdapter) {
             revert UnexpectedVotingPowerAdapter();

@@ -7,7 +7,7 @@ const owner = "0x1111111111111111111111111111111111111111";
 const hash = `0x${"a".repeat(64)}`;
 
 describe("round RPC tuple decoding", () => {
-  it("decodes a named V8 submission struct returned by Viem", () => {
+  it("decodes a named 0.1.0 submission struct returned by Viem", () => {
     const fields = [
       owner,
       0,

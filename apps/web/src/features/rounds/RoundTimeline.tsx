@@ -124,7 +124,7 @@ export function RoundTimeline({ round }: { round: RoundView }) {
 
       <p className="mt-4 border-t pt-3 text-content-secondary paragraph-sm">
         {round.implementationVersion === 1
-          ? "Legacy v1 round: submissions close when voting starts, with no separate moderation-review window."
+          ? "Legacy round: submissions close when voting starts, with no separate moderation-review window."
           : `Moderation review lasts ${Math.round((round.votingStart - round.submissionsClose) / 60)} minutes. No new submissions are accepted during this buffer.`}
       </p>
     </div>

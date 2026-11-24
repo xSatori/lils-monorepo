@@ -12,14 +12,14 @@ import { IRoundPrizeVault } from "../interfaces/IRoundPrizeVault.sol";
 import { IVotingPower } from "../interfaces/IVotingPower.sol";
 import { IRoundFactoryAdminView } from "../interfaces/IRoundFactoryAdminView.sol";
 import { RoundTypes } from "../RoundTypes.sol";
-import { RoundValidationV8 } from "./RoundValidationV8.sol";
+import { RoundValidationRelease010 } from "./RoundValidationRelease010.sol";
 
 interface IRoundFactoryScheduleMode {
     function testMode() external view returns (bool);
 }
 
-/// @notice V8 round with creation-time historical voting power and bounded finalization.
-contract RoundV8 is IRoundV3, Initializable, ReentrancyGuard, AccessControl, EIP712 {
+/// @notice 0.1.0 round with creation-time historical voting power and bounded finalization.
+contract RoundRelease010 is IRoundV3, Initializable, ReentrancyGuard, AccessControl, EIP712 {
     using SafeCast for uint256;
 
     uint256 public constant MAX_METADATA_URI_BYTES = 512;
@@ -235,7 +235,7 @@ contract RoundV8 is IRoundV3, Initializable, ReentrancyGuard, AccessControl, EIP
             factory_ == address(0) || creator_ == address(0) || prizeVault_ == address(0)
                 || prizeVault_.code.length == 0 || msg.sender != factory_
         ) revert InvalidAddress();
-        RoundValidationV8.validateUnscheduled(config);
+        RoundValidationRelease010.validateUnscheduled(config);
 
         factory = factory_;
         creator = creator_;
@@ -298,7 +298,7 @@ contract RoundV8 is IRoundV3, Initializable, ReentrancyGuard, AccessControl, EIP
         if (scheduleConfigured && block.timestamp >= submissionsOpen) revert InvalidPhase();
         if (
             bytes(uri).length == 0 || bytes(uri).length > MAX_METADATA_URI_BYTES
-                || !RoundValidationV8.isContentAddressedURI(uri) || contentHash == bytes32(0)
+                || !RoundValidationRelease010.isContentAddressedURI(uri) || contentHash == bytes32(0)
         ) revert InvalidMetadata();
         metadataURI = uri;
         metadataHash = contentHash;
@@ -368,7 +368,7 @@ contract RoundV8 is IRoundV3, Initializable, ReentrancyGuard, AccessControl, EIP
         if (
             bytes(input.metadataURI).length == 0
                 || bytes(input.metadataURI).length > MAX_METADATA_URI_BYTES
-                || !RoundValidationV8.isContentAddressedURI(input.metadataURI)
+                || !RoundValidationRelease010.isContentAddressedURI(input.metadataURI)
                 || input.metadataHash == bytes32(0)
         ) revert InvalidMetadata();
         uint256 titleLength = bytes(input.title).length;
@@ -476,7 +476,7 @@ contract RoundV8 is IRoundV3, Initializable, ReentrancyGuard, AccessControl, EIP
         if (nonce != imageRevisionNonce[submissionId]) revert InvalidImageNonce();
         if (
             bytes(imageURI).length == 0 || bytes(imageURI).length > MAX_METADATA_URI_BYTES
-                || !RoundValidationV8.isContentAddressedURI(imageURI) || imageHash == bytes32(0)
+                || !RoundValidationRelease010.isContentAddressedURI(imageURI) || imageHash == bytes32(0)
         ) revert InvalidMetadata();
 
         Submission storage submission = _submissions[submissionId];

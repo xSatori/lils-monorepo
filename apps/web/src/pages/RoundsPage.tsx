@@ -580,9 +580,9 @@ export default function RoundsPage() {
             )}
             {query.data && contracts.factoryGeneration === 1 && (
               <RoundsStatus kind="info">
-                <strong>Legacy v1 factory.</strong> Existing rounds remain
+                <strong>Legacy factory.</strong> Existing rounds remain
                 readable and interactive. New round creation is disabled until a
-                generation-2 factory with the moderation-review initializer
+                factory with a compatible moderation-review initializer
                 schema is configured.
               </RoundsStatus>
             )}

@@ -185,7 +185,7 @@ export function RoundsInfoDialog({
               </p>
               {factory && factory.activeImplementationVersion >= 5 && (
                 <p className="mt-3 text-content-secondary paragraph-sm">
-                  Version 5 commits deterministic media onchain before the host
+                  This contract commits deterministic media onchain before the host
                   can pin it. The stateless upload route reads that commitment
                   directly and never uses PostgreSQL challenges or sessions.
                   Ordered admin-assisted images need two distinct current global
@@ -201,7 +201,7 @@ export function RoundsInfoDialog({
                   Current contracts
                 </h3>
                 <span className="text-content-secondary label-sm">
-                  Factory generation {factoryGeneration ?? "unknown"}
+                  Onchain Rounds 0.1.0
                 </span>
               </div>
               <ul className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -214,11 +214,6 @@ export function RoundsInfoDialog({
                   label="Active round implementation"
                   address={factory?.activeImplementation}
                   explorerUrl={explorerUrl}
-                  detail={
-                    factory
-                      ? `Implementation version ${factory.activeImplementationVersion}`
-                      : undefined
-                  }
                 />
                 <ContractLink
                   label="Active prize-vault implementation"

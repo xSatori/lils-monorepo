@@ -1,8 +1,10 @@
 # Onchain Rounds Deployment
 
+Release names use `MAJOR.MINOR.PATCH`. The first public release is **0.1.0**. Patch releases cover compatible fixes, and minor releases add functionality during the initial development series. Contract implementation numbers and signing-domain versions follow their own compatibility rules.
+
 ## Running the integrated rounds branch
 
-The `feat/onchain-rounds` branch serves the V8 Sepolia interface and a [read-only snapshot of historical rounds](../../apps/web/src/features/rounds/archive/README.md) at `/rounds`. The Solidity contracts manage rounds, voting and prizes. The Node backend verifies onchain media commitments and serves or pins IPFS content. The upstream offchain funding service is separate.
+The `feat/onchain-rounds` branch serves the 0.1.0 Sepolia interface and a [read-only snapshot of historical rounds](../../apps/web/src/features/rounds/archive/README.md) at `/rounds`. The Solidity contracts manage rounds, voting and prizes. The Node backend verifies onchain media commitments and serves or pins IPFS content. The upstream offchain funding service is separate.
 
 From the repository root, with Bun and Foundry installed:
 
@@ -18,7 +20,7 @@ bun run --cwd apps/web dev
 
 For a production bundle run `bun run --cwd apps/web build` after building the shared packages. The contracts use the pinned OpenZeppelin 5.4.0 alias in the root Foundry configuration. The upstream contracts retain their own OpenZeppelin dependency.
 
-The frontend defaults to self-pinning. To use sponsored V8 uploads, set `VITE_ROUNDS_UPLOAD_API_URL=/api/rounds/uploads` for the frontend build. Provide these variables to the Node function runtime (or root `.env.local` for Vite development):
+The frontend defaults to self-pinning. To use sponsored 0.1.0 uploads, set `VITE_ROUNDS_UPLOAD_API_URL=/api/rounds/uploads` for the frontend build. Provide these variables to the Node function runtime (or root `.env.local` for Vite development):
 
 | Variable | Value |
 | --- | --- |
@@ -31,13 +33,13 @@ The legacy challenge, presign and metadata workflow also needs `ROUNDS_UPLOAD_AU
 
 The deployment records below describe historical releases. The Foundry broadcast scripts send transactions when run with broadcasting enabled. The Pinata verification script creates and removes provider data; it is separate from the local test suite.
 
-## Sepolia V8 Preview (2026-09-21)
+## Sepolia 0.1.0 Preview (2026-09-21)
 
-V8 is the active local and Vercel Preview Sepolia factory. All four deployment
+0.1.0 is the active local and Vercel Preview Sepolia factory. All four deployment
 contracts are source-verified on Sepolia Etherscan. The Preview URL, Preview-only
 sponsored-upload factory setting, verification evidence, security-audit triage,
-and remaining release gates are in [V8-PREVIEW-RELEASE.md](./V8-PREVIEW-RELEASE.md)
-and [`deployments/sepolia-rounds-v8.json`](../../deployments/sepolia-rounds-v8.json).
+and remaining release gates are in [0.1.0-PREVIEW-RELEASE.md](./0.1.0-PREVIEW-RELEASE.md)
+and [`deployments/sepolia-rounds-0.1.0.json`](../../deployments/sepolia-rounds-0.1.0.json).
 V7 and earlier factories remain readable as historical rounds. This Preview is
 not a production deployment or mainnet sign-off.
 

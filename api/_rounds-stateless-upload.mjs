@@ -11,7 +11,7 @@ const MAX_IMAGE_CAR_BYTES = 11 * 1024 * 1024;
 const MAX_METADATA_CAR_BYTES = 128 * 1024;
 const PINATA_UPLOAD_URL = "https://uploads.pinata.cloud/v3/files";
 const SEPOLIA_V7_FACTORY = "0x4c05EF874bA1AF1D97C0708075CD531a38283454";
-const SEPOLIA_V8_FACTORY = "0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6";
+const SEPOLIA_CURRENT_FACTORY = "0xCa648c6b3e53b126Ad6bC00b248a7Ac236C3aaF6";
 
 export class StatelessUploadError extends Error {
   constructor(code, message, status = 400) {
@@ -204,7 +204,7 @@ export function allowedRoundFactories(chainId, configuredFactory) {
       [
         getAddress(configuredFactory),
         ...(chainId === 11155111
-          ? [getAddress(SEPOLIA_V8_FACTORY), getAddress(SEPOLIA_V7_FACTORY)]
+          ? [getAddress(SEPOLIA_CURRENT_FACTORY), getAddress(SEPOLIA_V7_FACTORY)]
           : []),
       ].map((address) => address.toLowerCase()),
     ),

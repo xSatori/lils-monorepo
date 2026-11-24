@@ -3,29 +3,29 @@ pragma solidity ^0.8.24;
 
 import { Test } from "forge-std/Test.sol";
 import { IERC1271 } from "@openzeppelin/contracts/interfaces/IERC1271.sol";
-import { RoundFactoryV8 } from "../src/v8/RoundFactoryV8.sol";
-import { RoundPrizeVaultV8 } from "../src/v8/RoundPrizeVaultV8.sol";
-import { RoundV8 } from "../src/v8/RoundV8.sol";
-import { SepoliaRoundTestAdmin } from "../src/v8/SepoliaRoundTestAdmin.sol";
+import { RoundFactoryRelease010 } from "../src/0.1.0/RoundFactoryRelease010.sol";
+import { RoundPrizeVaultRelease010 } from "../src/0.1.0/RoundPrizeVaultRelease010.sol";
+import { RoundRelease010 } from "../src/0.1.0/RoundRelease010.sol";
+import { SepoliaRoundTestAdmin } from "../src/0.1.0/SepoliaRoundTestAdmin.sol";
 import { LilNounsVotingPower } from "../src/LilNounsVotingPower.sol";
 import { MockLilNounsVotes } from "../src/mocks/MockLilNounsVotes.sol";
 
-contract RoundsV8AdminTest is Test {
+contract RoundsRelease010AdminTest is Test {
     uint256 private constant OWNER_ONE_KEY = 0xA11CE;
     uint256 private constant OWNER_TWO_KEY = 0xB0B;
     address private constant MAINNET_ADMIN = 0xeE09d7138B34EAC649ff0CEBE43f258464537701;
 
     SepoliaRoundTestAdmin private admin;
-    RoundFactoryV8 private factory;
+    RoundFactoryRelease010 private factory;
 
     function setUp() external {
         vm.chainId(31_337);
         admin = new SepoliaRoundTestAdmin(vm.addr(OWNER_ONE_KEY), vm.addr(OWNER_TWO_KEY));
-        factory = new RoundFactoryV8(
+        factory = new RoundFactoryRelease010(
             address(admin),
             0.01 ether,
-            address(new RoundV8()),
-            address(new RoundPrizeVaultV8()),
+            address(new RoundRelease010()),
+            address(new RoundPrizeVaultRelease010()),
             address(new LilNounsVotingPower(address(new MockLilNounsVotes(address(this))))),
             true
         );
@@ -36,7 +36,7 @@ contract RoundsV8AdminTest is Test {
         assertTrue(factory.isGlobalAdmin(address(admin)));
         assertFalse(factory.isGlobalAdmin(vm.addr(OWNER_ONE_KEY)));
         vm.prank(vm.addr(OWNER_ONE_KEY));
-        vm.expectRevert(RoundFactoryV8.NotGlobalAdmin.selector);
+        vm.expectRevert(RoundFactoryRelease010.NotGlobalAdmin.selector);
         factory.setCreationFee(0.02 ether);
 
         bytes memory callData = abi.encodeCall(factory.setCreationFee, (0.02 ether));
@@ -71,14 +71,14 @@ contract RoundsV8AdminTest is Test {
     function testMainnetAdminCannotBeOverriddenByConstructor() external {
         vm.chainId(1);
         vm.etch(MAINNET_ADMIN, hex"60006000f3");
-        address roundImplementation = address(new RoundV8());
-        address vaultImplementation = address(new RoundPrizeVaultV8());
+        address roundImplementation = address(new RoundRelease010());
+        address vaultImplementation = address(new RoundPrizeVaultRelease010());
         address adapter = factory.votingPowerAdapter();
-        vm.expectRevert(RoundFactoryV8.InvalidAddress.selector);
-        new RoundFactoryV8(
+        vm.expectRevert(RoundFactoryRelease010.InvalidAddress.selector);
+        new RoundFactoryRelease010(
             address(admin), 0.01 ether, roundImplementation, vaultImplementation, adapter, false
         );
-        RoundFactoryV8 mainnet = new RoundFactoryV8(
+        RoundFactoryRelease010 mainnet = new RoundFactoryRelease010(
             address(0), 0.01 ether, roundImplementation, vaultImplementation, adapter, false
         );
         assertEq(mainnet.globalAdmin(), MAINNET_ADMIN);

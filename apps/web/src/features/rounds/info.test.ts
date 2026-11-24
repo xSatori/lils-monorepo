@@ -35,7 +35,7 @@ function factoryClient(implementationResult: unknown) {
 }
 
 describe("Rounds factory contract information", () => {
-  it("explains V8 creation-time voting power and wallet-level limits accurately", () => {
+  it("explains 0.1.0 creation-time voting power and wallet-level limits accurately", () => {
     const text = votingLifecycleDescription(8);
     expect(text).toContain("round creation");
     expect(text).toContain("after creation");
@@ -43,7 +43,7 @@ describe("Rounds factory contract information", () => {
     expect(text).toContain("splitting");
     expect(text).toContain("batches");
   });
-  it("reads one global admin from a V8 factory", async () => {
+  it("reads one global admin from a 0.1.0 factory", async () => {
     const globalAdmin = "0x7777777777777777777777777777777777777777";
     const client = factoryClient([implementation, vaultImplementation]);
     const readContract = client.readContract;

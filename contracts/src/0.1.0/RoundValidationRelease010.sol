@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import { RoundTypes } from "../RoundTypes.sol";
 
-library RoundValidationV8 {
+library RoundValidationRelease010 {
     uint256 internal constant MAX_METADATA_URI_BYTES = 512;
     uint16 internal constant MAX_SUBMISSIONS = 1000;
     uint16 internal constant MAX_SUBMISSIONS_PER_WALLET = 10;

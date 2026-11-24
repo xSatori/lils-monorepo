@@ -3,13 +3,13 @@ pragma solidity ^0.8.24;
 
 import { Script } from "forge-std/Script.sol";
 import { console2 } from "forge-std/console2.sol";
-import { RoundV8 } from "../src/v8/RoundV8.sol";
-import { RoundPrizeVaultV8 } from "../src/v8/RoundPrizeVaultV8.sol";
-import { RoundFactoryV8 } from "../src/v8/RoundFactoryV8.sol";
-import { SepoliaRoundTestAdmin } from "../src/v8/SepoliaRoundTestAdmin.sol";
+import { RoundRelease010 } from "../src/0.1.0/RoundRelease010.sol";
+import { RoundPrizeVaultRelease010 } from "../src/0.1.0/RoundPrizeVaultRelease010.sol";
+import { RoundFactoryRelease010 } from "../src/0.1.0/RoundFactoryRelease010.sol";
+import { SepoliaRoundTestAdmin } from "../src/0.1.0/SepoliaRoundTestAdmin.sol";
 
-/// @notice A new V8 factory and 2-of-2 test authority; no existing clone is upgraded.
-contract DeployTestRoundsV8 is Script {
+/// @notice A new 0.1.0 factory and 2-of-2 test authority; no existing clone is upgraded.
+contract DeployTestRoundsRelease010 is Script {
     uint256 internal constant INITIAL_CREATION_FEE = 0.01 ether;
     error UnsupportedChain(uint256 chainId);
     error InvalidDeployer();
@@ -26,9 +26,9 @@ contract DeployTestRoundsV8 is Script {
 
         vm.startBroadcast(deployer);
         SepoliaRoundTestAdmin testAdmin = new SepoliaRoundTestAdmin(ownerOne, ownerTwo);
-        address roundImplementation = address(new RoundV8());
-        address vaultImplementation = address(new RoundPrizeVaultV8());
-        RoundFactoryV8 factory = new RoundFactoryV8(
+        address roundImplementation = address(new RoundRelease010());
+        address vaultImplementation = address(new RoundPrizeVaultRelease010());
+        RoundFactoryRelease010 factory = new RoundFactoryRelease010(
             address(testAdmin),
             INITIAL_CREATION_FEE,
             roundImplementation,
@@ -40,9 +40,9 @@ contract DeployTestRoundsV8 is Script {
 
         console2.log("chain id", block.chainid);
         console2.log("test admin", address(testAdmin));
-        console2.log("round v8 implementation", roundImplementation);
-        console2.log("prize vault v8 implementation", vaultImplementation);
-        console2.log("round factory v8", address(factory));
+        console2.log("round currentFactory implementation", roundImplementation);
+        console2.log("prize vault currentFactory implementation", vaultImplementation);
+        console2.log("round factory 0.1.0", address(factory));
         console2.log("voting power adapter", votingPowerAdapter);
         console2.log("treasury", factory.treasury());
         console2.log("creation fee", factory.creationFee());

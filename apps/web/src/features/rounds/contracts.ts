@@ -303,7 +303,7 @@ export const roundFactoryV3Abi = [
   },
 ] as const;
 
-export const roundFactoryV8Abi = [
+export const roundFactoryRelease010Abi = [
   ...roundFactoryV3Abi.filter((item) => item.name !== "globalAdmins"),
   {
     type: "function",
@@ -323,7 +323,7 @@ export const roundFactoryV8Abi = [
 
 export const getRoundFactoryAbi = (generation?: number) =>
   generation && generation >= 8
-    ? roundFactoryV8Abi
+    ? roundFactoryRelease010Abi
     : generation && generation >= 3
       ? roundFactoryV3Abi
       : roundFactoryAbi;
@@ -756,7 +756,7 @@ export const roundV6Abi = [
   },
 ] as const;
 
-export const roundV8Abi = [
+export const roundRelease010Abi = [
   ...roundV6Abi.filter(
     (item) => item.name !== "captureSnapshot" && item.name !== "finalize",
   ),
@@ -781,7 +781,7 @@ export const roundV8Abi = [
 
 export const getRoundAbi = (implementationVersion: number) =>
   implementationVersion >= 8
-    ? roundV8Abi
+    ? roundRelease010Abi
     : implementationVersion >= 6
       ? roundV6Abi
       : implementationVersion >= 5

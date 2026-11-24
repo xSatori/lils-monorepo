@@ -3,22 +3,22 @@ pragma solidity ^0.8.24;
 
 import { Test } from "forge-std/Test.sol";
 import { Clones } from "@openzeppelin/contracts/proxy/Clones.sol";
-import { RoundV8 } from "../src/v8/RoundV8.sol";
-import { RoundPrizeVaultV8 } from "../src/v8/RoundPrizeVaultV8.sol";
-import { SepoliaRoundTestAdmin } from "../src/v8/SepoliaRoundTestAdmin.sol";
+import { RoundRelease010 } from "../src/0.1.0/RoundRelease010.sol";
+import { RoundPrizeVaultRelease010 } from "../src/0.1.0/RoundPrizeVaultRelease010.sol";
+import { SepoliaRoundTestAdmin } from "../src/0.1.0/SepoliaRoundTestAdmin.sol";
 import { RoundTypes } from "../src/RoundTypes.sol";
 import { PrizeTypes } from "../src/v3/PrizeTypes.sol";
 import { LilNounsVotingPower } from "../src/LilNounsVotingPower.sol";
 import { MockLilNounsVotes } from "../src/mocks/MockLilNounsVotes.sol";
 
-contract RoundsV8VaultQuorumTest is Test {
+contract RoundsRelease010VaultQuorumTest is Test {
     uint256 private constant OWNER_ONE_KEY = 11;
     uint256 private constant OWNER_TWO_KEY = 12;
     uint256 private constant ROUND_ADMIN_ONE_KEY = 13;
     uint256 private constant ROUND_ADMIN_TWO_KEY = 14;
     SepoliaRoundTestAdmin private globalAdmin;
-    RoundV8 private round;
-    RoundPrizeVaultV8 private vault;
+    RoundRelease010 private round;
+    RoundPrizeVaultRelease010 private vault;
 
     function setUp() external {
         vm.chainId(31_337);
@@ -27,11 +27,11 @@ contract RoundsV8VaultQuorumTest is Test {
         globalAdmin = new SepoliaRoundTestAdmin(vm.addr(OWNER_ONE_KEY), vm.addr(OWNER_TWO_KEY));
         address adapter =
             address(new LilNounsVotingPower(address(new MockLilNounsVotes(address(this)))));
-        round = RoundV8(payable(Clones.clone(address(new RoundV8()))));
-        vault = RoundPrizeVaultV8(payable(Clones.clone(address(new RoundPrizeVaultV8()))));
+        round = RoundRelease010(payable(Clones.clone(address(new RoundRelease010()))));
+        vault = RoundPrizeVaultRelease010(payable(Clones.clone(address(new RoundPrizeVaultRelease010()))));
         RoundTypes.RoundConfig memory config = RoundTypes.RoundConfig({
-            metadataURI: "ipfs://v8",
-            metadataHash: keccak256("v8"),
+            metadataURI: "ipfs://round-0.1.0",
+            metadataHash: keccak256("round-0.1.0"),
             roundStart: 0,
             submissionsOpen: 0,
             submissionsClose: 0,
@@ -81,7 +81,7 @@ contract RoundsV8VaultQuorumTest is Test {
         vm.warp(open);
         vm.prank(makeAddr("submitter"));
         round.submit(
-            RoundV8.SubmissionInput({
+            RoundRelease010.SubmissionInput({
                 submissionType: RoundTypes.SubmissionType.PROJECT,
                 title: "abc",
                 description: "hello",
@@ -92,7 +92,7 @@ contract RoundsV8VaultQuorumTest is Test {
         );
         vm.prank(makeAddr("other-submitter"));
         round.submit(
-            RoundV8.SubmissionInput({
+            RoundRelease010.SubmissionInput({
                 submissionType: RoundTypes.SubmissionType.PROJECT,
                 title: "def",
                 description: "hello",
@@ -121,12 +121,12 @@ contract RoundsV8VaultQuorumTest is Test {
         _complete();
         uint48 deadline = uint48(block.timestamp + 1 hours);
         bytes32 digest =
-            vault.hashAllocationAction(RoundPrizeVaultV8.AllocationAction.HOLD, 0, 0, deadline);
+            vault.hashAllocationAction(RoundPrizeVaultRelease010.AllocationAction.HOLD, 0, 0, deadline);
         bytes memory globalSignature = _globalSignature(digest);
         bytes memory adminOneSignature = _sign(ROUND_ADMIN_ONE_KEY, digest);
         bytes memory adminTwoSignature = _sign(ROUND_ADMIN_TWO_KEY, digest);
 
-        vm.expectRevert(RoundPrizeVaultV8.InvalidSignerPair.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidSignerPair.selector);
         vault.hold(
             0,
             deadline,
@@ -135,7 +135,7 @@ contract RoundsV8VaultQuorumTest is Test {
             vm.addr(ROUND_ADMIN_TWO_KEY),
             adminTwoSignature
         );
-        vm.expectRevert(RoundPrizeVaultV8.InvalidSignerPair.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidSignerPair.selector);
         vault.hold(
             0,
             deadline,
@@ -155,7 +155,7 @@ contract RoundsV8VaultQuorumTest is Test {
         assertTrue(vault.isHeld(0));
 
         digest =
-            vault.hashAllocationAction(RoundPrizeVaultV8.AllocationAction.UNHOLD, 0, 1, deadline);
+            vault.hashAllocationAction(RoundPrizeVaultRelease010.AllocationAction.UNHOLD, 0, 1, deadline);
         vault.unhold(
             0,
             deadline,
@@ -169,8 +169,8 @@ contract RoundsV8VaultQuorumTest is Test {
 
     function testRevokedRoundAdminCannotAuthorizeOrExecuteQueuedAction() external {
         _complete();
-        RoundPrizeVaultV8.SafetyAction memory action = RoundPrizeVaultV8.SafetyAction({
-            kind: RoundPrizeVaultV8.SafetyActionKind.ROTATE_RECOVERY_RECIPIENT,
+        RoundPrizeVaultRelease010.SafetyAction memory action = RoundPrizeVaultRelease010.SafetyAction({
+            kind: RoundPrizeVaultRelease010.SafetyActionKind.ROTATE_RECOVERY_RECIPIENT,
             assetType: PrizeTypes.AssetType.NATIVE,
             token: address(0),
             tokenId: 0,
@@ -190,14 +190,14 @@ contract RoundsV8VaultQuorumTest is Test {
         );
         round.revokeRoundAdmin(vm.addr(ROUND_ADMIN_ONE_KEY));
         vm.warp(block.timestamp + 5 minutes);
-        vm.expectRevert(RoundPrizeVaultV8.InvalidSignerPair.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidSignerPair.selector);
         vault.executeSafetyAction(actionId);
     }
 
     function testSafetyCancellationRequiresGlobalAndEligibleRoundAdmin() external {
         _complete();
-        RoundPrizeVaultV8.SafetyAction memory action = RoundPrizeVaultV8.SafetyAction({
-            kind: RoundPrizeVaultV8.SafetyActionKind.ROTATE_RECOVERY_RECIPIENT,
+        RoundPrizeVaultRelease010.SafetyAction memory action = RoundPrizeVaultRelease010.SafetyAction({
+            kind: RoundPrizeVaultRelease010.SafetyActionKind.ROTATE_RECOVERY_RECIPIENT,
             assetType: PrizeTypes.AssetType.NATIVE,
             token: address(0),
             tokenId: 0,
@@ -217,7 +217,7 @@ contract RoundsV8VaultQuorumTest is Test {
         );
         uint48 deadline = uint48(block.timestamp + 10 minutes);
         digest = vault.hashSafetyCancellation(actionId, deadline);
-        vm.expectRevert(RoundPrizeVaultV8.InvalidSignerPair.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidSignerPair.selector);
         vault.cancelSafetyAction(
             actionId,
             deadline,
@@ -235,9 +235,9 @@ contract RoundsV8VaultQuorumTest is Test {
             _sign(ROUND_ADMIN_TWO_KEY, digest)
         );
         vm.warp(block.timestamp + 5 minutes);
-        vm.expectRevert(RoundPrizeVaultV8.SafetyActionAlreadyExecuted.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.SafetyActionAlreadyExecuted.selector);
         vault.executeSafetyAction(actionId);
-        vm.expectRevert(RoundPrizeVaultV8.SafetyActionAlreadyExecuted.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.SafetyActionAlreadyExecuted.selector);
         vault.cancelSafetyAction(
             actionId,
             deadline,
@@ -252,7 +252,7 @@ contract RoundsV8VaultQuorumTest is Test {
         _complete();
         uint48 deadline = uint48(block.timestamp + 20 minutes);
         bytes32 holdDigest =
-            vault.hashAllocationAction(RoundPrizeVaultV8.AllocationAction.HOLD, 0, 0, deadline);
+            vault.hashAllocationAction(RoundPrizeVaultRelease010.AllocationAction.HOLD, 0, 0, deadline);
         vault.hold(
             0,
             deadline,
@@ -263,9 +263,9 @@ contract RoundsV8VaultQuorumTest is Test {
         );
         vm.warp(block.timestamp + 5 minutes);
         bytes32 reclaimDigest = vault.hashAllocationAction(
-            RoundPrizeVaultV8.AllocationAction.RECLAIM, 0, 1, deadline
+            RoundPrizeVaultRelease010.AllocationAction.RECLAIM, 0, 1, deadline
         );
-        vm.expectRevert(RoundPrizeVaultV8.InvalidSignature.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidSignature.selector);
         vault.reclaim(
             0,
             deadline,
@@ -290,7 +290,7 @@ contract RoundsV8VaultQuorumTest is Test {
         );
         assertTrue(vault.isReclaimed(0));
         assertEq(vault.allocationNonces(0), 2);
-        vm.expectRevert(RoundPrizeVaultV8.AlreadyClaimed.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.AlreadyClaimed.selector);
         vault.reclaim(
             0,
             deadline,
@@ -304,8 +304,8 @@ contract RoundsV8VaultQuorumTest is Test {
     function testDelayedSafetyRotationExecutesOnceWithUnrevokedQuorum() external {
         _complete();
         address nextRecipient = makeAddr("rotation-recipient");
-        RoundPrizeVaultV8.SafetyAction memory action = RoundPrizeVaultV8.SafetyAction({
-            kind: RoundPrizeVaultV8.SafetyActionKind.ROTATE_RECOVERY_RECIPIENT,
+        RoundPrizeVaultRelease010.SafetyAction memory action = RoundPrizeVaultRelease010.SafetyAction({
+            kind: RoundPrizeVaultRelease010.SafetyActionKind.ROTATE_RECOVERY_RECIPIENT,
             assetType: PrizeTypes.AssetType.NATIVE,
             token: address(0),
             tokenId: 0,
@@ -323,12 +323,12 @@ contract RoundsV8VaultQuorumTest is Test {
             vm.addr(ROUND_ADMIN_ONE_KEY),
             _sign(ROUND_ADMIN_ONE_KEY, digest)
         );
-        vm.expectRevert(RoundPrizeVaultV8.SafetyActionNotReady.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.SafetyActionNotReady.selector);
         vault.executeSafetyAction(actionId);
         vm.warp(block.timestamp + 5 minutes);
         vault.executeSafetyAction(actionId);
         assertEq(vault.recoveryRecipient(), nextRecipient);
-        vm.expectRevert(RoundPrizeVaultV8.SafetyActionAlreadyExecuted.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.SafetyActionAlreadyExecuted.selector);
         vault.executeSafetyAction(actionId);
     }
 
@@ -336,10 +336,10 @@ contract RoundsV8VaultQuorumTest is Test {
         _complete();
         uint48 deadline = uint48(block.timestamp + 1 hours);
         bytes32 digest =
-            vault.hashAllocationAction(RoundPrizeVaultV8.AllocationAction.HOLD, 0, 0, deadline);
+            vault.hashAllocationAction(RoundPrizeVaultRelease010.AllocationAction.HOLD, 0, 0, deadline);
         bytes memory badGlobal =
             bytes.concat(_sign(OWNER_ONE_KEY, digest), _sign(OWNER_ONE_KEY, digest));
-        vm.expectRevert(RoundPrizeVaultV8.InvalidSignature.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidSignature.selector);
         vault.hold(
             0,
             deadline,
@@ -354,7 +354,7 @@ contract RoundsV8VaultQuorumTest is Test {
         assertEq(round.finalizationCursor(), 1);
         assertFalse(round.finalized());
         vm.warp(block.timestamp + 5 minutes);
-        vm.expectRevert(RoundPrizeVaultV8.InvalidState.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.InvalidState.selector);
         vault.release(0);
         round.finalizeBatch(1);
         assertTrue(round.finalized());
@@ -371,7 +371,7 @@ contract RoundsV8VaultQuorumTest is Test {
         vault.release(0);
         assertEq(winner.balance, beforeBalance + 1 ether);
         assertEq(vault.liabilityByAsset(key), 0);
-        vm.expectRevert(RoundPrizeVaultV8.AlreadyClaimed.selector);
+        vm.expectRevert(RoundPrizeVaultRelease010.AlreadyClaimed.selector);
         vault.release(0);
     }
 

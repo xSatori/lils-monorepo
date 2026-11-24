@@ -397,7 +397,7 @@ describe("Rounds v3 prizes", () => {
     expect(frozen.actionId).toMatch(/^0x[0-9a-f]{64}$/);
   });
 
-  it("uses the V8 EIP-712 domain for every typed prize safety action", () => {
+  it("uses the 0.1.0 EIP-712 domain for every typed prize safety action", () => {
     const shared = {
       chainId: 11155111,
       vault: VAULT,

@@ -220,7 +220,7 @@ export function CreateRoundPanel({
 
   const disabledReason = useMemo(() => {
     if (!factoryGeneration || factoryGeneration < 5)
-      return "This factory remains readable, but sponsored round creation requires generation five or newer.";
+      return "This factory remains readable, but sponsored round creation requires a factory that supports onchain media commitments.";
     if (factory.paused) return "Round creation is paused by a global admin.";
     if (!votingPowerAdapter || !isAddress(votingPowerAdapter))
       return "Voting-power adapter is not configured for this chain.";

@@ -2,9 +2,9 @@
 
 Solidity 0.8.24 contracts for exact-fee, factory-created, chain-authoritative Lil Nouns Rounds.
 
-The frontend uses the [V8 protocol](src/v8/README.md) and its [Sepolia deployment record](../deployments/sepolia-rounds-v8.json). V8 supports funded prize vaults and onchain release. The layout and security notes below describe the original generation.
+The frontend uses the [0.1.0 protocol](src/0.1.0/README.md) and its [Sepolia deployment record](../deployments/sepolia-rounds-0.1.0.json). 0.1.0 supports funded prize vaults and onchain release. The layout and security notes below describe the original generation.
 
-Install the root workspace dependencies with `bun install --frozen-lockfile`. Foundry resolves the rounds package `@openzeppelin/contracts-rounds` to OpenZeppelin Contracts 5.4.0. The remapping changes Solidity build metadata relative to the historical V8 compilation, so use the original release commit when reproducing deployment bytecode.
+Install the root workspace dependencies with `bun install --frozen-lockfile`. Foundry resolves the rounds package `@openzeppelin/contracts-rounds` to OpenZeppelin Contracts 5.4.0. The remapping changes Solidity build metadata relative to the historical 0.1.0 compilation, so use the original release commit when reproducing deployment bytecode.
 
 ## Commands
 
